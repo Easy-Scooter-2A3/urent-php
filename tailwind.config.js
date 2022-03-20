@@ -1,7 +1,7 @@
 module.exports = {
   content: [
     './resources/**/*.blade.php',
-    './resources/**/*.js.php',
+    './resources/**/*.ts.php',
   ],
   theme: {
     extend: {},

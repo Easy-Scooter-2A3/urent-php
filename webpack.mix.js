@@ -11,8 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.ts('resources/js/app.ts', 'public/js')
     // Compile CSS using PostCSS
     .postCss('resources/css/app.css', 'public/css', [
         require('tailwindcss'),
-    ]);
+    ])
+    .ts('resources/js/test.ts', 'public/js');
