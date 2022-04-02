@@ -13,4 +13,5 @@
         </ul>
     </div>
 </footer>
+<script>mdc.autoInit()</script>
 </html>

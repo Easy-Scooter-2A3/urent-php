@@ -1,0 +1,20 @@
+@use "material-components-web/material-components-web"
+
+$urent-red: #b52e2e
+
+.darkBackground
+    background-color: #101010
+
+@mixin urent-red
+    color: $urent-red !important
+
+.urent-red-text-field.mdc-text-field--focused
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label
+    @include urent-red
+
+// @mixin line-ripple-color($urent-red)
+//     caret-color: $urent-red
+
+// .urent-red
+//     @include line-ripple-color($urent-red !important)
