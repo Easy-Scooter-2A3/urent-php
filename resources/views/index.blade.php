@@ -1,8 +1,8 @@
 @include('head')
 <header class="h-1/5">
-    <div class="flex justify-between border darkBackground">
-        <img class="border" src="/img/logo4.svg" alt="logo">
-        <div class="flex justify-around w-3/5 items-center text-white border">
+    <div class="flex justify-between darkBackground p-4">
+        <img src="/img/logo4.png" alt="logo">
+        <div class="flex justify-end w-3/5 items-center text-white">
             <!-- <a class="hover:text-red-600" href="/#todo">
                 <h3>HOME</h3>
             </a>
@@ -40,9 +40,16 @@
                         <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
                     </li>
                 </ul>
+                @auth
                 <div class="py-1">
-                    <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                    <a href="{{ route('signout') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
                 </div>
+                @else
+                <div class="py-1">
+                    <a href="{{ route('login') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Login</a>
+                    <a href="{{ route('register') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Register</a>
+                </div>
+                @endauth
             </div>
 
         </div>
