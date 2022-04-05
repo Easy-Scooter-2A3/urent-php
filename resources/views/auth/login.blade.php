@@ -60,14 +60,23 @@
             <div class="flex">
                 <a href="/register" class="hover:text-red-600 text-gray-500 mt-3 text-sm hover:underline">No account ? Create one</a>
                 <h3 class="text-gray-500 mt-3 text-sm">&nbsp;/&nbsp;</h3>
-                <a href="/resetpassword" class="hover:text-red-600 text-gray-500 mt-3 text-sm hover:underline">Reset password</a>
+                <a href="/forgot-password" class="hover:text-red-600 text-gray-500 mt-3 text-sm hover:underline">Reset password</a>
             </div>
+            @isset($status)
+                <div class="text-green-600 text-sm">{{ $status }}</div>
+            @enderror
             @error('email')
                 <div class="text-red-600 text-sm">{{ $message }}</div>
             @enderror
             @error('password')
                 <div class="text-red-600 text-sm">{{ $message }}</div>
             @enderror
+
+            @if (session('status'))
+                <div class="mb-4 font-medium text-sm text-green-600">
+                    {{ session('status') }}
+                </div>
+            @endif
         </form>
         <span class="border"></span>
         <div class="m-5 md:w-2/5 sm:w-full border">
