@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Test;
+use App\Http\Controllers\Index;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,6 @@ use App\Http\Controllers\Test;
 |
 */
 
-Route::get('/', [Test::class, 'index']);
-Route::post('/osef', [Test::class, 'osef']);
+Route::get('/', [Index::class, 'index']);
+Route::get('/logout', [Index::class, 'logout']);
 

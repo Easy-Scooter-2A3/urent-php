@@ -1,35 +1,38 @@
 @include('head')
 @include('header')
 
-<body class="h-1/5 bg-gray-100">
+<body class="bg-gray-100">
 
-    <div class="w-4/6 flex justify-between mx-auto px-5 border bg-white">
-        <div class="flex flex-col m-5">
+    <div class="xl:w-3/6 lg:w-4/6 md:w-full flex flex-col sm:flex-row justify-between mx-auto px-5 border bg-white my-5 drop-shadow-md">
+        <form method="POST" class="flex flex-col m-5 md:w-2/5 sm:w-full">
+            @csrf
 
             {{-- Login field --}}
-            <label data-mdc-auto-init="MDCTextField" class="mdc-text-field mdc-text-field--filled mdc-text-field--with-leading-icon">
-                <span class="mdc-text-field__ripple"></span>
-                <span class="mdc-floating-label" id="my-label-id">Login</span>
-                <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading" tabindex="0" role="button">account_circle</i>
-                <input class="mdc-text-field__input" type="text">
-                <span class="mdc-line-ripple"></span>
-            </label>
-
+            @component('components.inputfield', [
+                'text' => 'Login',
+                'icon' => 'account_circle',
+                'name' => 'email',
+                'type' => 'text',
+            ])
+            @endcomponent
+            
             {{-- Password field --}}
-            <label data-mdc-auto-init="MDCTextField" class="mdc-text-field mdc-text-field--filled mdc-text-field--with-leading-icon">
-                <span class="mdc-text-field__ripple"></span>
-                <span class="mdc-floating-label" id="my-label-id">Password</span>
-                <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading" tabindex="0" role="button">password</i>
-                <input class="mdc-text-field__input" type="text">
-                <span class="mdc-line-ripple"></span>
-            </label>
+            @component('components.inputfield', [
+                'text' => 'Password',
+                'icon' => 'password',
+                'name' => 'password',
+                'type' => 'password',
+            ])
+            @endcomponent
 
-            <div class="border flex justify-between">
+
+            <div class="mt-5 flex justify-between">
                 {{-- Remember me --}}
                 <div class="mdc-form-field">
                     <div class="mdc-checkbox">
                       <input type="checkbox"
                              class="mdc-checkbox__native-control"
+                             name="remember"
                              id="checkbox-1"/>
                       <div class="mdc-checkbox__background">
                         <svg class="mdc-checkbox__checkmark"
@@ -46,14 +49,28 @@
                 </div>
 
                 {{-- Login button --}}
-                <button class="mdc-button mdc-button--raised">
-                    <span class="mdc-button__ripple"></span>
-                    <span class="mdc-button__touch"></span>
-                    <span class="mdc-button__label">Valider</span>
-                </button>
+                @component('components.button', [
+                    'text' => 'Submit',
+                    'type' => 'submit',
+                ])
+                    
+                @endcomponent
             </div>
-        </div>
-        <div class="m-5 border">
+
+            <div class="flex">
+                <a href="/register" class="hover:text-red-600 text-gray-500 mt-3 text-sm hover:underline">No account ? Create one</a>
+                <h3 class="text-gray-500 mt-3 text-sm">&nbsp;/&nbsp;</h3>
+                <a href="/resetpassword" class="hover:text-red-600 text-gray-500 mt-3 text-sm hover:underline">Reset password</a>
+            </div>
+            @error('email')
+                <div class="text-red-600 text-sm">{{ $message }}</div>
+            @enderror
+            @error('password')
+                <div class="text-red-600 text-sm">{{ $message }}</div>
+            @enderror
+        </form>
+        <span class="border"></span>
+        <div class="m-5 md:w-2/5 sm:w-full border">
             <h3>TODO</h3>
             <h3>TODO</h3>
             <h3>TODO</h3>
