@@ -24,6 +24,8 @@ class User extends Authenticatable
         'location',
         'phone',
         'partner_code',
+        'fidelity_points',
+        'credit_points'
     ];
 
     /**
