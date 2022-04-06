@@ -32,7 +32,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'location' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:255'],
-            'partner_code' => ['string', 'max:255'],
+            // 'partner_code' => ['string', 'max:255'],
         ])->validate();
 
         return User::create([

@@ -77,6 +77,18 @@
                 @error('password')
                     <div class="text-red-600 text-sm">{{ $message }}</div>
                 @enderror
+                @error('name')
+                    <div class="text-red-600 text-sm">{{ $message }}</div>
+                @enderror
+                @error('location')
+                    <div class="text-red-600 text-sm">{{ $message }}</div>
+                @enderror
+                @error('phone')
+                    <div class="text-red-600 text-sm">{{ $message }}</div>
+                @enderror
+                @error('partner_code')
+                    <div class="text-red-600 text-sm">{{ $message }}</div>
+                @enderror
                 
                 {{-- Submit button --}}
                 @component('components.button', [
