@@ -5,6 +5,7 @@ use App\Http\Controllers\Index;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Authentication;
+use App\Http\Controllers\Dashboard;
 use App\Actions\Authentication\ResetPassword;
 
 /*
@@ -26,3 +27,5 @@ Route::post('/forgot-password', [Authentication::class, 'forgotPasswordSubmit'])
 
 Route::get('/reset-password/{token}', [Authentication::class, 'resetPassword'])->middleware('guest')->name('password.reset');
 Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->middleware('guest')->name('password.resetSubmit');
+
+Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');

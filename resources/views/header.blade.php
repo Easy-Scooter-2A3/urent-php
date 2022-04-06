@@ -2,15 +2,6 @@
     <div class="flex justify-between darkBackground p-4">
         <img src="/img/logo4.png" alt="logo">
         <div class="flex justify-end w-3/5 items-center text-white">
-            <!-- <a class="hover:text-red-600" href="/#todo">
-                <h3>HOME</h3>
-            </a>
-            <a class="hover:text-red-600" href="/#todo">
-                <h3>Application</h3>
-            </a>
-            <a class="hover:text-red-600" href="/#todo">
-                <h3>About us</h3>
-            </a> -->
 
             <ul class="flex">
                 <li class="hover:text-red-600 m-2">HOME</li>
@@ -27,13 +18,15 @@
 
             <!-- Dropdown menu -->
             <div id="userDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                @auth
                 <div class="py-3 px-4 text-sm text-gray-900 dark:text-white">
-                    <div>Marcel Patulacci</div>
-                    <div class="font-medium truncate">marcel@patulacci.com</div>
+                        <h2>{{ Auth::user()->name }}</h2>
+                        <div class="font-medium truncate">{{ Auth::user()->email }}</div>
                 </div>
+                @endauth
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                     <li>
-                        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                        <a href="{{ route('dashboard') }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                     </li>
                     <li>
                         <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
