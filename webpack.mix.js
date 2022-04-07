@@ -17,4 +17,6 @@ mix.ts('resources/js/app.ts', 'public/js')
     .postCss('resources/css/tailwindcss.css', 'public/css', [
         require('tailwindcss')
     ])
+    .ts('resources/js/dashboard.ts', 'public/js')
+    .ts('resources/js/checkRedirect.ts', 'public/js')
     .ts('resources/js/test.ts', 'public/js');

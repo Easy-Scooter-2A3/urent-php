@@ -1,4 +1,9 @@
-<button data-mdc-auto-init="MDCSwitch" @isset($id)id="{{ $id }}"@endisset class="mdc-switch mdc-switch--unselected" type="button" role="switch">
+<button data-mdc-auto-init="MDCSwitch" @isset($id)id="{{ $id }}"@endisset type="button" role="switch"
+@class([
+  'mdc-switch',
+  Auth::user()->two_factor_secret ? 'mdc-switch--selected' : 'mdc-switch--unselected'
+  ])
+>
     <div class="mdc-switch__track"></div>
     <div class="mdc-switch__handle-track">
       <div class="mdc-switch__handle">
