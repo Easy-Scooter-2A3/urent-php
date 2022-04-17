@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\Weather;
 use App\Actions\Authentication\ResetPassword;
 
 /*
@@ -29,3 +30,5 @@ Route::get('/reset-password/{token}', [Authentication::class, 'resetPassword'])-
 Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->middleware('guest')->name('password.resetSubmit');
 
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
+
+Route::get('/weather', [Weather::class, 'list'])->middleware('auth')->name('weather');

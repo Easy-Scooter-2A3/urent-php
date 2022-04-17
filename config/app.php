@@ -17,6 +17,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'openweathermap' => env('OPENWEATHERMAP', '/home/kazuh/openweathermap/build/openweathermap'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
