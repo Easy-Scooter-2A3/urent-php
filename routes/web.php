@@ -8,6 +8,7 @@ use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Weather;
 use App\Actions\Authentication\ResetPassword;
+use App\Http\Controllers\ScooterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,8 @@ Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
 
 Route::get('/weather', [Weather::class, 'list'])->middleware('auth')->name('weather');
+
+Route::get('/scooter', [ScooterController::class, 'list'])->name('scooter_list');
+Route::get('/scooter/{id}', [ScooterController::class, 'get'])->name('scooter');
+Route::delete('/scooter/{id}', [ScooterController::class, 'delete'])->name('scooter_delete');
+Route::post('/scooter', [ScooterController::class, 'insert'])->name('scooter_create');
