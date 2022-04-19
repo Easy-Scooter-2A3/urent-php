@@ -25,9 +25,10 @@
                         <th colspan="2">Admin</th>
                     </tr>
                 </thead>                
-                @foreach ($users as $user)
-                <tbody class="">
-                    <tr class="justify-around gap-3 lg-5/6 md:w-full m-5 mx-auto bg-white drop-shadow-md">
+                <tbody class="justify-around gap-3 lg md:w-full bg-white drop-shadow-md">
+                    @foreach ($users as $user)
+                    <tr class="">
+                        <td ><input type="checkbox" style="margin: 7px;"></td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->created_at }}</td>
                         <td>{{ $user->updated_at }}</td>
@@ -40,9 +41,9 @@
                             @endif
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
-             </table>
-            @endforeach
+            </table>
         </div>
     </div>
     {{-- @endforeach  --}}
