@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Dashboard;
 use App\Actions\Authentication\ResetPassword;
+use App\Http\Controllers\AdminDashboard;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +31,5 @@ Route::get('/reset-password/{token}', [Authentication::class, 'resetPassword'])-
 Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->middleware('guest')->name('password.resetSubmit');
 
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
+
+Route::get('/admin', [AdminDashboard::class, 'index'])->middleware("admin")->name('admin');

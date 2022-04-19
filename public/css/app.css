@@ -18185,6 +18185,14 @@ a.mdc-list-item {
   background-color: #101010;
 }
 
+.urent-red {
+  color: #b52e2e !important;
+}
+
 .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
   color: #b52e2e !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent !important;
 }
