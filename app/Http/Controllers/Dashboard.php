@@ -6,18 +6,22 @@ use Illuminate\Http\Request;
 
 class Dashboard extends Controller
 {
-    public function index(Request $request) {
-        $collection = [
-            ['dashboard', "Account"],
-            ['dashboard', "History"],
-            ['dashboard', "Fidelity"],
-            ['dashboard', "Invoices"],
-            ['dashboard', "Statistics"],
-            ['dashboard', "Weather"],
-            ['dashboard', "Packages"],
-            ['dashboard', "Travels"],
-        ];
+    private $collection = [
+        ['dashboard', "Account"],
+        ['dashboard', "History"],
+        ['dashboard', "Fidelity"],
+        ['dashboard', "Invoices"],
+        ['dashboard', "Statistics"],
+        ['weather', "Weather"],
+        ['dashboard', "Packages"],
+        ['dashboard', "Travels"],
+    ];
 
-        return view('user.dashboard', ['collection' => $collection]);
+    public function index(Request $request) {
+        return view('user.dashboard', ['collection' => $this->collection]);
+    }
+
+    public function weather(Request $request) {
+        return view('user.weather', ['collection' => $this->collection]);
     }
 }

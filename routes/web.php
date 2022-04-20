@@ -31,6 +31,7 @@ Route::get('/reset-password/{token}', [Authentication::class, 'resetPassword'])-
 Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->middleware('guest')->name('password.resetSubmit');
 
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
+Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
 
 Route::get('/weather', [Weather::class, 'list'])->middleware('auth')->name('weather');
 
