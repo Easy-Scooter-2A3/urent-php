@@ -65,8 +65,15 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="justify-around gap-3 lg-5/6 md:w-full m-5 mx-auto bg-white drop-shadow-md">
-                <button><span class="mdc-button__label">Détails</span></button>
+            <div class="gap-3 lg-5/6 md:w-full m-5 mx-auto flex bg-white drop-shadow-md">
+                    @component('components.inputfield', [
+                        'text' => 'Search',
+                        'icon' => 'search',
+                        'name' => 'search',
+                        'type' => 'search',
+                    ])
+                    @endcomponent
+                <button class="mdc-button mdc-button--raised mt-4 mb-5 ml-5"><span class="mdc-button__label">View détails</span></button>
             </div>
         </div>
     </div>
