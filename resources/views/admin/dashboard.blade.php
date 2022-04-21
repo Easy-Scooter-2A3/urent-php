@@ -2,8 +2,6 @@
 @include('header')
 
 <body class="bg-gray-100">
-    <script src="/js/dashboardAdmin.js"></script>
-
     <div class="flex flex-col md:flex-row">
         <div class=" p-4 bg-white w-full md:w-60">
             <div class="grid grid-cols-1 gap-4 text-center justify-items-center w-full">
@@ -25,13 +23,11 @@
                         @foreach ($cols as $col)
                             <th scope="col" class="p-4">{{ $col }}</th>
                         @endforeach
-                       
-
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
-                    <tr id="{{$user->id}}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr users class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="w-4 p-4">
                             <div class="flex items-center">
                                 <input id="{{$user->id}}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -60,7 +56,6 @@
                                 <button><i class="material-icons mdc-text-fieldfield__icon mdc-text-field__icon--leading text-red-600">clear</i></button>
                             @endif
                         </td>
-                       
                     </tr>
                     @endforeach
                 </tbody>
@@ -71,11 +66,14 @@
                         'icon' => 'search',
                         'name' => 'search',
                         'type' => 'search',
+                        'id' => 'searchList',
                     ])
                     @endcomponent
                 <button class="mdc-button mdc-button--raised mt-4 mb-5 ml-5"><span class="mdc-button__label">View détails</span></button>
             </div>
         </div>
+    <script src="/js/dashboardAdmin.js"></script>
+
     </div>
 
     {{-- @endforeach  --}}
