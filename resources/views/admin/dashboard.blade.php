@@ -2,6 +2,7 @@
 @include('header')
 
 <body class="bg-gray-100">
+    <script src="/js/dashboardAdmin.js"></script>
 
     <div class="flex flex-col md:flex-row">
         <div class=" p-4 bg-white w-full md:w-60">
@@ -11,43 +12,66 @@
                 @endforeach
             </div>
         </div>
-                    
-        <div class="flex flex-col w-full p-4">
-            <table>
-                <thead class="justify-around gap-3 lg-5/6 md:w-full m-5 mx-auto bg-white drop-shadow-md">
+        <div class="relative overflow-x-auto lg:w-full mx-10 my-10 shadow-md">
+            <table class="w-full lg-5/6 text-sm text-left">
+                <thead class="uppercase bg-white gap-3 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th><input type="checkbox" style="margin: 7px;"></th>
-                        <th colspan="2">Status</th>
-                        <th colspan="2">Name</th>
-                        <th colspan="2">Date</th>
-                        <th colspan="2">Dern. Connection</th>
-                        <th colspan="2">ID</th>
-                        <th colspan="2">Admin</th>
+                        <th scope="col" class="p-4">
+                            <div class="flex items-center">
+                                <input id="checkbox-all" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="checkbox-all" class="sr-only">checkbox</label>
+                            </div>
+                        </th>
+                        @foreach ($cols as $col)
+                            <th scope="col" class="p-4">{{ $col }}</th>
+                        @endforeach
+                       
+
                     </tr>
-                </thead>                
-                <tbody class="justify-around gap-3 lg md:w-full bg-white drop-shadow-md">
+                </thead>
+                <tbody>
                     @foreach ($users as $user)
-                    <tr class="">
-                        <td ><input type="checkbox" style="margin: 7px;"></td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->created_at }}</td>
-                        <td>{{ $user->updated_at }}</td>
-                        <td>{{ $user->id }}</td>
-                        <td>
+                    <tr id="{{$user->id}}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="w-4 p-4">
+                            <div class="flex items-center">
+                                <input id="{{$user->id}}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="{{$user->id}}-label" class="sr-only">checkbox</label>
+                            </div>
+                        </td>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                            {{ $user->email_verified_at }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ $user->name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $user->created_at }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $user->updated_at }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $user->id }}
+                        </td>
+                        <td class="px-6 py-4">
                             @if ($user->isAdmin == 1)
-                                <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</i>
+                                <button href="/change-admin"><i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</i></button>
                             @else
-                                <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-red-600">clear</i>
+                                <button><i class="material-icons mdc-text-fieldfield__icon mdc-text-field__icon--leading text-red-600">clear</i></button>
                             @endif
                         </td>
+                       
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+            <div class="justify-around gap-3 lg-5/6 md:w-full m-5 mx-auto bg-white drop-shadow-md">
+                <button><span class="mdc-button__label">Détails</span></button>
+            </div>
         </div>
     </div>
+
     {{-- @endforeach  --}}
     {{-- <form id="mfa_form" hidden action="/user/two-factor-authentication" method="post"></form> --}}
-    
 </body>
 @include('footer')

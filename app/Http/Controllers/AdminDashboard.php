@@ -20,12 +20,14 @@ class AdminDashboard extends Controller
             ['dashboard', "Travels"],
         ];
 
+        $cols = ['Status', 'Name', 'Date', 'Dern. Connection', 'ID', 'Admin'];
+
         $users = User::all();
-        return view('admin.dashboard', ['collection' => $collection, 'users' => $users]);
+        return view('admin.dashboard', ['collection' => $collection, 'users' => $users, 'cols' => $cols]);
     }
 
-    private function changeAdmin(Request $request) {
-        $user = User::find()->first();
+    public function changeAdmin() {
+        $user = User::find(2);
 
         if (!$user) {
             $json = ['status' => 'error', 'message' => 'User not found'];
