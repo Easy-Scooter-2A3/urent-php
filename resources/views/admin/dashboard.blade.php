@@ -27,10 +27,10 @@
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
-                    <tr users class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr userId class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="w-4 p-4">
                             <div class="flex items-center">
-                                <input id="{{$user->id}}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input userid="{{ $user->id }}" id="{{$user->id}}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="{{$user->id}}-label" class="sr-only">checkbox</label>
                             </div>
                         </td>
@@ -51,9 +51,9 @@
                         </td>
                         <td class="px-6 py-4">
                             @if ($user->isAdmin == 1)
-                                <button href="/change-admin"><i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</i></button>
+                                <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</i>
                             @else
-                                <button><i class="material-icons mdc-text-fieldfield__icon mdc-text-field__icon--leading text-red-600">clear</i></button>
+                                <i class="material-icons mdc-text-fieldfield__icon mdc-text-field__icon--leading text-red-600">clear</i>
                             @endif
                         </td>
                     </tr>
@@ -69,7 +69,12 @@
                         'id' => 'searchList',
                     ])
                     @endcomponent
-                <button class="mdc-button mdc-button--raised mt-4 mb-5 ml-5"><span class="mdc-button__label">View détails</span></button>
+                <button id="viewDetailsBtn" class="mdc-button mdc-button--raised mt-4 mb-5 ml-5">
+                    <span class="mdc-button__label">View details</span>
+                </button>
+                <button class="mdc-button mdc-button--raised mt-4 mb-5 ml-5">
+                    <span class="mdc-button__label">Change Admin</span>
+                </button>
             </div>
         </div>
     <script src="/js/dashboardAdmin.js"></script>
