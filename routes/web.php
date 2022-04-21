@@ -33,3 +33,4 @@ Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
 
 Route::get('/admin', [AdminDashboard::class, 'index'])->middleware("admin")->name('admin');
+Route::get('/admin-change', [AdminDashboard::class, 'changeAdmin'])->middleware("admin")->name('admin.change');
