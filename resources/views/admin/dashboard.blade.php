@@ -10,7 +10,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="relative overflow-x-auto lg:w-full mx-10 my-10 shadow-md">
+        <div class="relative overflow-x-auto lg:w-full mx-10 my-10">
             <table class="w-full lg-5/6 text-sm text-left">
                 <thead class="uppercase bg-white gap-3 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
