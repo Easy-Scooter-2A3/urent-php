@@ -7,7 +7,8 @@
         
         {{-- Rond --}}
         <div class="flex-1">
-            <div class="w-10 h-10 bg-green-400 mx-auto rounded-full text-lg text-white flex items-center">
+            <span id="tmp" class="w-12 h-12"></span>
+            <div day-circle class="w-10 h-10 hover:border-zinc-800 hover:border-2 bg-green-400 mx-auto rounded-full text-lg text-white flex items-center transition-all ease-in-out duration-300">
                 <button type="button" data-tooltip-target="tooltip-day-{{ $item }}" class="text-black text-center w-full">{{ $item[0] }}</button>
 
                 <div id="tooltip-day-{{ $item }}" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-gray-700">
@@ -39,6 +40,8 @@
         @endforeach
     
         <div class="flex-1">
-        </div>		
+        </div>	
+    
+        <script src="/js/weather-bar.js"></script>
     </div>
 </div>
