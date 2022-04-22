@@ -46,11 +46,8 @@ class ScooterController extends Controller
     }
 
     public function delete(Request $request) {
-        $list = $request->list;
-        if (count($list) > 0) {
-            Scooter::destroy($list);
-        }
-        return response()->json(['success' => true]);
+        $status = Scooter::destroy($request->id);
+        return response()->json(['success' => boolval($status)]);
     }
 
     public function setUser(Request $request) {
