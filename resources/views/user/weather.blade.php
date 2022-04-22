@@ -13,7 +13,7 @@
         </div>
 
         <div class="w-full">
-            <div class="p-4 gap-3 xl:w-5/12 lg:w-4/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md">
+            <div class="p-4 gap-3 xl:w-9/12 lg:w-4/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md">
 
                 <div id="controls-carousel" class="relative" data-carousel="static">
                     <div class="flex justify-between">
@@ -51,10 +51,22 @@
                 </div>
             </div>
 
-            <div class="p-4 gap-3 xl:w-5/12 lg:w-4/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md">
-                <h2>
-                    {{-- Jours --}}
-                </h2>
+            <div class="p-4 gap-3 xl:w-9/12 lg:w-4/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md">
+                {{-- <div class="flex justify-around">
+                    @foreach (["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] as $item)
+                        @component('components.button', [
+                            "text" => $item,
+                            "type" => "button",
+                            "id" => "button-".$item,
+                        ])
+                        @endcomponent
+                    @endforeach
+                </div> --}}
+                
+                {{--  --}}
+                @include('user.weather-bar')
+                {{--  --}}
+
             </div>
         </div>
     </div>
