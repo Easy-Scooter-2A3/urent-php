@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\Weather;
 use App\Actions\Authentication\ResetPassword;
 use App\Http\Controllers\AdminDashboard;
+use App\Http\Controllers\ScooterController;
 
 
 /*
@@ -34,3 +36,5 @@ Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name(
 
 Route::get('/admin', [AdminDashboard::class, 'index'])->middleware("admin")->name('admin');
 Route::get('/admin-change', [AdminDashboard::class, 'changeAdmin'])->middleware("admin")->name('admin.change');
+Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
+Route::get('/weather', [Weather::class, 'list'])->middleware('auth')->name('weather');
