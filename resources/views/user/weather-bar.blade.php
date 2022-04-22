@@ -42,6 +42,6 @@
         <div class="flex-1">
         </div>	
     
-        <script src="/js/weather-bar.js"></script>
+        <script src="/js/daybar.js"></script>
     </div>
 </div>

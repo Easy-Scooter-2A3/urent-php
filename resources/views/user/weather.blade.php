@@ -47,25 +47,17 @@
                     </div>
                     <hr>
                     {{-- Graphique --}}
+
+                    <canvas id="weather-canvas" class="w-full h-72 border"></canvas>
+                    <script src="/js/canvas.js"></script>
+
                     <div></div>
                 </div>
             </div>
 
             <div class="p-4 gap-3 xl:w-9/12 lg:w-4/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md">
-                {{-- <div class="flex justify-around">
-                    @foreach (["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] as $item)
-                        @component('components.button', [
-                            "text" => $item,
-                            "type" => "button",
-                            "id" => "button-".$item,
-                        ])
-                        @endcomponent
-                    @endforeach
-                </div> --}}
                 
-                {{--  --}}
                 @include('user.weather-bar')
-                {{--  --}}
 
             </div>
         </div>
