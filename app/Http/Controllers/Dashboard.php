@@ -18,7 +18,7 @@ class Dashboard extends Controller
     ];
 
     public function index(Request $request) {
-        return view('user.dashboard', [
+        return view('dashboard', [
             'view' => 'user.dashboard-account',
             'collection' => $this->collection
         ]);
@@ -31,7 +31,7 @@ class Dashboard extends Controller
         $date->setTimezone(new \DateTimeZone('Europe/Paris'));
         $currentDay = $date->format('N'); // 1-7
         $currentHour = $date->format('G'); // 0-23
-        return view('user.dashboard', [
+        return view('dashboard', [
             'view' => 'user.dashboard-weather',
             'collection' => $this->collection,
             'days' => $days,

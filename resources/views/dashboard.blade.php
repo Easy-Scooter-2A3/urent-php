@@ -2,7 +2,6 @@
 @include('header')
 
 <body class="bg-gray-100">
-
     <div class="flex flex-col md:flex-row">
         <div class="p-4 bg-white w-full md:w-60">
             <div class="flex flex-col gap-4 text-center justify-items-center w-full">

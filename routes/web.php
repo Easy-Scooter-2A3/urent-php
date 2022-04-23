@@ -38,3 +38,6 @@ Route::get('/admin', [AdminDashboard::class, 'index'])->middleware("admin")->nam
 Route::get('/admin-change', [AdminDashboard::class, 'changeAdmin'])->middleware("admin")->name('admin.change');
 Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
 Route::get('/weather', [Weather::class, 'list'])->middleware('auth')->name('weather');
+
+Route::post('/admin/users/action', [AdminDashboard::class, 'action'])->middleware("auth")->name('admin.users.action');
+Route::post('/admin/users/details', [AdminDashboard::class, 'details'])->middleware("auth")->name('admin.users.details');

@@ -1,14 +1,54 @@
-const checkAll = (checked: boolean) => {
-    console.log("'checkAll' function called");
+import axios from "axios";
 
+const checkAll = (checked: boolean) => {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
-    for (const element of inputs) {
+    inputs.forEach((element) => {
         element.checked = checked;
+    });
+}
+
+const getDetails = async (users: (string | null)[]) => {
+    const res = await axios.post(`/admin/users/details`, {users});
+    return res.data;
+}
+
+const doAction = async (users: (string | null)[], action: string) => {
+    if (users.length === 0) {
+        console.log("No users selected");
+        return;
+    }
+    const _token = document.querySelector<HTMLInputElement>("[name='_token']")?.value;
+    if (!_token) {
+        console.error("Could not find CSRF token");
+        return;
+    }
+
+    const data = {
+        users,
+        action,
+        _token
+    };
+
+    try {
+        const res = await axios.post('/admin/users/action', data);
+        if (res.status === 200) {
+            location.reload();
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log(error)
+        }
     }
 }
 
-const searchList = (input: KeyboardEvent) => {
+const selectedUsers = () => {
+    const list = document.querySelectorAll<HTMLInputElement>("[userid]");
+    return Array.from(list).filter((element) => {
+        return element.checked;
+    });
+}
 
+const searchField = (input: KeyboardEvent) => {
     let target = input.target as HTMLInputElement;
     if (!target) {
         return;
@@ -16,8 +56,8 @@ const searchList = (input: KeyboardEvent) => {
 
     const regex = new RegExp(target.value, "i");
 
-    const list = document.querySelectorAll<HTMLElement>("[userid]");
-    if (target.value == '') {
+    const list = document.querySelectorAll<HTMLElement>("[useridParent]");
+    if (target.value.length === 0) {
         list.forEach((element) => {
             element.removeAttribute("hidden");
         });
@@ -30,58 +70,46 @@ const searchList = (input: KeyboardEvent) => {
     });
 }
 
-const detailUser = (checked: boolean) => {
-    const user = document.querySelector("[users]");
-    if (!user) {
-        return;
-    }
-    //Récupérer l'input de user
-    const input = user.querySelector("input[type='checkbox']") as HTMLInputElement;
-    if (!input) {
-        return;
-    }
-    console.log(input);
-    //Si l'input est coché
-    if (input.checked == checked) {
-        console.log("input.checked == checked");
-    }
-
-}
-
 (async () => {
-    const searchInput = document.getElementById("searchList") as HTMLInputElement | null;
-    const elem = document.getElementById('checkbox-all') as HTMLInputElement | null;
-    const userDetail = document.querySelectorAll<HTMLInputElement>("[userid]");
-
+    const searchInput = document.getElementById("searchField") as HTMLInputElement | null;
+    const checkboxAll = document.getElementById('checkbox-all') as HTMLInputElement | null;
+    const users = document.querySelectorAll<HTMLInputElement>("[userid]");
     const viewDetailsBtn = document.getElementById('viewDetailsBtn') as HTMLButtonElement | null;
-
-    if (!searchInput || !elem || !userDetail || !viewDetailsBtn) {
+    const toggleAdminBtn = document.getElementById('toggleAdminBtn') as HTMLButtonElement | null;
+    const toggleActivationUserBtn = document.getElementById('toggleActivationUserBtn') as HTMLButtonElement | null;
+    
+    if (!searchInput || !checkboxAll || !users || !viewDetailsBtn || !toggleAdminBtn || !toggleActivationUserBtn) {
         console.error('Could not find one or more elements');
         return;
     }
 
-    elem.addEventListener('click', function (e: MouseEvent) {
+    checkboxAll.addEventListener('click', function (e: MouseEvent) {
         console.log('checkbox-all clicked');
-        checkAll(elem.checked);
+        checkAll(checkboxAll.checked);
     });
 
-    userDetail.forEach((element) => {
-        element.addEventListener('click', function (e: MouseEvent) {
-            console.log('checkbox clicked');
-            // detailUser(element.getAttribute("userid"));
-        });
-    });
-
-    viewDetailsBtn.addEventListener('click', function (e: MouseEvent) {
+    viewDetailsBtn.addEventListener('click', async function (e: MouseEvent) {
         console.log('viewDetailsBtn clicked');
-        const selectedUsers = []
-        userDetail.forEach((element) => {
-            if (element.checked) {
-                selectedUsers.push(element.getAttribute("userid"));
-            }
-        });
-        // axios post ect avec le tableau
+        const _users = selectedUsers().map((element) => element.getAttribute("userid"));
+        if (_users.length === 0) {
+            return;
+        }
+
+        const details = await getDetails(_users);
+        console.log(details);
     });
-    
-    searchInput.addEventListener('keyup', searchList);
+
+    toggleAdminBtn.addEventListener('click', async function (e: MouseEvent) {
+        console.log('toggleAdminBtn clicked');
+        const _users = selectedUsers().map((element) => element.getAttribute("userid"));
+        await doAction(_users, 'toggleAdmin');
+    });
+
+    toggleActivationUserBtn.addEventListener('click', async function (e: MouseEvent) {
+        console.log('toggleActivationUserBtn clicked');
+        const _users = selectedUsers().map((element) => element.getAttribute("userid"));
+        await doAction(_users, 'toggleActivationUser');
+    });
+
+    searchInput.addEventListener('keyup', searchField);
 })();
