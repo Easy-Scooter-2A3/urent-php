@@ -8,7 +8,9 @@ use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Weather;
 use App\Actions\Authentication\ResetPassword;
+use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\ScooterController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,11 +33,11 @@ Route::get('/reset-password/{token}', [Authentication::class, 'resetPassword'])-
 Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->middleware('guest')->name('password.resetSubmit');
 
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
-Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
 
+Route::get('/admin', [AdminDashboard::class, 'index'])->middleware("admin")->name('admin');
+Route::get('/admin-change', [AdminDashboard::class, 'changeAdmin'])->middleware("admin")->name('admin.change');
+Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
 Route::get('/weather', [Weather::class, 'list'])->middleware('auth')->name('weather');
 
-Route::get('/scooter', [ScooterController::class, 'list'])->name('scooter_list');
-Route::get('/scooter/{id}', [ScooterController::class, 'get'])->name('scooter');
-Route::delete('/scooter/{id}', [ScooterController::class, 'delete'])->name('scooter_delete');
-Route::post('/scooter', [ScooterController::class, 'insert'])->name('scooter_create');
+Route::post('/admin/users/action', [AdminDashboard::class, 'action'])->middleware("auth")->name('admin.users.action');
+Route::post('/admin/users/details', [AdminDashboard::class, 'details'])->middleware("auth")->name('admin.users.details');

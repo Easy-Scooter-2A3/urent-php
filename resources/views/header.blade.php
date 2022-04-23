@@ -49,8 +49,14 @@
                         <a href="{{ route('dashboard') }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                     </li>
                     <li>
+                        @if (Auth::user() && Auth::user()->isAdmin)
+                            <a href="{{ route('admin') }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard Admin</a>
+                         @endif
+                    </li>
+                    <li>
                         <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
                     </li>
+                    
                 </ul>
                 @auth
                 <div class="py-1">

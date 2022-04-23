@@ -4,7 +4,7 @@
 <body class="bg-gray-100">
 
     <div class="xl:w-3/6 lg:w-4/6 md:w-full flex flex-col sm:flex-row justify-between mx-auto px-5 border bg-white my-5 drop-shadow-md">
-        <form method="POST" class="flex flex-col m-5 md:w-2/5 sm:w-full">
+        <form method="POST" class="flex flex-col gap-4 m-5 md:w-2/5 sm:w-full">
             @csrf
 
             {{-- Login field --}}
