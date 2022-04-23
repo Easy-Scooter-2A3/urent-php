@@ -118,7 +118,7 @@ const getDetails = async (users: (string | null)[]) => {
         const data = {
             users: _users,
         }
-        await doAction(data, 'toggleAdmin', 'users');
+        await doAction(data, 'toggleActivationUser', 'users');
     });
 
     searchInput.addEventListener('keyup', (e) => {
