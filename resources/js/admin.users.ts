@@ -106,13 +106,19 @@ const getDetails = async (users: (string | null)[]) => {
     toggleAdminBtn.addEventListener('click', async function (e: MouseEvent) {
         console.log('toggleAdminBtn clicked');
         const _users = selectedRows('[userid]').map((element) => element.getAttribute("userid"));
-        await doAction(_users, 'toggleAdmin', 'users');
+        const data = {
+            users: _users,
+        }
+        await doAction(data, 'toggleAdmin', 'users');
     });
 
     toggleActivationUserBtn.addEventListener('click', async function (e: MouseEvent) {
         console.log('toggleActivationUserBtn clicked');
         const _users = selectedRows('[userid]').map((element) => element.getAttribute("userid"));
-        await doAction(_users, 'toggleActivationUser', 'users');
+        const data = {
+            users: _users,
+        }
+        await doAction(data, 'toggleAdmin', 'users');
     });
 
     searchInput.addEventListener('keyup', (e) => {

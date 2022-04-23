@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const doAction = async (data: (string | null)[], action: string, mode: string) => {
+const doAction = async (data: { [k: string]: any; }, action: string, mode: string) => {
     if (data.length === 0) {
         console.log("Nothing selected");
         return;
@@ -20,6 +20,7 @@ const doAction = async (data: (string | null)[], action: string, mode: string) =
     try {
         const res = await axios.post(`/admin/${mode}/action`, payload);
         if (res.status === 200) {
+            console.log(res.data);
             location.reload();
         }
     } catch (error) {

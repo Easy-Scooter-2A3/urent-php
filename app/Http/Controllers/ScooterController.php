@@ -23,13 +23,28 @@ class ScooterController extends Controller
 
     public function action(Request $request) {
         $action = $request->input('action');
-        $scooters = $request->input('data');
+        $data = $request->input('data');
 
         switch ($action) {
             case 'delete':
-                Scooter::destroy($scooters);
+                Scooter::destroy($data['scooters']);
                 break;
-            
+            case 'create':
+                $validator = Validator::make($data, [
+                    'model' => ['required', 'string', 'max:255'],
+                    'status' => ['required', 'string', 'max:255'],
+                ])->validate();
+
+                $scooter = new Scooter([
+                    'model' => $data['model'],
+                    'status' => $data['status'],
+                ]);
+
+                if (!isNull($request->status)) {
+                    $scooter->status = 'available';
+                }
+                $scooter->save();
+                break;
             default:
                 break;
         }
@@ -43,32 +58,6 @@ class ScooterController extends Controller
 
     public function get(Request $request) { 
         return response()->json(['data' => Scooter::find($request->id)]);
-    }
-
-    public function insert(Request $request) {
-
-        $validator = Validator::make($request->all(), [
-            'model' => ['required', 'string', 'max:255'],
-            'latitude' => ['required', 'numeric'],
-            'longitude' => ['required', 'numeric'],
-            'status' => ['string', 'max:255', 'default:available'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
-
-        $scooter = new Scooter([
-            'model' => $request->model,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-        ]);
-
-        if (!isNull($request->status)) {
-            $scooter->status = 'available';
-        }
-
-        return response()->json(['success' => $scooter->save()]);
     }
 
     public function delete(Request $request) {

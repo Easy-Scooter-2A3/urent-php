@@ -35,18 +35,18 @@ class AdminDashboard extends Controller
 
     public function action(Request $request) {
         $action = $request->input('action');
-        $users = $request->input('data');
+        $data = $request->input('data');
 
         switch ($action) {
             case 'toggleAdmin':
-                foreach ($users as $user) {
+                foreach ($data['users'] as $user) {
                     $user = User::find($user);
                     $user->isAdmin = !$user->isAdmin;
                     $user->save();
                 }
                 break;
             case 'toggleActivationUser':
-                foreach ($users as $user) {
+                foreach ($data['users'] as $user) {
                     $user = User::find($user);
                     $user->isActive = !$user->isActive;
                     $user->save();

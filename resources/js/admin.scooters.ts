@@ -26,6 +26,10 @@ const getDetails = async (scooters: (string | null)[]) => {
 }
 
 (async () => {
+    const confirmCreationBtn = document.getElementById('confirmCreationBtn') as HTMLButtonElement | null;
+    const modalCreationModel = document.getElementById('modal-creation-model') as HTMLInputElement | null;
+    const modalCreationStatus = document.getElementById('modal-creation-status') as HTMLInputElement | null;
+
     const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement | null;
 
     const searchInput = document.getElementById("searchField") as HTMLInputElement | null;
@@ -56,10 +60,31 @@ const getDetails = async (scooters: (string | null)[]) => {
         return;
     }
 
+    if (!confirmCreationBtn) {
+        console.error("Could not find confirmCreation");
+        return;
+    }
+
+    if (!modalCreationModel || !modalCreationStatus) {
+        console.error("Could not find modal-creation-model or modal-creation-status");
+        return;
+    }
+
     deleteBtn.addEventListener('click', async function (e: MouseEvent) {
-        const _scooters = selectedRows('[scooterid]').map((element) => element.getAttribute("scooterid"));
         if (!confirm("Are you sure you want to delete these scooters?")) return;
-        await doAction(_scooters, 'delete', 'scooters');
+        const _scooters = selectedRows('[scooterid]').map((element) => element.getAttribute("scooterid"));
+        const data = {
+            scooters: _scooters,
+        }
+        await doAction(data, 'delete', 'scooters');
+    });
+
+    confirmCreationBtn.addEventListener('click', async function (e: MouseEvent) {
+        const data = {
+            model: modalCreationModel.value,
+            status: modalCreationStatus.value,
+        }
+        await doAction(data, 'create', 'scooters');
     });
 
     checkboxAll.addEventListener('click', function (e: MouseEvent) {
