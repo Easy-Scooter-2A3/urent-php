@@ -7,6 +7,10 @@
         @class(['mdc-button--raised', 'my-auto', 'hidden' => true])
     @endisset
 
+    @isset($modal)
+        data-modal-toggle="{{ $modal }}"
+    @endisset
+
     @empty($hidden)
         @class(['mdc-button', 'mdc-button--raised', 'my-auto', 'mdc-button' => true])
     @endempty
