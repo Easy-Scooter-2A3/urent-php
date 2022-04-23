@@ -35,9 +35,12 @@ Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
 
 Route::get('/admin', [AdminDashboard::class, 'index'])->middleware("admin")->name('admin');
+Route::get('/admin/scooters', [AdminDashboard::class, 'scooter'])->middleware("admin")->name('admin.scooters');
 Route::get('/admin-change', [AdminDashboard::class, 'changeAdmin'])->middleware("admin")->name('admin.change');
 Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
 Route::get('/weather', [Weather::class, 'list'])->middleware('auth')->name('weather');
 
 Route::post('/admin/users/action', [AdminDashboard::class, 'action'])->middleware("auth")->name('admin.users.action');
 Route::post('/admin/users/details', [AdminDashboard::class, 'details'])->middleware("auth")->name('admin.users.details');
+
+Route::post('/admin/scooters/details', [ScooterController::class, 'details'])->middleware("auth")->name('admin.scooters.details');

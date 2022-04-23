@@ -1,5 +1,7 @@
 import axios from "axios";
 import IUser from "./interfaces/user";
+import searchField from "./searchField";
+import selectedRows from "./selectedRows";
 
 const checkAll = (checked: boolean) => {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
@@ -51,35 +53,6 @@ const doAction = async (users: (string | null)[], action: string) => {
     }
 }
 
-const selectedUsers = () => {
-    const list = document.querySelectorAll<HTMLInputElement>("[userid]");
-    return Array.from(list).filter((element) => {
-        return element.checked;
-    });
-}
-
-const searchField = (input: KeyboardEvent) => {
-    let target = input.target as HTMLInputElement;
-    if (!target) {
-        return;
-    }
-
-    const regex = new RegExp(target.value, "i");
-
-    const list = document.querySelectorAll<HTMLElement>("[useridParent]");
-    if (target.value.length === 0) {
-        list.forEach((element) => {
-            element.removeAttribute("hidden");
-        });
-        return;
-    }
-
-    list.forEach((element) => {
-        const name = element.children[2]?.textContent;
-        element.hidden = (name && name.match(regex)) ? false : true;
-    });
-}
-
 (async () => {
     const searchInput = document.getElementById("searchField") as HTMLInputElement | null;
     const checkboxAll = document.getElementById('checkbox-all') as HTMLInputElement | null;
@@ -109,7 +82,7 @@ const searchField = (input: KeyboardEvent) => {
     viewDetailsBtn.addEventListener('click', async function (e: MouseEvent) {
         detailsBody.innerHTML = "";
         console.log('viewDetailsBtn clicked');
-        const _users = selectedUsers().map((element) => element.getAttribute("userid"));
+        const _users = selectedRows('[userid]').map((element) => element.getAttribute('userid'));
         if (_users.length === 0) {
             return;
         }
@@ -160,15 +133,17 @@ const searchField = (input: KeyboardEvent) => {
 
     toggleAdminBtn.addEventListener('click', async function (e: MouseEvent) {
         console.log('toggleAdminBtn clicked');
-        const _users = selectedUsers().map((element) => element.getAttribute("userid"));
+        const _users = selectedRows('[userid]').map((element) => element.getAttribute("userid"));
         await doAction(_users, 'toggleAdmin');
     });
 
     toggleActivationUserBtn.addEventListener('click', async function (e: MouseEvent) {
         console.log('toggleActivationUserBtn clicked');
-        const _users = selectedUsers().map((element) => element.getAttribute("userid"));
+        const _users = selectedRows('[userid]').map((element) => element.getAttribute("userid"));
         await doAction(_users, 'toggleActivationUser');
     });
 
-    searchInput.addEventListener('keyup', searchField);
+    searchInput.addEventListener('keyup', (e) => {
+        searchField(e, 2, '[useridParent]');
+    });
 })();

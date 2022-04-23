@@ -11,6 +11,16 @@ use function PHPUnit\Framework\isNull;
 
 class ScooterController extends Controller
 {
+    public function details(Request $request) {
+        $input = $request->input('scooters');
+        $users = [];
+        if (count($input) > 0) {
+            $users = Scooter::whereIn('id', $input)->get();
+        };
+
+        return response()->json(['success' => true, 'data' => $users]);
+    }
+
     public function list(Request $request) { 
         return response()->json(['data' => Scooter::all()]);
     }

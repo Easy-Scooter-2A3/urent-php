@@ -4,28 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Scooter;
 
 
 class AdminDashboard extends Controller
 {
-    public function index(Request $request) {
-        $collection = [
-            ['dashboard', "Account"],
-            ['dashboard', "History"],
-            ['dashboard', "Fidelity"],
-            ['dashboard', "Invoices"],
-            ['dashboard', "Statistics"],
-            ['dashboard', "Weather"],
-            ['dashboard', "Packages"],
-            ['dashboard', "Travels"],
-        ];
+    private $collection = [
+        ['dashboard', "Account"],
+        ['dashboard', "History"],
+        ['dashboard', "Fidelity"],
+        ['dashboard', "Invoices"],
+        ['dashboard', "Statistics"],
+        ['dashboard', "Weather"],
+        ['dashboard', "Packages"],
+        ['dashboard', "Travels"],
+        ['admin.scooters', "Scooters"],
+    ];
 
+    public function index(Request $request) {
         $cols = ['Status', 'Name', 'Date', 'Dern. Connection', 'ID', 'Admin'];
 
         $users = User::all();
         return view('dashboard', [
             'view' => 'admin.users',
-            'collection' => $collection,
+            'collection' => $this->collection,
             'users' => $users,
             'cols' => $cols
         ]);
@@ -62,7 +64,7 @@ class AdminDashboard extends Controller
         $input = $request->input('users');
         $users = [];
         if (count($input) > 0) {
-            $users = User::whereIn('id', $request->input('users'))->get();
+            $users = User::whereIn('id', $input)->get();
         };
 
         return response()->json(['success' => true, 'data' => $users]);
@@ -79,5 +81,17 @@ class AdminDashboard extends Controller
         $user->admin = $user->admin ? 1 : 0;
         $response = ['status' => 'success', 'message' => 'User admin status changed'];
         $user->save() ? $response : $response = ['status' => 'error', 'message' => 'User admin status not changed'];
+    }
+
+    public function scooter(Request $request) {
+        $cols = ['Status', 'Date', 'Dern. Maintenance', 'Model', 'ID', 'Used by'];
+
+        $scooter = Scooter::all();
+        return view('dashboard', [
+            'view' => 'admin.scooters',
+            'collection' => $this->collection,
+            'scooters' => $scooter,
+            'cols' => $cols
+        ]);
     }
 }
