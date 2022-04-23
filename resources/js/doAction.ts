@@ -18,7 +18,7 @@ const doAction = async (data: { [k: string]: any; }, action: string, mode: strin
     };
 
     try {
-        const res = await axios.post(`/admin/${mode}/action`, payload);
+        const res = await axios.post(`/dashboard/admin/${mode}/action`, payload);
         if (res.status === 200) {
             console.log(res.data);
             location.reload();

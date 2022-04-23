@@ -8,7 +8,6 @@ use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Weather;
 use App\Actions\Authentication\ResetPassword;
-use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\ScooterController;
 
 
@@ -33,15 +32,14 @@ Route::get('/reset-password/{token}', [Authentication::class, 'resetPassword'])-
 Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->middleware('guest')->name('password.resetSubmit');
 
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
-
-Route::get('/admin', [AdminDashboard::class, 'index'])->middleware("admin")->name('admin');
-Route::get('/admin/scooters', [AdminDashboard::class, 'scooter'])->middleware("admin")->name('admin.scooters');
-Route::get('/admin-change', [AdminDashboard::class, 'changeAdmin'])->middleware("admin")->name('admin.change');
 Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
-Route::get('/weather', [Weather::class, 'list'])->middleware('auth')->name('weather');
 
-Route::post('/admin/users/action', [AdminDashboard::class, 'action'])->middleware("auth")->name('admin.users.action');
-Route::post('/admin/users/details', [AdminDashboard::class, 'details'])->middleware("auth")->name('admin.users.details');
+Route::get('/dashboard/admin/accounts', [Dashboard::class, 'accounts'])->middleware("admin")->name('admin.accounts');
+Route::get('/dashboard/admin/scooters', [Dashboard::class, 'scooter'])->middleware("admin")->name('admin.scooters');
+Route::get('/weather', [Weather::class, 'list'])->middleware('admin')->name('weather');
 
-Route::post('/admin/scooters/action', [ScooterController::class, 'action'])->middleware("auth")->name('admin.scooters.action');
-Route::post('/admin/scooters/details', [ScooterController::class, 'details'])->middleware("auth")->name('admin.scooters.details');
+Route::post('/dashboard/admin/users/action', [Dashboard::class, 'action'])->middleware("admin")->name('admin.users.action');
+Route::post('/dashboard/admin/users/details', [Dashboard::class, 'details'])->middleware("admin")->name('admin.users.details');
+
+Route::post('/dashboard/admin/scooters/action', [ScooterController::class, 'action'])->middleware("admin")->name('admin.scooters.action');
+Route::post('/dashboard/admin/scooters/details', [ScooterController::class, 'details'])->middleware("admin")->name('admin.scooters.details');
