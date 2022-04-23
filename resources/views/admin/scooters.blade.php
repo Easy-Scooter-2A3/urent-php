@@ -60,6 +60,12 @@
             'modal' => 'modal-details',
         ])
         @endcomponent
+        @component('components.button', [
+            'text' => 'Delete',
+            'type' => 'button',
+            'id' => 'deleteBtn',
+        ])
+        @endcomponent
     </div>
 </div>
 <!-- Main modal -->

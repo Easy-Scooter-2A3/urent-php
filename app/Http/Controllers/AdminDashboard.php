@@ -35,7 +35,7 @@ class AdminDashboard extends Controller
 
     public function action(Request $request) {
         $action = $request->input('action');
-        $users = $request->input('users');
+        $users = $request->input('data');
 
         switch ($action) {
             case 'toggleAdmin':

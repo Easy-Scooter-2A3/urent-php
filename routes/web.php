@@ -43,4 +43,5 @@ Route::get('/weather', [Weather::class, 'list'])->middleware('auth')->name('weat
 Route::post('/admin/users/action', [AdminDashboard::class, 'action'])->middleware("auth")->name('admin.users.action');
 Route::post('/admin/users/details', [AdminDashboard::class, 'details'])->middleware("auth")->name('admin.users.details');
 
+Route::post('/admin/scooters/action', [ScooterController::class, 'action'])->middleware("auth")->name('admin.scooters.action');
 Route::post('/admin/scooters/details', [ScooterController::class, 'details'])->middleware("auth")->name('admin.scooters.details');

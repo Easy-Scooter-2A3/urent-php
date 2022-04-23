@@ -1,4 +1,5 @@
 import axios from 'axios';
+import doAction from './doAction';
 import IScooter from './interfaces/scooter';
 import searchField from './searchField';
 import selectedRows from './selectedRows';
@@ -25,6 +26,8 @@ const getDetails = async (scooters: (string | null)[]) => {
 }
 
 (async () => {
+    const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement | null;
+
     const searchInput = document.getElementById("searchField") as HTMLInputElement | null;
     const viewDetailsBtn = document.getElementById('viewDetailsBtn') as HTMLButtonElement | null;
 
@@ -47,6 +50,17 @@ const getDetails = async (scooters: (string | null)[]) => {
         console.error("Could not find checkbox-all");
         return;
     }
+
+    if (!deleteBtn) {
+        console.error("Could not find deleteBtn");
+        return;
+    }
+
+    deleteBtn.addEventListener('click', async function (e: MouseEvent) {
+        const _scooters = selectedRows('[scooterid]').map((element) => element.getAttribute("scooterid"));
+        if (!confirm("Are you sure you want to delete these scooters?")) return;
+        await doAction(_scooters, 'delete', 'scooters');
+    });
 
     checkboxAll.addEventListener('click', function (e: MouseEvent) {
         console.log('checkbox-all clicked');

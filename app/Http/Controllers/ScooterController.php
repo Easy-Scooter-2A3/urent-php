@@ -21,6 +21,22 @@ class ScooterController extends Controller
         return response()->json(['success' => true, 'data' => $users]);
     }
 
+    public function action(Request $request) {
+        $action = $request->input('action');
+        $scooters = $request->input('data');
+
+        switch ($action) {
+            case 'delete':
+                Scooter::destroy($scooters);
+                break;
+            
+            default:
+                break;
+        }
+
+        return response()->json(['success' => true, 'action' => $action]);
+    }
+
     public function list(Request $request) { 
         return response()->json(['data' => Scooter::all()]);
     }
