@@ -1,5 +1,8 @@
 import axios from "axios";
 import IUser from "./interfaces/user";
+import searchField from "./searchField";
+import selectedRows from "./selectedRows";
+import doAction from './doAction';
 
 const checkAll = (checked: boolean) => {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
@@ -20,64 +23,6 @@ const getDetails = async (users: (string | null)[]) => {
         }
         return null;
     }
-}
-
-const doAction = async (users: (string | null)[], action: string) => {
-    if (users.length === 0) {
-        console.log("No users selected");
-        return;
-    }
-    const _token = document.querySelector<HTMLInputElement>("[name='_token']")?.value;
-    if (!_token) {
-        console.error("Could not find CSRF token");
-        return;
-    }
-
-    const data = {
-        users,
-        action,
-        _token
-    };
-
-    try {
-        const res = await axios.post('/admin/users/action', data);
-        if (res.status === 200) {
-            location.reload();
-        }
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log(error)
-        }
-    }
-}
-
-const selectedUsers = () => {
-    const list = document.querySelectorAll<HTMLInputElement>("[userid]");
-    return Array.from(list).filter((element) => {
-        return element.checked;
-    });
-}
-
-const searchField = (input: KeyboardEvent) => {
-    let target = input.target as HTMLInputElement;
-    if (!target) {
-        return;
-    }
-
-    const regex = new RegExp(target.value, "i");
-
-    const list = document.querySelectorAll<HTMLElement>("[useridParent]");
-    if (target.value.length === 0) {
-        list.forEach((element) => {
-            element.removeAttribute("hidden");
-        });
-        return;
-    }
-
-    list.forEach((element) => {
-        const name = element.children[2]?.textContent;
-        element.hidden = (name && name.match(regex)) ? false : true;
-    });
 }
 
 (async () => {
@@ -109,7 +54,7 @@ const searchField = (input: KeyboardEvent) => {
     viewDetailsBtn.addEventListener('click', async function (e: MouseEvent) {
         detailsBody.innerHTML = "";
         console.log('viewDetailsBtn clicked');
-        const _users = selectedUsers().map((element) => element.getAttribute("userid"));
+        const _users = selectedRows('[userid]').map((element) => element.getAttribute('userid'));
         if (_users.length === 0) {
             return;
         }
@@ -160,15 +105,23 @@ const searchField = (input: KeyboardEvent) => {
 
     toggleAdminBtn.addEventListener('click', async function (e: MouseEvent) {
         console.log('toggleAdminBtn clicked');
-        const _users = selectedUsers().map((element) => element.getAttribute("userid"));
-        await doAction(_users, 'toggleAdmin');
+        const _users = selectedRows('[userid]').map((element) => element.getAttribute("userid"));
+        const data = {
+            users: _users,
+        }
+        await doAction(data, 'toggleAdmin', 'users');
     });
 
     toggleActivationUserBtn.addEventListener('click', async function (e: MouseEvent) {
         console.log('toggleActivationUserBtn clicked');
-        const _users = selectedUsers().map((element) => element.getAttribute("userid"));
-        await doAction(_users, 'toggleActivationUser');
+        const _users = selectedRows('[userid]').map((element) => element.getAttribute("userid"));
+        const data = {
+            users: _users,
+        }
+        await doAction(data, 'toggleAdmin', 'users');
     });
 
-    searchInput.addEventListener('keyup', searchField);
+    searchInput.addEventListener('keyup', (e) => {
+        searchField(e, 2, '[useridParent]');
+    });
 })();

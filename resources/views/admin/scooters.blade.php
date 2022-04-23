@@ -14,35 +14,31 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($users as $user)
-            <tr useridParent class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            @foreach ($scooters as $scooter)
+            <tr scooteridParent class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <td class="w-4 p-4">
                     <div class="flex items-center">
-                        <input userid="{{ $user->id }}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="{{$user->id}}-label" class="sr-only">checkbox</label>
+                        <input scooterid="{{ $scooter->id }}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="{{$scooter->id}}-label" class="sr-only">checkbox</label>
                     </div>
                 </td>
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                    {{ $user->isActive }}
+                    {{ $scooter->status }}
                 </th>
                 <td class="px-6 py-4">
-                    {{ $user->name }}
+                    {{ $scooter->created_at }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $user->created_at }}
+                    {{ $scooter->date_last_maintenance ?? "Never" }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $user->updated_at }}
+                    {{ $scooter->model }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $user->id }}
+                    {{ $scooter->id }}
                 </td>
                 <td class="px-6 py-4">
-                    @if ($user->isAdmin == 1)
-                        <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</i>
-                    @else
-                        <i class="material-icons mdc-text-fieldfield__icon mdc-text-field__icon--leading text-red-600">clear</i>
-                    @endif
+                    {{ $scooter->used_by ?? "No one" }}
                 </td>
             </tr>
             @endforeach
@@ -65,39 +61,36 @@
         ])
         @endcomponent
         @component('components.button', [
-            'text' => 'Toggle admin',
+            'text' => 'Delete',
             'type' => 'button',
-            'id' => 'toggleAdminBtn',
+            'id' => 'deleteBtn',
         ])
         @endcomponent
         @component('components.button', [
-            'text' => 'Toggle user status',
+            'text' => 'Create',
             'type' => 'button',
-            'id' => 'toggleActivationUserBtn',
+            'id' => 'createBtn',
+            'modal' => 'modal-creation',
         ])
         @endcomponent
     </div>
 </div>
+
 @include('modal-details')
+@include('modal-creation')
 
 <template id="modal-details-body-template">
     <div>
         <h2>ID : </h2>
-        <h2>Name : </h2>
-        <h2>Email : </h2>
-        <h2>Email verified at : </h2>
-        <h2>MFA activated at : </h2>
+        <h2>Status : </h2>
+        <h2>Model : </h2>
         <h2>Date de création : </h2>
         <h2>Date de dernière modification : </h2>
-        <h2>Location : </h2>
-        <h2>Phone : </h2>
-        <h2>Partner code : </h2>
-        <h2>Fidelity points : </h2>
-        <h2>Credit points : </h2>
-        <h2>Is admin : </h2>
-        <h2>Is active : </h2>
+        <h2>Longitude : </h2>
+        <h2>Latitude : </h2>
+        <h2>Used by : </h2>
     </div>
 </template>
 
 @csrf
-<script src="/js/admin.users.js"></script>
+<script src="/js/admin.scooters.js"></script>

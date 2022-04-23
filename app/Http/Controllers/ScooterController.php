@@ -11,6 +11,47 @@ use function PHPUnit\Framework\isNull;
 
 class ScooterController extends Controller
 {
+    public function details(Request $request) {
+        $input = $request->input('scooters');
+        $users = [];
+        if (count($input) > 0) {
+            $users = Scooter::whereIn('id', $input)->get();
+        };
+
+        return response()->json(['success' => true, 'data' => $users]);
+    }
+
+    public function action(Request $request) {
+        $action = $request->input('action');
+        $data = $request->input('data');
+
+        switch ($action) {
+            case 'delete':
+                Scooter::destroy($data['scooters']);
+                break;
+            case 'create':
+                $validator = Validator::make($data, [
+                    'model' => ['required', 'string', 'max:255'],
+                    'status' => ['required', 'string', 'max:255'],
+                ])->validate();
+
+                $scooter = new Scooter([
+                    'model' => $data['model'],
+                    'status' => $data['status'],
+                ]);
+
+                if (!isNull($request->status)) {
+                    $scooter->status = 'available';
+                }
+                $scooter->save();
+                break;
+            default:
+                break;
+        }
+
+        return response()->json(['success' => true, 'action' => $action]);
+    }
+
     public function list(Request $request) { 
         return response()->json(['data' => Scooter::all()]);
     }
@@ -19,38 +60,9 @@ class ScooterController extends Controller
         return response()->json(['data' => Scooter::find($request->id)]);
     }
 
-    public function insert(Request $request) {
-
-        $validator = Validator::make($request->all(), [
-            'model' => ['required', 'string', 'max:255'],
-            'latitude' => ['required', 'numeric'],
-            'longitude' => ['required', 'numeric'],
-            'status' => ['string', 'max:255', 'default:available'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
-
-        $scooter = new Scooter([
-            'model' => $request->model,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-        ]);
-
-        if (!isNull($request->status)) {
-            $scooter->status = 'available';
-        }
-
-        return response()->json(['success' => $scooter->save()]);
-    }
-
     public function delete(Request $request) {
-        $list = $request->list;
-        if (count($list) > 0) {
-            Scooter::destroy($list);
-        }
-        return response()->json(['success' => true]);
+        $status = Scooter::destroy($request->id);
+        return response()->json(['success' => boolval($status)]);
     }
 
     public function setUser(Request $request) {
