@@ -19,8 +19,8 @@
 
         </div>
 
-        {{-- Useless if it's the last day --}}
-        @if ($loop->iteration != count($days))
+        {{-- Useless if it's t he last day --}}
+        {{-- @if ($loop->iteration != count($days)) --}}
         {{-- Barre --}}
         <div class="w-1/6 align-center items-center align-middle content-center flex">
             <div class="w-full bg-gray-300 rounded items-center align-middle align-center flex-1">
@@ -35,7 +35,7 @@
                  
             </div>
         </div>
-        @endif
+        {{-- @endif --}}
 
         @endforeach
     
