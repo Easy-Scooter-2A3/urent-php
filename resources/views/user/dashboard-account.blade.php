@@ -62,7 +62,14 @@
         
     </h2>
     <h2>Fidelity points: {{ Auth::user()->fidelity_points }}</h2>
-    <h2>Credits: {{ Auth::user()->credit_points }}</h2>
+    <h2>Credits: {{ Auth::user()->balance() }}</h2>
+    @component('components.button', [
+        'text' => 'Stripe',
+        'type' => 'button',
+        'href' => route('dashboard.stripe-portal') }},
+    ])
+    @endcomponent
+    
     {{-- @include('dialogs.MFA') --}}
 
     @if (session('status') == 'two-factor-authentication-enabled')

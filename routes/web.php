@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Weather;
 use App\Actions\Authentication\ResetPassword;
 use App\Http\Controllers\ScooterController;
+use Illuminate\Http\Request;
 
 
 /*
@@ -22,7 +23,7 @@ use App\Http\Controllers\ScooterController;
 |
 */
 
-Route::get('/', [Index::class, 'index']);
+Route::get('/', [Index::class, 'index'])->name('index');
 Route::get('/logout', [Index::class, 'logout']);
 
 Route::get('/forgot-password', [Authentication::class, 'forgotPassword'])->middleware('guest')->name('forgot-password');
@@ -32,6 +33,10 @@ Route::get('/reset-password/{token}', [Authentication::class, 'resetPassword'])-
 Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->middleware('guest')->name('password.resetSubmit');
 
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
+Route::get('/dashboard/stripe-portal', function (Request $request) {
+    return $request->user()->redirectToBillingPortal(route('index'));
+})->name('dashboard.stripe-portal');
+
 Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
 
 Route::get('/dashboard/admin/accounts', [Dashboard::class, 'accounts'])->middleware("admin")->name('admin.accounts');
