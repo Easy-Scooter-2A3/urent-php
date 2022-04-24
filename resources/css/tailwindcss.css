@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* create variable */
+:root {
+  --mdc-theme-primary: #b52e2e !important;
+}
+/* :root { */
+    
+/* } */
+/* $urent-red: #b52e2e */
+/* // $--mdc-theme-primary: $urent-red */
+/* // $mdc-theme-primary: #FEDBD0 */

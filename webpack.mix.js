@@ -12,8 +12,17 @@ const mix = require('laravel-mix');
  */
 
 mix.ts('resources/js/app.ts', 'public/js')
+    mix.sass('resources/sass/app.sass', 'public/css',)
     // Compile CSS using PostCSS
-    .postCss('resources/css/app.css', 'public/css', [
-        require('tailwindcss'),
+    .postCss('resources/css/tailwindcss.css', 'public/css', [
+        require('tailwindcss')
     ])
-    .ts('resources/js/test.ts', 'public/js');
+    .ts('resources/js/dashboard.ts', 'public/js')
+    .ts('resources/js/checkRedirect.ts', 'public/js')
+    .ts('resources/js/weather/daybar.ts', 'public/js')
+    .ts('resources/js/weather/canvas.ts', 'public/js')
+    .ts('resources/js/admin.scooters.ts', 'public/js')
+    .ts('resources/js/admin.users.ts', 'public/js')
+    .ts('resources/js/searchField.ts', 'public/js')
+    .ts('resources/js/selectedRows.ts', 'public/js')
+    .ts('resources/js/doAction.ts', 'public/js');
