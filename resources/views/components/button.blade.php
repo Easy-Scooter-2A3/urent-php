@@ -1,3 +1,6 @@
+@isset($href)
+    <a href="{{ $href }}">
+@endisset
 <button
     @isset($id)
     id="{{ $id }}"
@@ -21,3 +24,4 @@
     <span class="mdc-button__touch"></span>
     <span class="mdc-button__label m-3">{{ $text }}</span>
 </button>
+@isset($href) </a> @endisset
