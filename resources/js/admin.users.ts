@@ -13,7 +13,7 @@ const checkAll = (checked: boolean) => {
 
 const getDetails = async (users: (string | null)[]) => {
     try {
-        const res = await axios.post(`/admin/users/details`, {users});
+        const res = await axios.post(`/dashboard/admin/users/details`, {users});
         if (res.status === 200) {
             return res.data.data as IUser[];
         }
