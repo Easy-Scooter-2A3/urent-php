@@ -66,7 +66,7 @@
     @component('components.button', [
         'text' => 'Stripe',
         'type' => 'button',
-        'href' => route('dashboard.stripe-portal') }},
+        'href' => route('dashboard.stripe-portal'),
     ])
     @endcomponent
     
