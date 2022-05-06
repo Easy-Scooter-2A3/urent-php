@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Log;
 class Weather extends Controller
 {
     public function list(Request $request) { 
-        $weathersvc = config('app.weathersvc');
+        // $weathersvc = config('app.weathersvc');
+        $weathersvc = env('WEATHER_SVC', '');
 
         $arr = [];
 
