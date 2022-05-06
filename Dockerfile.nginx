@@ -1,0 +1,17 @@
+FROM nginx:alpine
+
+WORKDIR /var/www
+
+EXPOSE 80
+
+COPY . .
+COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
+
+RUN chown -R nginx:nginx /var/cache/
+
+RUN chmod -R 755 /var/www
+RUN chown -R nginx:nginx /var/www
+
+# USER nginx
+
+CMD [ "nginx", "-g", "daemon off;" ]
