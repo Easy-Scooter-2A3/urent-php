@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class users_packages extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'user',
+        'package',
+    ];
 }

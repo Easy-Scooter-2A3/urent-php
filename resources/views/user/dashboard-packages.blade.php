@@ -99,4 +99,5 @@
         ])
         @endcomponent
     </div>
+    <script src="/js/user.packages.js"></script>
 </div>
