@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Actions\UserActions\GetCurrentPackage;
 
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -24,15 +25,20 @@ class Dashboard extends Controller
     ];
 
     public function index(Request $request) {
+        $currentPackage = GetCurrentPackage::run($request->user());
+        $package = Package::where('id', $currentPackage)->first();
+        // TODO: translate package name
+
         return view('dashboard', [
             'view' => 'user.dashboard-account',
-            'collection' => $this->collection
+            'collection' => $this->collection,
+            'current_package' => $package->type,
         ]);
     }
 
     public function packages(Request $request) {
         $packages = Package::all();
-        $currentPackage = users_packages::where('user', $request->user()->id)->first();
+        $currentPackage = GetCurrentPackage::run($request->user());
 
         return view('dashboard', [
             'view' => 'user.dashboard-packages',

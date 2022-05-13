@@ -39,6 +39,8 @@ Route::get('/dashboard/stripe-portal', function (Request $request) {
 
 Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
 
+Route::get('/dashboard/packages', [Dashboard::class, 'packages'])->middleware('auth')->name('user.packages');
+
 Route::get('/dashboard/admin/accounts', [Dashboard::class, 'accounts'])->middleware("admin")->name('admin.accounts');
 Route::get('/dashboard/admin/scooters', [Dashboard::class, 'scooter'])->middleware("admin")->name('admin.scooters');
 Route::get('/weather', [Weather::class, 'list'])->middleware('admin')->name('weather');
