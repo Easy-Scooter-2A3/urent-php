@@ -10,6 +10,7 @@ use App\Http\Controllers\Weather;
 use App\Actions\Authentication\ResetPassword;
 use App\Http\Controllers\ScooterController;
 use Illuminate\Http\Request;
+use App\Actions\Package\EditUserPackage;
 
 
 /*
@@ -39,9 +40,13 @@ Route::get('/dashboard/stripe-portal', function (Request $request) {
 
 Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
 
+Route::get('/dashboard/packages', [Dashboard::class, 'packages'])->middleware('auth')->name('user.packages');
+
 Route::get('/dashboard/admin/accounts', [Dashboard::class, 'accounts'])->middleware("admin")->name('admin.accounts');
 Route::get('/dashboard/admin/scooters', [Dashboard::class, 'scooter'])->middleware("admin")->name('admin.scooters');
 Route::get('/weather', [Weather::class, 'list'])->middleware('admin')->name('weather');
+
+Route::post('/dashboard/packages/edit', EditUserPackage::class)->middleware('auth')->name('user.packages.edit');
 
 Route::post('/dashboard/admin/users/action', [Dashboard::class, 'action'])->middleware("admin")->name('admin.users.action');
 Route::post('/dashboard/admin/users/details', [Dashboard::class, 'details'])->middleware("admin")->name('admin.users.details');

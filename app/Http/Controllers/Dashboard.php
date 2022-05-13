@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Actions\Package\GetCurrentPackage;
 
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Scooter;
+use App\Models\Package;
+use App\Models\users_packages;
 
 class Dashboard extends Controller
 {
@@ -15,16 +18,32 @@ class Dashboard extends Controller
         ['dashboard', "Invoices"],
         ['dashboard', "Statistics"],
         ['dashboard_weather', "Weather"],
-        ['dashboard', "Packages"],
+        ['user.packages', "Packages"],
         ['dashboard', "Travels"],
         ['admin.accounts', "Accounts (admin)"],
         ['admin.scooters', "Scooters (admin)"],
     ];
 
     public function index(Request $request) {
+        $currentPackage = GetCurrentPackage::run($request->user());
+        $package = Package::where('id', $currentPackage)->first();
+        // TODO: translate package name
+
         return view('dashboard', [
             'view' => 'user.dashboard-account',
-            'collection' => $this->collection
+            'collection' => $this->collection,
+            'current_package' => $package->type,
+        ]);
+    }
+
+    public function packages(Request $request) {
+        $packages = Package::all();
+        $currentPackage = GetCurrentPackage::run($request->user());
+
+        return view('dashboard', [
+            'view' => 'user.dashboard-packages',
+            'collection' => $this->collection,
+            'current_package' => $currentPackage,
         ]);
     }
 
@@ -75,7 +94,7 @@ class Dashboard extends Controller
                     $user->save();
                 }
                 break;
-            
+
             default:
                 break;
         }

@@ -63,6 +63,7 @@
     </h2>
     <h2>Fidelity points: {{ Auth::user()->fidelity_points }}</h2>
     <h2>Credits: {{ Auth::user()->balance() }}</h2>
+    <h2>Package: {{ $current_package }}</h2>
     @component('components.button', [
         'text' => 'Stripe',
         'type' => 'button',
