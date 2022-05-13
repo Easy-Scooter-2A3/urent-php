@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Actions\UserActions\GetCurrentPackage;
+use App\Actions\Package\GetCurrentPackage;
 
 use Illuminate\Http\Request;
 use App\Models\User;

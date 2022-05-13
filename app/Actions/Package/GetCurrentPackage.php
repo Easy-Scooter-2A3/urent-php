@@ -1,5 +1,5 @@
 <?php
-namespace App\Actions\UserActions;
+namespace App\Actions\Package;
 
 use Lorisleiva\Actions\Concerns\AsAction;
 use App\Models\User;
