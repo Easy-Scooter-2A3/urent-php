@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Scooter;
 use App\Models\Package;
 use App\Models\users_packages;
+use App\Models\Product;
 
 class Dashboard extends Controller
 {
@@ -22,6 +23,7 @@ class Dashboard extends Controller
         ['dashboard', "Travels"],
         ['admin.accounts', "Accounts (admin)"],
         ['admin.scooters', "Scooters (admin)"],
+        ['admin.products', "Products (admin)"],
     ];
 
     public function index(Request $request) {
@@ -44,6 +46,18 @@ class Dashboard extends Controller
             'view' => 'user.dashboard-packages',
             'collection' => $this->collection,
             'current_package' => $currentPackage,
+        ]);
+    }
+
+    public function products(Request $request) {
+        $cols = ['Name', 'Price', 'Nb. Achats', 'Desc', 'Stock', 'Achats'];
+        $product = Product::all();
+
+        return view('dashboard', [
+            'view' => 'admin.products',
+            'collection' => $this->collection,
+            'products' => $product,
+            'cols' => $cols,
         ]);
     }
 

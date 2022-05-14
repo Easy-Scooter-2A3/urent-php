@@ -11,6 +11,9 @@ use App\Actions\Authentication\ResetPassword;
 use App\Http\Controllers\ScooterController;
 use Illuminate\Http\Request;
 use App\Actions\Package\EditUserPackage;
+use App\Actions\Product\CreateProduct;
+use App\Actions\Product\DeleteProduct;
+use App\Actions\Product\GetProductsDetails;
 
 
 /*
@@ -44,6 +47,8 @@ Route::get('/dashboard/packages', [Dashboard::class, 'packages'])->middleware('a
 
 Route::get('/dashboard/admin/accounts', [Dashboard::class, 'accounts'])->middleware("admin")->name('admin.accounts');
 Route::get('/dashboard/admin/scooters', [Dashboard::class, 'scooter'])->middleware("admin")->name('admin.scooters');
+Route::get('/dashboard/admin/products', [Dashboard::class, 'products'])->middleware("admin")->name('admin.products');
+
 Route::get('/weather', [Weather::class, 'list'])->middleware('admin')->name('weather');
 
 Route::post('/dashboard/packages/edit', EditUserPackage::class)->middleware('auth')->name('user.packages.edit');
@@ -53,3 +58,7 @@ Route::post('/dashboard/admin/users/details', [Dashboard::class, 'details'])->mi
 
 Route::post('/dashboard/admin/scooters/action', [ScooterController::class, 'action'])->middleware("admin")->name('admin.scooters.action');
 Route::post('/dashboard/admin/scooters/details', [ScooterController::class, 'details'])->middleware("admin")->name('admin.scooters.details');
+
+Route::post('/dashboard/admin/products', CreateProduct::class)->middleware("admin")->name('admin.products.create');
+Route::post('/dashboard/admin/products/delete', DeleteProduct::class)->middleware("admin")->name('admin.products.delete');
+Route::post('/dashboard/admin/products/details', GetProductsDetails::class)->middleware("admin")->name('admin.products.details');
