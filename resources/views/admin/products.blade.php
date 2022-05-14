@@ -29,7 +29,7 @@
                     {{ $product->price }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ 50 }}
+                    {{ -1 }}
                 </td>
                 <td class="px-6 py-4">
                     {{ $product->description }}
@@ -38,7 +38,10 @@
                     {{ $product->stock }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ 60 }}
+                    {{ -1 }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ $product->available ? 'Yes' : 'No' }}
                 </td>
             </tr>
             @endforeach
@@ -87,6 +90,7 @@
         <h2>Description : </h2>
         <h2>Stock : </h2>
         <h2>Nb. Achats : </h2>
+        <h2>Available : </h2>
     </div>
 </template>
 

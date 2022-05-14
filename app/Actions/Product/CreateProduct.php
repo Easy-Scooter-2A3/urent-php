@@ -16,16 +16,18 @@ class CreateProduct
             'price' => ['required'],
             'description' => ['required'],
             'stock' => ['required'],
+            'available' => ['required'],
         ];
     }
 
-    public function handle(string $name, string $price, string $description, string $stock)
+    public function handle(string $name, string $price, string $description, string $stock, bool $available)
     {
         Product::create([
             'name' => $name,
             'price' => $price,
             'description' => $description,
             'stock' => $stock,
+            'available' => $available,
         ]);
     }
 
@@ -35,7 +37,8 @@ class CreateProduct
             $request->post('name'),
             $request->post('price'),
             $request->post('description'),
-            $request->post('stock')
+            $request->post('stock'),
+            $request->post('available'),
         );
 
         return response()->json(['success' => true]);

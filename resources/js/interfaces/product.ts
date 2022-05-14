@@ -5,6 +5,7 @@ interface IProduct {
         description: string;
         stock: string;
         nbAchat: string;
+        available: number;
 }
 
 export default IProduct;

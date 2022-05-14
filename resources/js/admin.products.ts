@@ -3,6 +3,7 @@ import Iproduct from './interfaces/product';
 import searchField from './searchField';
 import selectedRows from './selectedRows';
 import { doPost, doDelete } from './utils';
+import { MDCSwitch } from '@material/switch';
 
 const checkAll = (checked: boolean) => {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
@@ -31,6 +32,7 @@ const getDetails = async (products: (string | null)[]) => {
     const modalCreationPrice = document.getElementById('modal-creation-price') as HTMLInputElement | null;
     const modalCreationDesc = document.getElementById('modal-creation-description') as HTMLInputElement | null;
     const modalCreationStock = document.getElementById('modal-creation-stock') as HTMLInputElement | null;
+    const _modalCreationAvailable = document.getElementById('modal-creation-available') as HTMLButtonElement | null;
 
     const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement | null;
 
@@ -67,10 +69,11 @@ const getDetails = async (products: (string | null)[]) => {
         return;
     }
 
-    if ([modalCreationName, modalCreationPrice, modalCreationDesc, modalCreationStock].some((element) => !element)) {
-        console.error("Could not find modal-creation-name, modal-creation-price, modal-creation-description, modal-creation-stock");
+    if ([modalCreationName, modalCreationPrice, modalCreationDesc, modalCreationStock, _modalCreationAvailable].some((element) => !element)) {
+        console.error("Could not find modal-creation-name, modal-creation-price, modal-creation-description, modal-creation-stock, modal-creation-available");
         return;
     }
+    const modalCreationAvailable = new MDCSwitch(_modalCreationAvailable!);
 
     deleteBtn.addEventListener('click', async function (e: MouseEvent) {
         if (!confirm("Are you sure you want to delete these products?")) return;
@@ -90,6 +93,7 @@ const getDetails = async (products: (string | null)[]) => {
             price: modalCreationPrice!.value,
             description: modalCreationDesc!.value,
             stock: modalCreationStock!.value,
+            available: modalCreationAvailable.selected,
         }
         
         if (await doPost('/dashboard/admin/products', data)) {
@@ -126,9 +130,10 @@ const getDetails = async (products: (string | null)[]) => {
             fields[0].textContent += `${product.id}`;
             fields[1].textContent += product.name;
             fields[2].textContent += `${product.price}`;
-            fields[2].textContent += product.description;
+            fields[3].textContent += product.description;
             fields[4].textContent += `${product.stock}`;
             fields[5].textContent += `${product.nbAchat}`;
+            fields[6].textContent += `${product.available ? 'Yes' : 'No'}`;
 
             detailsBody.appendChild(clone);
             if (n != products.length) {

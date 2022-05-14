@@ -50,14 +50,18 @@ class Dashboard extends Controller
     }
 
     public function products(Request $request) {
-        $cols = ['Name', 'Price', 'Nb. Achats', 'Desc', 'Stock', 'Achats'];
+        $cols = ['Name', 'Price', 'Nb. Achats', 'Desc', 'Stock', 'Achats', 'Available'];
         $product = Product::all();
+
+        // TODO: pagination -> action
+        $attributes = ['Headgear', 'Tools', 'Food', 'Medicine', 'Clothes', 'Glasses', 'Bags', 'Shoes', 'Accessories'];
 
         return view('dashboard', [
             'view' => 'admin.products',
             'collection' => $this->collection,
             'products' => $product,
             'cols' => $cols,
+            'attributes' => $attributes,
         ]);
     }
 
