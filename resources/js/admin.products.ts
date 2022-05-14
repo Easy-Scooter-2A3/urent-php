@@ -138,6 +138,6 @@ const getDetails = async (products: (string | null)[]) => {
     });
 
     searchInput.addEventListener('keyup', (e) => {
-        searchField(e, 5, '[productidParent]');
+        searchField(e, 1, '[productidParent]');
     });
 })();
