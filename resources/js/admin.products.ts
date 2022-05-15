@@ -72,18 +72,20 @@ const fillFields = async (productId: string) => {
     modalFields.available.value = product.available ? 'Yes' : 'No';
 
     attributesGlobal.forEach(attributes => {
-        for (const attribute of attributes[6]) {
-            const query = `input[productattribute="${attribute}"]`;
-            const elems = document.querySelectorAll<HTMLInputElement>(query);
-            if (!elems) {
-                console.error('Could not find element');
-                continue;
-            }
-            elems.forEach((element) => {
-                if (element.getAttribute('edit') != null) {
-                    element.checked = true;
+        for (const key in attributes) {
+            for (const attribute of attributes[key]) {
+                const query = `input[productattribute="${attribute}"]`;
+                const elems = document.querySelectorAll<HTMLInputElement>(query);
+                if (!elems) {
+                    console.error('Could not find element');
+                    continue;
                 }
-            });
+                elems.forEach((element) => {
+                    if (element.getAttribute('edit') != null) {
+                        element.checked = true;
+                    }
+                });
+            }
         }
     });
 }
