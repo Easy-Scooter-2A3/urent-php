@@ -77,7 +77,7 @@
 </div>
 
 @include('modal-details')
-@include('modal-creation-scooter')
+@include('modal-creation-scooters')
 
 <template id="modal-details-body-template">
     <div>
