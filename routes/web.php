@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Weather;
+use App\Http\Controllers\Catalogue;
 use App\Actions\Authentication\ResetPassword;
 use App\Http\Controllers\ScooterController;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ use App\Actions\Product\CreateProduct;
 use App\Actions\Product\EditProduct;
 use App\Actions\Product\DeleteProduct;
 use App\Actions\Product\GetProductsDetails;
+use App\Actions\Product\AddToCart;
 
 
 /*
@@ -36,6 +38,10 @@ Route::post('/forgot-password', [Authentication::class, 'forgotPasswordSubmit'])
 
 Route::get('/reset-password/{token}', [Authentication::class, 'resetPassword'])->middleware('guest')->name('password.reset');
 Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->middleware('guest')->name('password.resetSubmit');
+
+Route::get('/catalogue', [Catalogue::class, 'index'])->middleware('auth')->name('catalogue');
+
+Route::post('/cart/add', AddToCart::class)->middleware('auth')->name('cart.add');
 
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
 Route::get('/dashboard/stripe-portal', function (Request $request) {
