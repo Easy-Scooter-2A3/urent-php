@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Scooter;
 use App\Models\Package;
+use App\Models\Attribute;
 use App\Models\users_packages;
 use App\Models\Product;
 
@@ -54,7 +55,7 @@ class Dashboard extends Controller
         $product = Product::all();
 
         // TODO: pagination -> action
-        $attributes = ['Headgear', 'Tools', 'Food', 'Medicine', 'Clothes', 'Glasses', 'Bags', 'Shoes', 'Accessories'];
+        $attributes = Attribute::all();
 
         return view('dashboard', [
             'view' => 'admin.products',

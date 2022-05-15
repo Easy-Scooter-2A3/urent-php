@@ -5,16 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Attribute extends Model
 {
     use HasFactory;
-    public $timestamps = false; // TODO: remove this line
+    public $timestamps = false;
 
     protected $fillable = [
         'name',
-        'price',
-        'description',
-        'stock',
-        'available',
     ];
 }

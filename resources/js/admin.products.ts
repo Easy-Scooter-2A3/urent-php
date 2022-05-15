@@ -160,12 +160,15 @@ const fillFields = async (productId: string) => {
     });
 
     confirmCreationBtn.addEventListener('click', async function (e: MouseEvent) {
+        const attributes = selectedRows('[productattribute]').map((element) => element.getAttribute("productattribute"));
+
         const data = {
             name: modalCreationName!.value,
             price: modalCreationPrice!.value,
             description: modalCreationDesc!.value,
             stock: modalCreationStock!.value,
             available: modalCreationAvailable.selected,
+            attributes,
         }
         
         if (await doPost('/dashboard/admin/products', data)) {
