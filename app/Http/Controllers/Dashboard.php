@@ -52,7 +52,7 @@ class Dashboard extends Controller
 
     public function products(Request $request) {
         $cols = ['Name', 'Price', 'Nb. Achats', 'Desc', 'Stock', 'Achats', 'Available'];
-        $product = Product::all();
+        $products = Product::all();
 
         // TODO: pagination -> action
         $attributes = Attribute::all();
@@ -60,7 +60,7 @@ class Dashboard extends Controller
         return view('dashboard', [
             'view' => 'admin.products',
             'collection' => $this->collection,
-            'products' => $product,
+            'products' => $products,
             'cols' => $cols,
             'attributes' => $attributes,
         ]);
