@@ -17,7 +17,7 @@ const getDetails = async (products: (string | null)[]) => {
     try {
         const res = await axios.post(`/dashboard/admin/products/details`, {products});
         if (res.status === 200) {
-            return res.data.data as Iproduct[];
+            return [res.data.data, res.data.attributes];
         }
     } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -51,12 +51,15 @@ const fillFields = async (productId: string) => {
         return;
     }
 
-    const data = await getDetails([productId]);
-    if (!data) {
+    const data = await getDetails([productId]) as [Iproduct[], {[k: number]: number[]}[]];
+    const products = data[0];
+    const attributesGlobal = data[1];
+    if (!products || !attributesGlobal) {
         console.error('Could not get details');
         return;
     };
-    const product = data.shift();
+    console.log(data);
+    const product = products[0];
     if (!product) {
         console.error('Could not get product');
         return;
@@ -67,6 +70,22 @@ const fillFields = async (productId: string) => {
     modalFields.description.value = product.description;
     modalFields.stock.value = product.stock.toString();
     modalFields.available.value = product.available ? 'Yes' : 'No';
+
+    attributesGlobal.forEach(attributes => {
+        for (const attribute of attributes[6]) {
+            const query = `input[productattribute="${attribute}"]`;
+            const elems = document.querySelectorAll<HTMLInputElement>(query);
+            if (!elems) {
+                console.error('Could not find element');
+                continue;
+            }
+            elems.forEach((element) => {
+                if (element.getAttribute('edit') != null) {
+                    element.checked = true;
+                }
+            });
+        }
+    });
 }
 
 (async () => {
@@ -189,15 +208,13 @@ const fillFields = async (productId: string) => {
             return;
         }
 
-        const products = await getDetails(_products);
-        if (!products) {
+        const products = await getDetails(_products) as [Iproduct[], {[k: number]: number[]}[]];
+        if (!products[0] || !products[1]) {
             console.error("Could not get details");
             return;
         }
-        console.log(products);
-
         let n = 0;
-        for (const product of products) {
+        for (const product of products[0]) {
             n++;
 
             const clone = document.importNode(detailsBodyTemplate.content, true);

@@ -99,7 +99,7 @@
                                       
                                 <td class="mdc-data-table__cell mdc-data-table__cell--checkbox">
                                     <div class="mdc-checkbox mdc-data-table__row-checkbox">
-                                      <input productattribute={{ $attribute->id }} type="checkbox" class="mdc-checkbox__native-control" aria-labelledby="u0"/>
+                                      <input creation productattribute={{ $attribute->id }} type="checkbox" class="mdc-checkbox__native-control" aria-labelledby="u0"/>
                                       <div class="mdc-checkbox__background">
                                         <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
                                           <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
