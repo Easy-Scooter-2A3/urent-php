@@ -76,11 +76,19 @@
             'modal' => 'modal-creation',
         ])
         @endcomponent
+        @component('components.button', [
+            'text' => 'Edit',
+            'type' => 'button',
+            'id' => 'editBtn',
+            'modal' => 'modal-edit',
+        ])
+        @endcomponent
     </div>
 </div>
 
 @include('modal-details')
 @include('modal-creation-product')
+@include('modal-edit-product')
 
 <template id="modal-details-body-template">
     <div>

@@ -4,6 +4,7 @@ import searchField from './searchField';
 import selectedRows from './selectedRows';
 import { doPost, doDelete } from './utils';
 import { MDCSwitch } from '@material/switch';
+import { MDCTextField } from '@material/textfield';
 
 const checkAll = (checked: boolean) => {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
@@ -26,6 +27,48 @@ const getDetails = async (products: (string | null)[]) => {
     }
 }
 
+const toMDCTextField = (element: HTMLElement | null) => {
+    if (!element || !element.parentElement) {
+        return null;
+    }
+
+    return new MDCTextField(element.parentElement);
+}
+
+const fillFields = async (productId: string) => {
+    // define them as MDCTextField
+    const modalFields = {
+        name: toMDCTextField(document.getElementById('modal-edit-name')) as MDCTextField,
+        price: toMDCTextField(document.getElementById('modal-edit-price')) as MDCTextField,
+        description: toMDCTextField(document.getElementById('modal-edit-description')) as MDCTextField,
+        stock: toMDCTextField(document.getElementById('modal-edit-stock')) as MDCTextField,
+        available: document.getElementById('modal-edit-available') as HTMLInputElement,
+    }
+
+    const someValueNull = Object.values(modalFields).some((element) => !element);
+    if (someValueNull) {
+        console.error('Some values are null');
+        return;
+    }
+
+    const data = await getDetails([productId]);
+    if (!data) {
+        console.error('Could not get details');
+        return;
+    };
+    const product = data.shift();
+    if (!product) {
+        console.error('Could not get product');
+        return;
+    };
+
+    modalFields.name.value = product.name;
+    modalFields.price.value = product.price.toString();	
+    modalFields.description.value = product.description;
+    modalFields.stock.value = product.stock.toString();
+    modalFields.available.value = product.available ? 'Yes' : 'No';
+}
+
 (async () => {
     const confirmCreationBtn = document.getElementById('confirmCreationBtn') as HTMLButtonElement | null;
     const modalCreationName = document.getElementById('modal-creation-name') as HTMLInputElement | null;
@@ -35,6 +78,7 @@ const getDetails = async (products: (string | null)[]) => {
     const _modalCreationAvailable = document.getElementById('modal-creation-available') as HTMLButtonElement | null;
 
     const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement | null;
+    const editBtn = document.getElementById('editBtn') as HTMLButtonElement | null;
 
     const searchInput = document.getElementById("searchField") as HTMLInputElement | null;
     const viewDetailsBtn = document.getElementById('viewDetailsBtn') as HTMLButtonElement | null;
@@ -64,6 +108,11 @@ const getDetails = async (products: (string | null)[]) => {
         return;
     }
 
+    if (!editBtn) {
+        console.error("Could not find deleteBtn");
+        return;
+    }
+
     if (!confirmCreationBtn) {
         console.error("Could not find confirmCreation");
         return;
@@ -78,6 +127,12 @@ const getDetails = async (products: (string | null)[]) => {
     deleteBtn.addEventListener('click', async function (e: MouseEvent) {
         if (!confirm("Are you sure you want to delete these products?")) return;
         const products = selectedRows('[productid]').map((element) => element.getAttribute("productid"));
+
+        if (products.length === 0) {
+            e.preventDefault();
+            return;
+        }
+
         const data = {
             products,
         }
@@ -85,6 +140,23 @@ const getDetails = async (products: (string | null)[]) => {
         if (await doPost('/dashboard/admin/products/delete', data)) {
             window.location.reload();
         }
+    });
+
+    editBtn.addEventListener('click', async function (e: MouseEvent) {
+        const products = selectedRows("[productid]").map((element) => element.getAttribute("productid"));
+        if (products.length === 0) {
+            console.log("No products selected");
+            e.preventDefault(); // TODO: make it work
+            return;
+        }
+        const id = products.shift();
+        if (!id) {
+            console.log("No products selected");
+            e.preventDefault(); // TODO: make it wo
+            return;
+        }
+
+        fillFields(id);
     });
 
     confirmCreationBtn.addEventListener('click', async function (e: MouseEvent) {
