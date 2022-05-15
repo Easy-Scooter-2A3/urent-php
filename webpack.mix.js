@@ -28,4 +28,5 @@ mix.ts('resources/js/app.ts', 'public/js')
     .ts('resources/js/searchField.ts', 'public/js')
     .ts('resources/js/selectedRows.ts', 'public/js')
     .ts('resources/js/doAction.ts', 'public/js')
+    .ts('resources/js/catalogue.ts', 'public/js')
     .ts('resources/js/user.packages.ts', 'public/js');

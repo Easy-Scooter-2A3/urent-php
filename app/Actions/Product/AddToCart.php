@@ -5,6 +5,7 @@ namespace App\Actions\Product;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Cart;
 
 class AddToCart
 {
@@ -13,20 +14,30 @@ class AddToCart
     public function handle(int $productId, int $quantity)
     {
         $product = Product::find($productId);
-        //check stock
-        $product->stock = $product->stock - $quantity;
-        $product->save();
+        if ($product->stock < $quantity) {
+            return response()->json(['success' => false, 'message' => 'Not enough stock']);
+        }
 
-        //add to cart
+        $cart = Cart::where('user_id', auth()->user()->id)->where('product_id', $productId)->first();
+        if ($cart) {
+            $cart->quantity += $quantity;
+            $cart->save();
+        } else {
+            Cart::create([
+                'user_id' => auth()->user()->id,
+                'product_id' => $productId,
+                'quantity' => $quantity,
+            ]);
+        }
+
+        return response()->json(['success' => true]);
     }
 
     public function asController(Request $request)
     {
-        $this->handle(
+        return $this->handle(
             $request->post('productId'),
             $request->post('quantity')
         );
-
-        return response()->json(['success' => true]);
     }
 }
