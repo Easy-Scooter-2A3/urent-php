@@ -2,7 +2,7 @@ import axios from 'axios';
 import Iproduct from './interfaces/product';
 import searchField from './searchField';
 import selectedRows from './selectedRows';
-import { doPost, doDelete } from './utils';
+import { doPost, doDelete, doPut } from './utils';
 import { MDCSwitch } from '@material/switch';
 import { MDCTextField } from '@material/textfield';
 
@@ -58,7 +58,6 @@ const fillFields = async (productId: string) => {
         console.error('Could not get details');
         return;
     };
-    console.log(data);
     const product = products[0];
     if (!product) {
         console.error('Could not get product');
@@ -74,7 +73,7 @@ const fillFields = async (productId: string) => {
     attributesGlobal.forEach(attributes => {
         for (const key in attributes) {
             for (const attribute of attributes[key]) {
-                const query = `input[productattribute="${attribute}"]`;
+                const query = `input[productattribute-edit="${attribute}"]`;
                 const elems = document.querySelectorAll<HTMLInputElement>(query);
                 if (!elems) {
                     console.error('Could not find element');
@@ -91,6 +90,7 @@ const fillFields = async (productId: string) => {
 }
 
 (async () => {
+    const confirmEditBtn = document.getElementById('confirmEditBtn') as HTMLButtonElement | null;
     const confirmCreationBtn = document.getElementById('confirmCreationBtn') as HTMLButtonElement | null;
     const modalCreationName = document.getElementById('modal-creation-name') as HTMLInputElement | null;
     const modalCreationPrice = document.getElementById('modal-creation-price') as HTMLInputElement | null;
@@ -108,6 +108,14 @@ const fillFields = async (productId: string) => {
     const detailsBodyTemplate = document.getElementById('modal-details-body-template') as HTMLTemplateElement | null;
 
     const checkboxAll = document.getElementById('checkbox-all') as HTMLInputElement | null;
+
+    const modalFieldsEdit = {
+        name: toMDCTextField(document.getElementById('modal-edit-name')) as MDCTextField,
+        price: toMDCTextField(document.getElementById('modal-edit-price')) as MDCTextField,
+        description: toMDCTextField(document.getElementById('modal-edit-description')) as MDCTextField,
+        stock: toMDCTextField(document.getElementById('modal-edit-stock')) as MDCTextField,
+        available: new MDCSwitch(document.getElementById('modal-edit-available') as HTMLButtonElement) as MDCSwitch,
+    }
 
     if (!detailsBody || !detailsBodyTemplate) {
         console.error("Could not find modal-details-body or modal-details-body-template");
@@ -136,6 +144,17 @@ const fillFields = async (productId: string) => {
 
     if (!confirmCreationBtn) {
         console.error("Could not find confirmCreation");
+        return;
+    }
+
+    if (!confirmEditBtn) {
+        console.error("Could not find confirmEdit");
+        return;
+    }
+
+    const someValueNull = Object.values(modalFieldsEdit).some((element) => !element);
+    if (someValueNull) {
+        console.error('Some values are null');
         return;
     }
 
@@ -177,6 +196,7 @@ const fillFields = async (productId: string) => {
             return;
         }
 
+        editBtn.setAttribute('productid', id);
         fillFields(id);
     });
 
@@ -189,10 +209,33 @@ const fillFields = async (productId: string) => {
             description: modalCreationDesc!.value,
             stock: modalCreationStock!.value,
             available: modalCreationAvailable.selected,
-            attributes,
+            attributes: [...attributes],
         }
         
         if (await doPost('/dashboard/admin/products', data)) {
+            window.location.reload();
+        }
+    });
+
+    confirmEditBtn.addEventListener('click', async function (e: MouseEvent) {
+        const id = editBtn.getAttribute('productid');
+        if (!id) {
+            console.error("Could not find product id");
+            return;
+        }
+
+        const attributes = selectedRows('[productattribute-edit]').map((element) => element.getAttribute("productattribute-edit"));
+
+        const data = {
+            name: modalFieldsEdit.name!.value,
+            price: modalFieldsEdit.price!.value,
+            description: modalFieldsEdit.description!.value,
+            stock: modalFieldsEdit.stock!.value,
+            available: modalFieldsEdit.available!.selected,
+            attributes: [...attributes],
+        }
+
+        if (await doPut(`/dashboard/admin/products/${id}`, data)) {
             window.location.reload();
         }
     });

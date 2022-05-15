@@ -12,6 +12,7 @@ use App\Http\Controllers\ScooterController;
 use Illuminate\Http\Request;
 use App\Actions\Package\EditUserPackage;
 use App\Actions\Product\CreateProduct;
+use App\Actions\Product\EditProduct;
 use App\Actions\Product\DeleteProduct;
 use App\Actions\Product\GetProductsDetails;
 
@@ -60,5 +61,6 @@ Route::post('/dashboard/admin/scooters/action', [ScooterController::class, 'acti
 Route::post('/dashboard/admin/scooters/details', [ScooterController::class, 'details'])->middleware("admin")->name('admin.scooters.details');
 
 Route::post('/dashboard/admin/products', CreateProduct::class)->middleware("admin")->name('admin.products.create');
+Route::put('/dashboard/admin/products/{id}', EditProduct::class)->middleware("admin")->name('admin.products.edit');
 Route::post('/dashboard/admin/products/delete', DeleteProduct::class)->middleware("admin")->name('admin.products.delete');
 Route::post('/dashboard/admin/products/details', GetProductsDetails::class)->middleware("admin")->name('admin.products.details');
