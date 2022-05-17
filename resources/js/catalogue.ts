@@ -10,7 +10,7 @@ const addToCart = async (productId: number, quantity: number) => {
 }
 
 const addEVH = () => {
-    const catalogue = document.getElementById("catalogue");
+    const catalogue = document.getElementById('catalogue');
     if (!catalogue) {
         console.log("No catalogue found");
         return;
@@ -104,3 +104,5 @@ const filters = () => {
     filters();
 
 })();
+
+export { filters } ;

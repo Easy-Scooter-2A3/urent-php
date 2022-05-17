@@ -5,10 +5,10 @@
     
     <div class="m-2 w-11/12 mx-auto">
         @component('components.button', [
-            'text' => 'Voir le panier',
+            'text' => 'Catalogue',
             'type' => 'button',
-            'id' => 'cartCheckBtn',
-            'href' => route('cart'),
+            'id' => 'catalogueBtn',
+            'href' => route('catalogue'),
         ])
         @endcomponent
     </div>
@@ -57,7 +57,7 @@
                         <th class="mdc-data-table__header-cell border w-2/6" role="columnheader" scope="col"></th>
                       </tr>
                     </thead>
-                    <tbody id="catalogue" class="mdc-data-table__content">
+                    <tbody id="panier" class="mdc-data-table__content">
                       @foreach ($products as $product)
                       <tr productattributeParent rowid="{{ $product->id }}" class="mdc-data-table__row">
                         <td class="mdc-data-table__cell">
@@ -81,9 +81,16 @@
                                           ])
                                       @endcomponent
                                       @component('components.button', [
-                                        'text' => 'Add to cart',
+                                        'text' => 'Set quantity',
                                         'type' => 'button',
-                                        'id' => 'addToCartBtn-'.$product->id,
+                                        'id' => 'setQuantityBtn-'.$product->id,
+                                        'customId' => $product->id,
+                                      ])
+                                      @endcomponent
+                                      @component('components.button', [
+                                        'text' => 'Remove',
+                                        'type' => 'button',
+                                        'id' => 'removeBtn-'.$product->id,
                                         'customId' => $product->id,
                                       ])
                                       @endcomponent
@@ -189,5 +196,5 @@
     </div>
 
 </body>
-<script src="/js/catalogue.js"></script>
+<script src="/js/panier.js"></script>
 @include('footer')

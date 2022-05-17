@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Weather;
+use App\Http\Controllers\Panier;
 use App\Http\Controllers\Catalogue;
 use App\Actions\Authentication\ResetPassword;
 use App\Http\Controllers\ScooterController;
@@ -17,6 +18,7 @@ use App\Actions\Product\EditProduct;
 use App\Actions\Product\DeleteProduct;
 use App\Actions\Product\GetProductsDetails;
 use App\Actions\Product\AddToCart;
+use App\Actions\Product\SetCart;
 
 
 /*
@@ -41,7 +43,9 @@ Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->
 
 Route::get('/catalogue', [Catalogue::class, 'index'])->middleware('auth')->name('catalogue');
 
+Route::get('/cart', [Panier::class, 'index'])->middleware('auth')->name('cart');
 Route::post('/cart/add', AddToCart::class)->middleware('auth')->name('cart.add');
+Route::post('/cart/set', SetCart::class)->middleware('auth')->name('cart.set');
 
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
 Route::get('/dashboard/stripe-portal', function (Request $request) {
