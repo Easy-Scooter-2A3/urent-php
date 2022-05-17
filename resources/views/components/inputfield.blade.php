@@ -3,6 +3,12 @@
     <span class="mdc-floating-label">{{ $text }}</span>
     <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading">{{ $icon }}</i>
     <input
+    @isset($min)
+        min="{{ $min }}"
+    @endisset
+    @isset($max)
+        max="{{ $max }}"
+    @endisset
     @isset($id)
         id="{{ $id }}"
     @endisset

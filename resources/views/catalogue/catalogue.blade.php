@@ -54,7 +54,7 @@
                     <thead>
                       <tr class="mdc-data-table__header-row">
                         <th class="mdc-data-table__header-cell" role="columnheader" scope="col"></th>
-                        <th class="mdc-data-table__header-cell border w-2/6" role="columnheader" scope="col"></th>
+                        <th class="mdc-data-table__header-cell w-2/6" role="columnheader" scope="col"></th>
                       </tr>
                     </thead>
                     <tbody id="catalogue" class="mdc-data-table__content">
@@ -78,7 +78,8 @@
                                           'id' => 'productId-'.$product->id.'-quantity',
                                           'name' => 'quantity',
                                           'type' => 'number',
-                                          ])
+                                          'min' => '1',
+                                      ])
                                       @endcomponent
                                       @component('components.button', [
                                         'text' => 'Add to cart',
