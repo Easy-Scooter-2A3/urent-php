@@ -19,6 +19,7 @@ use App\Actions\Product\DeleteProduct;
 use App\Actions\Product\GetProductsDetails;
 use App\Actions\Product\AddToCart;
 use App\Actions\Product\SetCart;
+use App\Actions\Product\GetWaypoints;
 
 
 /*
@@ -74,3 +75,6 @@ Route::post('/dashboard/admin/products', CreateProduct::class)->middleware("admi
 Route::put('/dashboard/admin/products/{id}', EditProduct::class)->middleware("admin")->name('admin.products.edit');
 Route::post('/dashboard/admin/products/delete', DeleteProduct::class)->middleware("admin")->name('admin.products.delete');
 Route::post('/dashboard/admin/products/details', GetProductsDetails::class)->middleware("admin")->name('admin.products.details');
+
+
+Route::get('/getwaypoints', GetWaypoints::class)->middleware('auth')->name('getwaypoints');

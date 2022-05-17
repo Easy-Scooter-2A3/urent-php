@@ -30,4 +30,5 @@ mix.ts('resources/js/app.ts', 'public/js')
     .ts('resources/js/doAction.ts', 'public/js')
     .ts('resources/js/catalogue.ts', 'public/js')
     .ts('resources/js/panier.ts', 'public/js')
+    .ts('resources/js/waypoints.ts', 'public/js')
     .ts('resources/js/user.packages.ts', 'public/js');
