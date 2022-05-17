@@ -1,5 +1,5 @@
 import { doPost } from './utils';
-import { filters } from './catalogue';
+import { filters, updateProducts } from './filters';
 import { MDCTextField } from '@material/textfield';
 
 const setQuantity = async (productId: number, quantity: number) => {

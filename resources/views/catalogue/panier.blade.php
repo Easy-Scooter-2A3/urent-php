@@ -78,6 +78,7 @@
                                           'id' => 'productId-'.$product->id.'-quantity',
                                           'name' => 'quantity',
                                           'type' => 'number',
+                                          'value' => $quantity[$product->id],
                                           ])
                                       @endcomponent
                                       @component('components.button', [

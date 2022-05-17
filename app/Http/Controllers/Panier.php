@@ -24,10 +24,16 @@ class Panier extends Controller
             ];
         }
 
+        $quantity = [];
+        foreach ($data['data'] as $key => $product) {
+            $quantity[$product->id] = Cart::where('user_id', auth()->user()->id)->where('product_id', $product->id)->first()->quantity;
+        }
+
         return view('catalogue.panier', [
             'attributes' => Attribute::all(),
             'attributesList' => $data['attributes'][0],
             'products' => $data['data'],
+            'quantity' => $quantity
         ]);
     }
 }
