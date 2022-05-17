@@ -6,6 +6,8 @@
     id="{{ $id }}"
     @endisset
 
+    @isset($customId) customId="{{ $customId }}" @endisset
+
     @isset($hidden)
         @class(['mdc-button--raised', 'my-auto', 'hidden' => true])
     @endisset
@@ -21,7 +23,7 @@
 
     type="{{ $type }}">
     <span class="mdc-button__ripple"></span>
-    <span class="mdc-button__touch"></span>
-    <span class="mdc-button__label m-3">{{ $text }}</span>
+    <span @isset($customId) customId="{{ $customId }}" @endisset class="mdc-button__touch"></span>
+    <span @isset($customId) customId="{{ $customId }}" @endisset class="mdc-button__label m-3">{{ $text }}</span>
 </button>
 @isset($href) </a> @endisset
