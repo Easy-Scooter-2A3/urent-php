@@ -24,6 +24,7 @@ use App\Actions\Product\SetCart;
 use App\Actions\Product\GetWaypoints;
 use App\Actions\Product\SingleCharge;
 use App\Actions\Product\GetOrdersDetails;
+use App\Actions\Product\GetOrderProducts;
 
 
 /*
@@ -67,6 +68,7 @@ Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('aut
 
 Route::get('/dashboard/packages', [Dashboard::class, 'packages'])->middleware('auth')->name('user.packages');
 Route::post('/dashboard/admin/orders/details', GetOrdersDetails::class)->middleware("auth")->name('users.details');
+Route::get('/dashboard/admin/orders/{orderId}/content', GetOrderProducts::class)->middleware('auth')->name('user.orders.content');
 
 Route::get('/dashboard/admin/accounts', [Dashboard::class, 'accounts'])->middleware("admin")->name('admin.accounts');
 Route::get('/dashboard/admin/scooters', [Dashboard::class, 'scooter'])->middleware("admin")->name('admin.scooters');

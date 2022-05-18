@@ -75,6 +75,9 @@
         <h2>Moyen de paiment : </h2>
         <h2>Fidelity points : </h2>
         <h2>Recu : </h2>
+        <h2>
+
+        </h2>
     </div>
 </template>
 

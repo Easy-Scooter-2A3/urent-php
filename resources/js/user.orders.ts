@@ -2,7 +2,7 @@ import axios from 'axios';
 import IOrder from './interfaces/order';
 import searchField from './searchField';
 import selectedRows from './selectedRows';
-import { doPost, doDelete, doPut } from './utils';
+import { doPost, doDelete, doPut, doGet } from './utils';
 import { MDCSwitch } from '@material/switch';
 import { MDCTextField } from '@material/textfield';
 
@@ -33,6 +33,10 @@ const toMDCTextField = (element: HTMLElement | null) => {
     }
 
     return new MDCTextField(element.parentElement);
+}
+
+const getOrderContent = async (orderId: number) => {
+    return doGet(`/dashboard/admin/orders/${orderId}/content`);
 }
 
 (async () => {
@@ -208,9 +212,19 @@ const toMDCTextField = (element: HTMLElement | null) => {
             fields[7].textContent += `${updatedDate.toLocaleTimeString()} ${updatedDate.toLocaleDateString()}`;
             fields[8].textContent += `${order.total_price} €`;
             fields[9].textContent += 'Carte';
-            // fields[8].textContent += order.payment_method;
             fields[10].textContent += order.fidelityPoints; //TODO: add fidelity points
             fields[11].innerHTML += `<a href="${order.recu}">Voir le recu</a>`; //TODO: color
+
+            const orderContent = await getOrderContent(order.id);
+            if (!orderContent) {
+                console.error("Could not get order content");
+                return;
+            }
+            fields[12].innerHTML = "Objets : <br>";
+
+            Object.values<any>(orderContent.data.data).forEach((product: any) => {
+                fields[12].innerHTML += `${product.nb} x ${product.name} <br>`;
+            });
 
             detailsBody.appendChild(clone);
             if (n != orders.length) {
