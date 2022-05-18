@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Product\GetCartTotal;
 use App\Actions\Product\GetProductsDetails;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -29,11 +30,14 @@ class Panier extends Controller
             $quantity[$product->id] = Cart::where('user_id', auth()->user()->id)->where('product_id', $product->id)->first()->quantity;
         }
 
+        $total = GetCartTotal::run()->getData(true);
+
         return view('catalogue.panier', [
             'attributes' => Attribute::all(),
             'attributesList' => $data['attributes'][0],
             'products' => $data['data'],
-            'quantity' => $quantity
+            'quantity' => $quantity,
+            'total' => $total['data']
         ]);
     }
 }
