@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Actions\Package\GetCurrentPackage;
+use App\Actions\Partnership\GetUserPartnerships;
 
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -27,6 +28,7 @@ class Dashboard extends Controller
         ['admin.accounts', "Accounts (admin)"],
         ['admin.scooters', "Scooters (admin)"],
         ['admin.products', "Products (admin)"],
+        ['admin.partnerships', "Partnerships (admin)"],
     ];
 
     public function index(Request $request) {
@@ -50,6 +52,23 @@ class Dashboard extends Controller
             'collection' => $this->collection,
             'orders' => $orders,
             'cols' => $cols
+        ]);
+    }
+
+    public function partnerships(Request $request) {
+        $cols = ['Company', 'From', 'To', 'Voucher', 'Max', 'Active'];
+        $cols2 = ['User', 'Partnership with', 'Since'];
+
+        $partnerships = GetUserPartnerships::run(auth()->user()->id);
+
+        return view('dashboard', [
+            'view' => 'user.dashboard-partnerships',
+            'collection' => $this->collection,
+            'cols' => $cols,
+            'cols2' => $cols2,
+            'partnerships' => $partnerships['data']['partnerships'],
+            'userPartnerships' => $partnerships['data']['userPartnerships'],
+            'products' => Product::all(),
         ]);
     }
 

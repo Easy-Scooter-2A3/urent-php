@@ -26,6 +26,8 @@ use App\Actions\Product\SingleCharge;
 use App\Actions\Product\GetOrdersDetails;
 use App\Actions\Product\GetOrderProducts;
 
+use App\Actions\Partnership\CreatePartnership;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +75,8 @@ Route::get('/dashboard/admin/orders/{orderId}/content', GetOrderProducts::class)
 Route::get('/dashboard/admin/accounts', [Dashboard::class, 'accounts'])->middleware("admin")->name('admin.accounts');
 Route::get('/dashboard/admin/scooters', [Dashboard::class, 'scooter'])->middleware("admin")->name('admin.scooters');
 Route::get('/dashboard/admin/products', [Dashboard::class, 'products'])->middleware("admin")->name('admin.products');
+Route::get('/dashboard/admin/partnerships', [Dashboard::class, 'partnerships'])->middleware("admin")->name('admin.partnerships');
+Route::post('/dashboard/admin/partnerships', CreatePartnership::class)->middleware("admin")->name('admin.partnerships');
 
 Route::get('/weather', [Weather::class, 'list'])->middleware('admin')->name('weather');
 
