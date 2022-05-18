@@ -1,5 +1,16 @@
 import axios from 'axios';
 
+const doGet = async (url: string) => {
+    try {
+        return await axios.get(url);
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log(error)
+        }
+        return false
+    }
+}
+
 const doPost = async (url: string, data: {[k: string]: any}) => {
     try {
         const res = await axios.post(url, data);
@@ -37,4 +48,4 @@ const doPut = async (url: string, data: {[k: string]: any}) => {
 }
 
 
-export { doPost, doDelete, doPut };
+export { doGet, doPost, doDelete, doPut };

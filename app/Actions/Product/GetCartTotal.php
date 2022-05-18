@@ -28,7 +28,7 @@ class GetCartTotal
             $total += $product->price * $productsInCart[$product->id]; //get price
         }
 
-        return response()->json(['success' => true, 'data' => $total]);
+        return ['success' => true, 'data' => $total];
     }
 
     public function asController(Request $request)

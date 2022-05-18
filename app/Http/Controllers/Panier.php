@@ -30,7 +30,7 @@ class Panier extends Controller
             $quantity[$product->id] = Cart::where('user_id', auth()->user()->id)->where('product_id', $product->id)->first()->quantity;
         }
 
-        $total = GetCartTotal::run()->getData(true);
+        $total = GetCartTotal::run();
 
         return view('catalogue.panier', [
             'attributes' => Attribute::all(),

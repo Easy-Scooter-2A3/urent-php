@@ -1,8 +1,8 @@
-import { doPost } from './utils';
+import { doGet, doPost } from './utils';
 import { filters, updateProducts } from './filters';
 import { MDCTextField } from '@material/textfield';
 import { MDCCheckbox } from '@material/checkbox';
-import { loadStripe } from '@stripe/stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
 
 const setQuantity = async (productId: number, quantity: number) => {
     if (await doPost('/cart/set', { productId, quantity })) {
@@ -12,6 +12,14 @@ const setQuantity = async (productId: number, quantity: number) => {
     }
 }
 
+const getCartTotal = async () => {
+    const data = await doGet('/cart/total');
+    if (!data) {
+        return 0;
+    }
+    return data.data.data;
+}
+
 const addEVH2 = () => {
     const panier = document.getElementById('panier');
     if (!panier) {
@@ -19,7 +27,7 @@ const addEVH2 = () => {
         return;
     }
 
-    panier.addEventListener("click", (event) => {
+    panier.addEventListener("click", async (event) => {
         const target = event.target as HTMLElement;
         if (!target) {
             return;
@@ -60,6 +68,19 @@ const addEVH2 = () => {
             default:
                 break;
         }
+
+        const elem = document.getElementById('cart-total');
+        if (!elem) {
+            console.log("No cart-total found");
+            return 0;
+        }
+
+        const total = await getCartTotal() as number;
+        if (total === 0) {
+            elem.innerText = '0';
+            return;
+        }
+        elem.innerText = total.toFixed(2);
     });
 }
 
@@ -90,11 +111,11 @@ const payment = async () => {
         return;
     }
 
-    const stripe = await loadStripe('pk_test_51H9QZqZqZqZqZqZqZqZqZqZqZqZqZqZqZ00QZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZ');
-    if (!stripe) {
-        console.error("Could not load stripe");
-        return;
-    }
+    // const stripe = await loadStripe('pk_test_51H9QZqZqZqZqZqZqZqZqZqZqZqZqZqZqZ00QZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZ');
+    // if (!stripe) {
+    //     console.error("Could not load stripe");
+    //     return;
+    // }
 
     cards.forEach(card => {
         card.addEventListener('click', (event) => {

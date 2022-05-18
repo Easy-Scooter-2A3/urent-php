@@ -18,6 +18,7 @@ use App\Actions\Product\EditProduct;
 use App\Actions\Product\DeleteProduct;
 use App\Actions\Product\GetProductsDetails;
 use App\Actions\Product\AddToCart;
+use App\Actions\Product\GetCartTotal;
 use App\Actions\Product\GetPaymentMethods;
 use App\Actions\Product\SetCart;
 use App\Actions\Product\GetWaypoints;
@@ -50,6 +51,9 @@ Route::get('/cart', [Panier::class, 'index'])->middleware('auth')->name('cart');
 Route::post('/cart/add', AddToCart::class)->middleware('auth')->name('cart.add');
 Route::post('/cart/set', SetCart::class)->middleware('auth')->name('cart.set');
 Route::post('/cart/payment', SingleCharge::class)->middleware('auth')->name('cart.payment');
+Route::get('/cart/total', GetCartTotal::class)->middleware('auth')->name('cart.total');
+
+// Route::get('/user/paymentmethods', GetPaymentMethods::class)->middleware('auth')->name('user.payment.methods');
 
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
 Route::get('/dashboard/stripe-portal', function (Request $request) {
