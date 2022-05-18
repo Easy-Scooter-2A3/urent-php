@@ -17,9 +17,9 @@
 
                 <div id="payment-cardlist" class="flex flex-col">
                     @foreach (Auth::user()->paymentMethods() as $pm)
-                    <div paymentMethod={{ $pm->id }} class="mdc-form-field">
+                    <div class="mdc-form-field">
                         <div class="mdc-checkbox">
-                            <input name="payment-card" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-{{ $pm->id }}" />
+                            <input paymentMethod={{ $pm->id }} name="payment-card" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-{{ $pm->id }}" />
                             <div class="mdc-checkbox__background">
                                 <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
                                     <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />

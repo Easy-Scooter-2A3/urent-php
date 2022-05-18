@@ -86,13 +86,14 @@ const addEVH2 = () => {
 
 const getSelectedCard = () => {
     const cards = document.getElementsByName('payment-card');
-    cards.forEach(card => {
+
+    for (const card of Array.from(cards)) {
         const cardElem = new MDCCheckbox(card.parentElement!);
+        console.log(cardElem)
         if (cardElem.checked) {
-            return card.getAttribute('paymentid')
+            return card.getAttribute('paymentMethod')
         }
     }
-    );
 }
 
 const payment = async () => {
@@ -139,8 +140,11 @@ const payment = async () => {
 
     confirmPayBtn.addEventListener('click', async () => {
         const paymentMethod = getSelectedCard();
-        if (await doPost('/cart/payment', {paymentMethod})) {
+        console.log('paymentMethod');
+        console.log(paymentMethod);
+        if (await doPost('/cart/payment', {paymentMethod, total: await getCartTotal(), mode: 'cart'})) {
             console.log('Payment done'); //TODO: create notification
+            window.location.href = '/';
         } else {
             console.log('Payment failed'); //TODO: create notification
         }

@@ -16,18 +16,25 @@ class SingleCharge
     public function rules()
     {
         return [
-            'payment_method' => ['required'],
+            'paymentMethod' => ['required'],
         ];
     }
 
-    public function handle(Request $request, string $paymentMethod, int $total)
+    public function handle(Request $request, string $paymentMethod, int $total, string $mode)
     {
+        $total *= 100;
+
         $payment = $request->user()->charge(
             $total, $paymentMethod
         );
 
         if ($payment->isSucceeded()) {
             $recu = $payment->__get('charges')->data[0]->__get('receipt_url');
+
+            if ($mode == 'cart') {
+                CreateOrder::dispatch($total, $paymentMethod, $recu);
+            }
+
             return response()->json(['success' => true, 'receipt_url' => $recu]);
         }
 
@@ -38,8 +45,9 @@ class SingleCharge
     {
         return $this->handle(
             $request,
-            $request->input('payment_method'),
-            $request->input('total')
+            $request->input('paymentMethod'),
+            $request->input('total'),
+            $request->input('mode'),
         );
     }
 }
