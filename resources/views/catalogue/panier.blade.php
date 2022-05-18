@@ -11,13 +11,6 @@
             'href' => route('catalogue'),
         ])
         @endcomponent
-        @component('components.button', [
-            'text' => 'Pay',
-            'type' => 'button',
-            'id' => 'payBtn',
-            'modal' => 'modal-payment',
-        ])
-        @endcomponent
     </div>
 
     <div class="m-2 flex flex-col md:flex-row w-11/12 mx-auto justify-between">
@@ -63,7 +56,15 @@
                         <th class="mdc-data-table__header-cell" role="columnheader" scope="col">
                           <h2 class="text-lg">Total : <span id="cart-total">{{ $total }}</span> €</h2>
                         </th>
-                        <th class="mdc-data-table__header-cell w-2/6" role="columnheader" scope="col"></th>
+                        <th class="mdc-data-table__header-cell w-2/6" role="columnheader" scope="col">
+                          @component('components.button', [
+                            'text' => 'Pay',
+                            'type' => 'button',
+                            'id' => 'payBtn',
+                            'modal' => 'modal-payment',
+                          ])
+                          @endcomponent
+                        </th>
                       </tr>
                     </thead>
                     <tbody id="panier" class="mdc-data-table__content">
