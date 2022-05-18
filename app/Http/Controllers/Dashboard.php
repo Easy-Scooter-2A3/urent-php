@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Scooter;
 use App\Models\Package;
 use App\Models\Attribute;
+use App\Models\Order;
 use App\Models\users_packages;
 use App\Models\Product;
 
@@ -19,6 +20,7 @@ class Dashboard extends Controller
         ['dashboard', "Fidelity"],
         ['dashboard', "Invoices"],
         ['dashboard', "Statistics"],
+        ['user.orders', "Orders"],
         ['dashboard_weather', "Weather"],
         ['user.packages', "Packages"],
         ['dashboard', "Travels"],
@@ -36,6 +38,18 @@ class Dashboard extends Controller
             'view' => 'user.dashboard-account',
             'collection' => $this->collection,
             'current_package' => $package->type,
+        ]);
+    }
+
+    public function orders(Request $request) {
+        $orders = Order::where('user_id', $request->user()->id)->get();
+        $cols = ['Status', 'Transporter', 'Total', 'Commandée le', 'Livraison le'];
+
+        return view('dashboard', [
+            'view' => 'user.dashboard-orders',
+            'collection' => $this->collection,
+            'orders' => $orders,
+            'cols' => $cols
         ]);
     }
 

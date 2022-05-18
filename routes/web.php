@@ -23,6 +23,8 @@ use App\Actions\Product\GetPaymentMethods;
 use App\Actions\Product\SetCart;
 use App\Actions\Product\GetWaypoints;
 use App\Actions\Product\SingleCharge;
+use App\Actions\Product\GetOrdersDetails;
+use App\Actions\Product\GetOrderProducts;
 
 
 /*
@@ -60,9 +62,13 @@ Route::get('/dashboard/stripe-portal', function (Request $request) {
     return $request->user()->redirectToBillingPortal(route('index'));
 })->name('dashboard.stripe-portal');
 
+Route::get('/dashboard/orders', [Dashboard::class, 'orders'])->middleware('auth')->name('user.orders');
+
 Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
 
 Route::get('/dashboard/packages', [Dashboard::class, 'packages'])->middleware('auth')->name('user.packages');
+Route::post('/dashboard/admin/orders/details', GetOrdersDetails::class)->middleware("auth")->name('users.details');
+Route::get('/dashboard/admin/orders/{orderId}/content', GetOrderProducts::class)->middleware('auth')->name('user.orders.content');
 
 Route::get('/dashboard/admin/accounts', [Dashboard::class, 'accounts'])->middleware("admin")->name('admin.accounts');
 Route::get('/dashboard/admin/scooters', [Dashboard::class, 'scooter'])->middleware("admin")->name('admin.scooters');
@@ -71,6 +77,7 @@ Route::get('/dashboard/admin/products', [Dashboard::class, 'products'])->middlew
 Route::get('/weather', [Weather::class, 'list'])->middleware('admin')->name('weather');
 
 Route::post('/dashboard/packages/edit', EditUserPackage::class)->middleware('auth')->name('user.packages.edit');
+
 
 Route::post('/dashboard/admin/users/action', [Dashboard::class, 'action'])->middleware("admin")->name('admin.users.action');
 Route::post('/dashboard/admin/users/details', [Dashboard::class, 'details'])->middleware("admin")->name('admin.users.details');
