@@ -1,0 +1,126 @@
+[
+    {
+        "start_latitude": 515146846,
+        "start_longitude": -732253,
+        "end_latitude": 515141170,
+        "end_longitude": -747455,
+        "start_timestamp": "2018-08-16T09:40:48.209Z",
+        "end_timestamp": "2018-08-16T09:44:20.882Z",
+        "waypoints": [
+            {
+                "latitude": 515156882,
+                "longitude": -703767,
+                "timestamp": "2018-08-16T09:40:48.209Z"
+            }
+        ],
+        "distance_meters": 575.7033169399663
+    },
+    {
+        "start_latitude": 487683231,
+        "start_longitude": 24552629,
+        "end_latitude": 487714903,
+        "end_longitude": 24353259,
+        "start_timestamp": "2018-12-30T10:14:15Z",
+        "end_timestamp": "2018-12-30T10:21:40.012Z",
+        "waypoints": [
+            {
+                "latitude": 487669254,
+                "longitude": 24523527,
+                "timestamp": "2018-12-30T10:14:44Z"
+            },
+            {
+                "latitude": 487692847,
+                "longitude": 24472227,
+                "timestamp": "2018-12-30T10:15:44Z"
+            },
+            {
+                "latitude": 487739039,
+                "longitude": 24443362,
+                "timestamp": "2018-12-30T10:16:50Z"
+            }
+        ],
+        "distance_meters": 1990.6083235016235
+    },
+    {
+        "start_latitude": 488286796,
+        "start_longitude": 22637393,
+        "end_latitude": 488374932,
+        "end_longitude": 22332650,
+        "start_timestamp": "2018-12-31T15:34:59.539Z",
+        "end_timestamp": "2018-12-31T15:45:36Z",
+        "waypoints": [
+            {
+                "latitude": 488291490,
+                "longitude": 22635658,
+                "timestamp": "2018-12-31T15:35:15Z"
+            },
+            {
+                "latitude": 488286496,
+                "longitude": 22638101,
+                "timestamp": "2018-12-31T15:35:42.652Z"
+            },
+            {
+                "latitude": 488326681,
+                "longitude": 22490281,
+                "timestamp": "2018-12-31T15:40:02Z"
+            },
+            {
+                "latitude": 488341707,
+                "longitude": 22425836,
+                "timestamp": "2018-12-31T15:42:44Z"
+            },
+            {
+                "latitude": 488371329,
+                "longitude": 22360050,
+                "timestamp": "2018-12-31T15:45:20Z"
+            }
+        ],
+        "distance_meters": 2597.1071398511276
+    },
+    {
+        "start_latitude": 487685830,
+        "start_longitude": 23687770,
+        "end_latitude": 487641318,
+        "end_longitude": 24051227,
+        "start_timestamp": "2018-06-27T10:52:14Z",
+        "end_timestamp": "2018-06-27T12:15:09.326Z",
+        "waypoints": [
+            {
+                "latitude": 487711867,
+                "longitude": 23612806,
+                "timestamp": "2018-06-27T10:52:29Z"
+            },
+            {
+                "latitude": 487685977,
+                "longitude": 23685542,
+                "timestamp": "2018-06-27T10:58:43Z"
+            },
+            {
+                "latitude": 487656478,
+                "longitude": 23925512,
+                "timestamp": "2018-06-27T11:07:22Z"
+            },
+            {
+                "latitude": 487644935,
+                "longitude": 23931522,
+                "timestamp": "2018-06-27T11:08:22Z"
+            },
+            {
+                "latitude": 487630317,
+                "longitude": 24014483,
+                "timestamp": "2018-06-27T11:09:59Z"
+            },
+            {
+                "latitude": 487641583,
+                "longitude": 24049200,
+                "timestamp": "2018-06-27T11:11:42Z"
+            },
+            {
+                "latitude": 487653414,
+                "longitude": 24089813,
+                "timestamp": "2018-06-27T11:13:32.747Z"
+            }
+        ],
+        "distance_meters": 4700.391747096594
+    }
+]

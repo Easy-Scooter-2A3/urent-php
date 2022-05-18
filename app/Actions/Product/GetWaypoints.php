@@ -4,7 +4,6 @@ namespace App\Actions\Product;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Illuminate\Http\Request;
 use App\Models\Waypoint;
-
 class GetWaypoints
 {
     use AsAction;

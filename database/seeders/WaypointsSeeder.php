@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Waypoint;
@@ -15,47 +16,28 @@ class WaypointsSeeder extends Seeder
      */
     public function run()
     {
-        // $dat = {
-        //     "start_latitude": 486699823,
-        //     "start_longitude": 23327127,
-        //     "end_latitude": 486757610,
-        //     "end_longitude": 23143784,
-        //     "start_timestamp": "2022-05-11T16:04:48.501Z",
-        //     "end_timestamp": "2022-05-11T16:14:46.911Z",
-        //     "waypoints": [
-        //         {
-        //             "latitude": 486699823,
-        //             "longitude": 23327127,
-        //             "timestamp": "2022-05-11T16:04:48.501Z"
-        //         },
-        //         {
-        //             "latitude": 486728191,
-        //             "longitude": 23279574,
-        //             "timestamp": "2022-05-11T16:07:48.645Z"
-        //         },
-        //         {
-        //             "latitude": 486748232,
-        //             "longitude": 23181246,
-        //             "timestamp": "2022-05-11T16:11:14.221Z"
-        //         }
-        //     ],
-        //     "distance_meters": 1404.3273141646996
-        // }
+        $file_name = "move_data.json";
 
-        $fp = fopen('./waypoints.csv', 'r');
+        $fp = fopen($file_name, 'r');
         if (!$fp) {
             echo "Error opening file";
             exit;
         }
 
-        $objs = []; // array of Waypoint objects
+        $json = fread($fp, filesize($file_name));
+        $data = json_decode($json, true);
+        fclose($fp);
 
-        foreach ($objs as $key => $obj) {
+        foreach ($data as $obj) {
             $dat = [
                 'start_latitude' => $obj['start_latitude'],
+                'start_longitude' => $obj['start_longitude'],
+                'end_latitude' => $obj['end_latitude'],
+                'end_longitude' => $obj['end_longitude'],
                 'start_timestamp' => date('Y-m-d H:i:s', strtotime($obj['start_timestamp'])),
-                'distance_meters' => $obj['distance_meters'],
+                'end_timestamp' => date('Y-m-d H:i:s', strtotime($obj['end_timestamp'])),
                 'waypoints' => json_encode($obj['waypoints']),
+                'distance_meters' => $obj['distance_meters'],
             ];
             Waypoint::create($dat);
         }
