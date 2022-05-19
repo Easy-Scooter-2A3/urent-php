@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Actions\Package\GetCurrentPackage;
+use App\Actions\Partnership\GetPartnerships;
 use App\Actions\Partnership\GetUserPartnerships;
 
 use Illuminate\Http\Request;
@@ -36,10 +37,14 @@ class Dashboard extends Controller
         $package = Package::where('id', $currentPackage)->first();
         // TODO: translate package name
 
+        $partner = GetUserPartnerships::run($request->user()->id);
+
         return view('dashboard', [
             'view' => 'user.dashboard-account',
             'collection' => $this->collection,
             'current_package' => $package->type,
+            'partnerships' => $partner['partnerships'],
+            'userPartnerships' => $partner['userPartnerships'],
         ]);
     }
 
@@ -59,15 +64,14 @@ class Dashboard extends Controller
         $cols = ['Company', 'From', 'To', 'Voucher', 'Max', 'Active'];
         $cols2 = ['User', 'Partnership with', 'Since'];
 
-        $partnerships = GetUserPartnerships::run(auth()->user()->id);
+        // $partnerships = GetUserPartnerships::run(auth()->user()->id);
 
         return view('dashboard', [
             'view' => 'user.dashboard-partnerships',
             'collection' => $this->collection,
             'cols' => $cols,
             'cols2' => $cols2,
-            'partnerships' => $partnerships['data']['partnerships'],
-            'userPartnerships' => $partnerships['data']['userPartnerships'],
+            'partnerships' => GetPartnerships::run(),
             'products' => Product::all(),
         ]);
     }

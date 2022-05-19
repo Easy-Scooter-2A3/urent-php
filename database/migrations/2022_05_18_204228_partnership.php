@@ -30,6 +30,13 @@ return new class extends Migration
             $table->foreignId("user_id")->constrained();
             $table->timestamps();
         });
+
+        Schema::create('partnership_products', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId("partnership_id")->constrained();
+            $table->foreignId("product_id")->constrained();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -39,6 +46,7 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('partnership_products');
         Schema::dropIfExists('partnership_users');
         Schema::dropIfExists('partnerships');
     }

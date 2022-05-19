@@ -17,11 +17,7 @@ class GetUserPartnerships
         $userPartnerships = partnership_user::where('user_id', $userId)->get();
         $partnerships = Partnership::whereIn('id', $userPartnerships->pluck('partnership_id'))->get();
 
-        $data = [
-            'partnerships' => $partnerships,
-            'userPartnerships' => $userPartnerships,
-        ];
-        return ['success' => true, 'data' => $data];
+        return ['success' => true, 'partnerships' => $partnerships, 'userPartnerships' => $userPartnerships];
     }
 
     public function asController(Request $request)

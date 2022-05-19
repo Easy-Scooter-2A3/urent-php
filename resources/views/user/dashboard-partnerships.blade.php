@@ -1,11 +1,11 @@
 <div class="relative overflow-x-auto lg:w-full mx-10 my-10">
-    <table class="w-full lg-5/6 text-sm text-left">
+    <table id="modal-main" class="w-full lg-5/6 text-sm text-left">
         <thead class="uppercase bg-white gap-3 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="p-4">
                     <div class="flex items-center">
-                        <input id="checkbox-all" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 bpartnership-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:bpartnership-gray-600">
-                        <label for="checkbox-all" class="sr-only">checkbox</label>
+                        <input id="checkbox-all-main" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 bpartnership-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:bpartnership-gray-600">
+                        <label for="checkbox-all-main" class="sr-only">checkbox</label>
                     </div>
                 </th>
                 @foreach ($cols as $col)
@@ -54,6 +54,13 @@
         ])
         @endcomponent
         @component('components.button', [
+            'text' => 'Edit',
+            'type' => 'button',
+            'id' => 'editBtn',
+            'modal' => 'modal-edit',
+        ])
+        @endcomponent
+        @component('components.button', [
             'text' => 'Create',
             'type' => 'button',
             'id' => 'createBtn',
@@ -63,6 +70,7 @@
     </div>
 </div>
 
+@include('modal-edit-partnerships')
 @include('modal-creation-partnerships')
 
 @csrf

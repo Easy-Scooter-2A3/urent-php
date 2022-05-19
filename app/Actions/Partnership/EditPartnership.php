@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Partnership;
 use App\Models\partnership_product;
 
-
-class CreatePartnership
+class EditPartnership
 {
     use AsAction;
 
@@ -24,31 +23,33 @@ class CreatePartnership
         ];
     }
 
-    public function handle($data)
+    public function handle($data, $id)
     {
         $productsIds = $data['products'];
 
         unset($data['products']);
-        $partnership = Partnership::create([
-            ...$data,
-            'from_date' => date('Y-m-d H:i:s', strtotime($data['from_date'])),
-            'to_date' => date('Y-m-d H:i:s', strtotime($data['to_date']))
-        ]);
+        Partnership::where('id', $id)
+            ->update([
+                ...$data,
+                'from_date' => date('Y-m-d H:i:s', strtotime($data['from_date'])),
+                'to_date' => date('Y-m-d H:i:s', strtotime($data['to_date']))
+            ]);
+
+        partnership_product::destroy($productsIds);
 
         foreach ($productsIds as $key => $productid) {
             partnership_product::create([
-                'partnership_id' => $partnership->id,
+                'partnership_id' => $id,
                 'product_id' => $productid,
             ]);
         }
-
-
     }
 
-    public function asController(Request $request)
+    public function asController(Request $request, int $id)
     {
         $this->handle(
-            $request->all()
+            $request->all(),
+            $id
         );
         return response()->json(['success' => true]);
     }
