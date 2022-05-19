@@ -31,8 +31,18 @@ class SingleCharge
         if ($payment->isSucceeded()) {
             $recu = $payment->__get('charges')->data[0]->__get('receipt_url');
 
-            if ($mode == 'cart') {
-                CreateOrder::dispatch($total, $paymentMethod, $recu);
+            switch ($mode) {
+                case 'cart':
+                    CreateOrder::dispatch($total, $paymentMethod, $recu);
+                    //TODO: send mail
+                    break;
+                case 'package':
+                    
+                    break;
+                    
+                
+                default:
+                    break;
             }
 
             return response()->json(['success' => true, 'receipt_url' => $recu]);

@@ -1,6 +1,9 @@
 import { MDCSwitch } from '@material/switch';
 import { MDCDialog } from '@material/dialog';
 import axios, { AxiosError } from 'axios';
+import { doPost } from './utils';
+import { MDCTextField } from '@material/textfield';
+import { MDCCheckbox } from '@material/checkbox';
 
 const enableMFA = async () => {
     console.log('enableMFA');
@@ -57,7 +60,7 @@ const confirmMFA = async (CSRF: HTMLInputElement, MFADialogCode: HTMLInputElemen
             }
         }
     }
-}        
+}
 
 (async () => {
     const mfa_switch = document.getElementById('mfa_switch') as HTMLButtonElement | null;

@@ -58,6 +58,8 @@ Route::post('/cart/set', SetCart::class)->middleware('auth')->name('cart.set');
 Route::post('/cart/payment', SingleCharge::class)->middleware('auth')->name('cart.payment');
 Route::get('/cart/total', GetCartTotal::class)->middleware('auth')->name('cart.total');
 
+Route::post('/pay/package', SingleCharge::class)->middleware('auth')->name('cart.payment');
+
 // Route::get('/user/paymentmethods', GetPaymentMethods::class)->middleware('auth')->name('user.payment.methods');
 
 Route::get('/dashboard', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');

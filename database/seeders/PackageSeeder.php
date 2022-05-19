@@ -23,6 +23,13 @@ class PackageSeeder extends Seeder
         Package::create([
             'type' => 'monthly',
             'unlock_price' => 0,
+            'option1_price' => 19.99,
+            'option2_price' => 44.99,
+            'option3_price' => 79.99,
+            'option1_nb' => 8,
+            'option2_nb' => 25,
+            'option3_nb' => 50,
+
         ]);
 
         Package::create([

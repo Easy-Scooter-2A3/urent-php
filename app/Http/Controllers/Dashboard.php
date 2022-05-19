@@ -84,6 +84,7 @@ class Dashboard extends Controller
             'view' => 'user.dashboard-packages',
             'collection' => $this->collection,
             'current_package' => $currentPackage,
+            'packages' => $packages,
         ]);
     }
 

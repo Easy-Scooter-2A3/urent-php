@@ -84,5 +84,6 @@
             {{-- @include('dialogs.MFA') --}}
         </div>
     @endif
+    @include('modal-payment')
     <script src="/js/dashboard.js"></script>
 </div>

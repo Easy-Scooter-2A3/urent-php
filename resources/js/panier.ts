@@ -112,12 +112,6 @@ const payment = async () => {
         return;
     }
 
-    // const stripe = await loadStripe('pk_test_51H9QZqZqZqZqZqZqZqZqZqZqZqZqZqZqZ00QZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZqZ');
-    // if (!stripe) {
-    //     console.error("Could not load stripe");
-    //     return;
-    // }
-
     cards.forEach(card => {
         card.addEventListener('click', (event) => {
             const target = event.target as HTMLElement;
@@ -137,7 +131,6 @@ const payment = async () => {
         });
     });
 
-
     confirmPayBtn.addEventListener('click', async () => {
         const paymentMethod = getSelectedCard();
         console.log('paymentMethod');
@@ -150,24 +143,6 @@ const payment = async () => {
         }
 
     });
-
-    // payBtn.addEventListener('click', async function (e: MouseEvent) {
-        // window.location.href = '/cart/payment';
-        // const elem = document.getElementById('modal-payment-body') as HTMLButtonElement;
-        // if (!elem) {
-        //     console.error("Could not find modal-payment-body");
-        //     return;
-        // }
-
-        // elem.innerText = 'Loading...';
-
-
-
-        // elem.innerText = '';
-        // const elements = stripe.elements();
-        // const cardElement = elements.create('card');
-        // cardElement.mount('#modal-payment-body-container');
-    // });
 }
 
 (async () => {

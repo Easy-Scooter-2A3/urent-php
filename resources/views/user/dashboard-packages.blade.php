@@ -1,3 +1,5 @@
+@include('modal-payment')
+
 <div class="p-4 gap-3 xl:w-2/12 lg:w-1/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md justify-between">
     <h1 class="text-center text-2xl">Pay as you go 
         @if ($current_package == 1)
@@ -21,6 +23,7 @@
             'text' => 'Choisir',
             'type' => 'button',
             'id' => 'pickPackageBtn1',
+            'modal' => 'modal-payment'
         ])
         @endcomponent
     </div>
@@ -62,11 +65,9 @@
         <div class="flex">
             <form action="#">
                 @php
-                    $options = [
-                        '8 trajets à 19.99€',
-                        '25 trajets à 44.99€',
-                        '50 trajets à 79.99€',
-                    ];
+                    $pkg = $packages->where('id', 2)->first();
+                    $prices = [$pkg->option1_price, $pkg->option2_price, $pkg->option3_price];
+                    $nb = [$pkg->option1_nb, $pkg->option2_nb, $pkg->option3_nb];
                 @endphp
                 @for ($i = 1; $i < 4; $i++)
                 <div class="mdc-form-field">
@@ -86,7 +87,9 @@
                       </div>
                       <div class="mdc-checkbox__ripple"></div>
                     </div>
-                    <label for="checkbox-1">{{ $options[$i-1] }}</label>
+                    <label for="checkbox-1">
+                        {{ $nb[$i-1] }} trajets à {{ $prices[$i-1] }} €
+                    </label>
                 </div>
                 @endfor
             </form>
@@ -98,6 +101,7 @@
             'text' => 'Choisir',
             'type' => 'button',
             'id' => 'pickPackageBtn2',
+            'modal' => 'modal-payment'
         ])
         @endcomponent
     </div>
@@ -129,8 +133,11 @@
             'text' => 'Choisir',
             'type' => 'button',
             'id' => 'pickPackageBtn3',
+            'modal' => 'modal-payment'
         ])
         @endcomponent
     </div>
+
+
     <script src="/js/user.packages.js"></script>
 </div>
