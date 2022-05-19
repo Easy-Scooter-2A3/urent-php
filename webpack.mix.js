@@ -32,4 +32,5 @@ mix.ts('resources/js/app.ts', 'public/js')
     .ts('resources/js/panier.ts', 'public/js')
     .ts('resources/js/waypoints.ts', 'public/js')
     .ts('resources/js/user.orders.ts', 'public/js')
+    .ts('resources/js/admin.partnerships.ts', 'public/js')
     .ts('resources/js/user.packages.ts', 'public/js');

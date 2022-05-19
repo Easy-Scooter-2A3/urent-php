@@ -26,7 +26,10 @@ use App\Actions\Product\SingleCharge;
 use App\Actions\Product\GetOrdersDetails;
 use App\Actions\Product\GetOrderProducts;
 
-
+use App\Actions\Partnership\CreatePartnership;
+use App\Actions\Partnership\EditPartnership;
+use App\Actions\Partnership\GetPartnershipsDetails;
+use App\Actions\Partnership\GetPartnershipProductsList;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -73,6 +76,10 @@ Route::get('/dashboard/admin/orders/{orderId}/content', GetOrderProducts::class)
 Route::get('/dashboard/admin/accounts', [Dashboard::class, 'accounts'])->middleware("admin")->name('admin.accounts');
 Route::get('/dashboard/admin/scooters', [Dashboard::class, 'scooter'])->middleware("admin")->name('admin.scooters');
 Route::get('/dashboard/admin/products', [Dashboard::class, 'products'])->middleware("admin")->name('admin.products');
+Route::get('/dashboard/admin/partnerships', [Dashboard::class, 'partnerships'])->middleware("admin")->name('admin.partnerships');
+Route::post('/dashboard/admin/partnerships', CreatePartnership::class)->middleware("admin")->name('admin.partnerships');
+Route::put('/dashboard/admin/partnerships/{id}', EditPartnership::class)->middleware("admin")->name('admin.partnerships.edit');
+Route::get('/dashboard/admin/partnerships/{id}/list', GetPartnershipProductsList::class)->middleware("admin")->name('admin.partnerships.list');
 
 Route::get('/weather', [Weather::class, 'list'])->middleware('admin')->name('weather');
 
@@ -89,6 +96,6 @@ Route::post('/dashboard/admin/products', CreateProduct::class)->middleware("admi
 Route::put('/dashboard/admin/products/{id}', EditProduct::class)->middleware("admin")->name('admin.products.edit');
 Route::post('/dashboard/admin/products/delete', DeleteProduct::class)->middleware("admin")->name('admin.products.delete');
 Route::post('/dashboard/admin/products/details', GetProductsDetails::class)->middleware("admin")->name('admin.products.details');
-
+Route::post('/dashboard/admin/partnership/details', GetPartnershipsDetails::class)->middleware("admin")->name('admin.products.details');
 
 Route::get('/getwaypoints', GetWaypoints::class)->middleware('auth')->name('getwaypoints');

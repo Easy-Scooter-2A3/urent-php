@@ -4,6 +4,11 @@
     <h2>Email: {{ Auth::user()->email }}</h2>
     <h2>Phone number: {{ Auth::user()->phone }}</h2>
     <h2>Location: {{ Auth::user()->location }}</h2>
+
+    @foreach ($userPartnerships as $partnership)
+    <h2>Partenariat: {{ $partnerships[$partnership]->name }}</h2>
+    @endforeach
+
     <h2>MFA: 
         <form id="mfa_form" action="/user/two-factor-authentication" method="post">
             @csrf
