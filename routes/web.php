@@ -65,6 +65,7 @@ Route::get('/dashboard/stripe-portal', function (Request $request) {
 Route::get('/dashboard/orders', [Dashboard::class, 'orders'])->middleware('auth')->name('user.orders');
 
 Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
+Route::get('/dashboard/invoices', [Dashboard::class, 'invoices'])->middleware('auth')->name('dashboard_invoices');
 
 Route::get('/dashboard/packages', [Dashboard::class, 'packages'])->middleware('auth')->name('user.packages');
 Route::post('/dashboard/admin/orders/details', GetOrdersDetails::class)->middleware("auth")->name('users.details');

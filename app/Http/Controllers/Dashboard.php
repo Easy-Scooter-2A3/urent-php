@@ -18,7 +18,7 @@ class Dashboard extends Controller
         ['dashboard', "Account"],
         ['dashboard', "History"],
         ['dashboard', "Fidelity"],
-        ['dashboard', "Invoices"],
+        ['dashboard_invoices', "Invoices"],
         ['dashboard', "Statistics"],
         ['user.orders', "Orders"],
         ['dashboard_weather', "Weather"],
@@ -93,6 +93,13 @@ class Dashboard extends Controller
             'days' => $days,
             'currentDay' => $currentDay,
             'currentHour' => $currentHour,
+        ]);
+    }
+
+    public function invoices() {
+        return view('dashboard', [
+            'view' => 'user.dashboard-invoices',
+            'collection' => $this->collection,
         ]);
     }
 
