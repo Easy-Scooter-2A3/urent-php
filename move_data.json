@@ -1,21 +1,5 @@
 [
     {
-        "start_latitude": 515146846,
-        "start_longitude": -732253,
-        "end_latitude": 515141170,
-        "end_longitude": -747455,
-        "start_timestamp": "2018-08-16T09:40:48.209Z",
-        "end_timestamp": "2018-08-16T09:44:20.882Z",
-        "waypoints": [
-            {
-                "latitude": 515156882,
-                "longitude": -703767,
-                "timestamp": "2018-08-16T09:40:48.209Z"
-            }
-        ],
-        "distance_meters": 575.7033169399663
-    },
-    {
         "start_latitude": 487683231,
         "start_longitude": 24552629,
         "end_latitude": 487714903,

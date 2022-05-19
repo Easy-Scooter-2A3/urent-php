@@ -1,6 +1,18 @@
 import axios from 'axios';
 
-const doPost = async (url: string, data: {[k: string]: any}) => {
+
+const doGet = async (url: string) => {
+    try {
+        return await axios.get(url);
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log(error)
+        }
+        return false
+    }
+}
+
+const doPost = async (url: string, data: { [k: string]: any }) => {
     try {
         const res = await axios.post(url, data);
         return true;
@@ -12,7 +24,7 @@ const doPost = async (url: string, data: {[k: string]: any}) => {
     }
 }
 
-const doDelete = async (url: string, data: {[k: string]: any}) => {
+const doDelete = async (url: string, data: { [k: string]: any }) => {
     try {
         const res = await axios.delete(url, data);
         return true;
@@ -24,7 +36,7 @@ const doDelete = async (url: string, data: {[k: string]: any}) => {
     }
 }
 
-const doPut = async (url: string, data: {[k: string]: any}) => {
+const doPut = async (url: string, data: { [k: string]: any }) => {
     try {
         const res = await axios.put(url, data);
         return true;
@@ -37,4 +49,4 @@ const doPut = async (url: string, data: {[k: string]: any}) => {
 }
 
 
-export { doPost, doDelete, doPut };
+export {doGet, doPost, doDelete, doPut};

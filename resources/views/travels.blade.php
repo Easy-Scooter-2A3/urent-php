@@ -69,4 +69,3 @@
     </div>
 </div>
 @csrf
-<script src="/js/waypoints.js"></script>

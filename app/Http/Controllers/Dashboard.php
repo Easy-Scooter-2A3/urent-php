@@ -168,4 +168,16 @@ class Dashboard extends Controller
             'cols' => $cols
         ]);
     }
+
+    public function travels_map(Request $request) {
+        $cols = ['Debut', 'Fin', 'Distance (M)'];
+
+        $travels = Waypoint::all();
+        return view('dashboard', [
+            'view' => 'admin.travels_map',
+            'collection' => $this->collection,
+            'travels' => $travels,
+            'cols' => $cols
+        ]);
+    }
 }

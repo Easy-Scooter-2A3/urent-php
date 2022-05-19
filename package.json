@@ -24,7 +24,9 @@
     },
     "dependencies": {
         "@stripe/stripe-js": "^1.29.0",
+        "@types/leaflet": "^1.7.10",
         "flowbite": "^1.4.1",
+        "leaflet": "^1.8.0",
         "material-components-web": "^13.0.0"
     }
 }

@@ -80,4 +80,5 @@ Route::post('/dashboard/admin/products/delete', DeleteProduct::class)->middlewar
 Route::post('/dashboard/admin/products/details', GetProductsDetails::class)->middleware("admin")->name('admin.products.details');
 
 Route::get('/dashboard/travels', [Dashboard::class, 'travels'])->middleware("auth")->name('travels');
-Route::get('/getwaypoints', GetWaypoints::class)->middleware('admin')->name('getwaypoints');
+Route::get('/dashboard/travels/map', [Dashboard::class, 'travels_map'])->middleware("auth")->name('travels.map');
+Route::get('/api/getwaypoints', GetWaypoints::class)->middleware('admin')->name('getwaypoints');
