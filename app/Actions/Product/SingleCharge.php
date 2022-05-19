@@ -20,11 +20,11 @@ class SingleCharge
         ];
     }
 
-    public function handle(Request $request, string $paymentMethod, int $total, string $mode)
+    public function handle(string $paymentMethod, int $total, string $mode)
     {
         $total *= 100;
 
-        $payment = $request->user()->charge(
+        $payment = auth()->user()->charge(
             $total, $paymentMethod
         );
 
@@ -44,7 +44,6 @@ class SingleCharge
     public function asController(Request $request)
     {
         return $this->handle(
-            $request,
             $request->input('paymentMethod'),
             $request->input('total'),
             $request->input('mode'),

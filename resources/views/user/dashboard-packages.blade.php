@@ -47,7 +47,7 @@
         </ul>
     
     
-        <ul class="list-decimal m-4">
+        {{-- <ul class="list-decimal m-4">
             <li>
                 8 trajets à 19.99€
             </li>
@@ -57,7 +57,40 @@
             <li>
                 50 trajets à 79.99€
             </li>
-        </ul>
+        </ul> --}}
+
+        <div class="flex">
+            <form action="#">
+                @php
+                    $options = [
+                        '8 trajets à 19.99€',
+                        '25 trajets à 44.99€',
+                        '50 trajets à 79.99€',
+                    ];
+                @endphp
+                @for ($i = 1; $i < 4; $i++)
+                <div class="mdc-form-field">
+                    <div class="mdc-checkbox">
+                      <input option="{{ $i }}" name="option"
+                             type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="checkbox-{{ $i }}"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                      <div class="mdc-checkbox__ripple"></div>
+                    </div>
+                    <label for="checkbox-1">{{ $options[$i-1] }}</label>
+                </div>
+                @endfor
+            </form>
+        </div>
     </div>
 
     <div class="self-center">
