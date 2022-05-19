@@ -79,5 +79,5 @@ Route::put('/dashboard/admin/products/{id}', EditProduct::class)->middleware("ad
 Route::post('/dashboard/admin/products/delete', DeleteProduct::class)->middleware("admin")->name('admin.products.delete');
 Route::post('/dashboard/admin/products/details', GetProductsDetails::class)->middleware("admin")->name('admin.products.details');
 
-
-Route::get('/getwaypoints', GetWaypoints::class)->middleware('auth')->name('getwaypoints');
+Route::get('/dashboard/travels', [Dashboard::class, 'travels'])->middleware("auth")->name('travels');
+Route::get('/getwaypoints', GetWaypoints::class)->middleware('admin')->name('getwaypoints');

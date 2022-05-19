@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Actions\Package\GetCurrentPackage;
 
+use App\Models\Waypoint;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Scooter;
@@ -20,8 +21,8 @@ class Dashboard extends Controller
         ['dashboard', "Invoices"],
         ['dashboard', "Statistics"],
         ['dashboard_weather', "Weather"],
+        ['travels', "Travels"],
         ['user.packages', "Packages"],
-        ['dashboard', "Travels"],
         ['admin.accounts', "Accounts (admin)"],
         ['admin.scooters', "Scooters (admin)"],
         ['admin.products', "Products (admin)"],
@@ -152,6 +153,18 @@ class Dashboard extends Controller
             'view' => 'admin.scooters',
             'collection' => $this->collection,
             'scooters' => $scooter,
+            'cols' => $cols
+        ]);
+    }
+
+    public function travels(Request $request) {
+        $cols = ['Debut', 'Fin', 'Distance (M)'];
+
+        $travels = Waypoint::all();
+        return view('dashboard', [
+            'view' => 'travels',
+            'collection' => $this->collection,
+            'travels' => $travels,
             'cols' => $cols
         ]);
     }
