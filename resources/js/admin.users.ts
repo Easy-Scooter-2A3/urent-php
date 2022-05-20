@@ -3,6 +3,7 @@ import IUser from "./interfaces/user";
 import searchField from "./searchField";
 import selectedRows from "./selectedRows";
 import doAction from './doAction';
+import { doPost } from "./utils";
 
 const checkAll = (checked: boolean) => {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
@@ -12,16 +13,9 @@ const checkAll = (checked: boolean) => {
 }
 
 const getDetails = async (users: (string | null)[]) => {
-    try {
-        const res = await axios.post(`/dashboard/admin/users/details`, {users});
-        if (res.status === 200) {
-            return res.data.data as IUser[];
-        }
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log(error)
-        }
-        return null;
+    const res = await doPost('/dashboard/admin/users/details', { users });
+    if (res) {
+        return res.data.data as IUser[];
     }
 }
 

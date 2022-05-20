@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const doGet = async (url: string) => {
     try {
-        return await axios.get(url);
+        return axios.get(url);
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log(error)
@@ -13,8 +13,7 @@ const doGet = async (url: string) => {
 
 const doPost = async (url: string, data: {[k: string]: any}) => {
     try {
-        const res = await axios.post(url, data);
-        return true;
+        return axios.post(url, data);
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log(error)
@@ -25,8 +24,7 @@ const doPost = async (url: string, data: {[k: string]: any}) => {
 
 const doDelete = async (url: string, data: {[k: string]: any}) => {
     try {
-        const res = await axios.delete(url, data);
-        return true;
+        return axios.delete(url, data);
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log(error)
@@ -37,8 +35,7 @@ const doDelete = async (url: string, data: {[k: string]: any}) => {
 
 const doPut = async (url: string, data: {[k: string]: any}) => {
     try {
-        const res = await axios.put(url, data);
-        return true;
+        return axios.put(url, data);
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log(error)

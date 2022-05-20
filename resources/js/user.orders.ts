@@ -14,16 +14,9 @@ const checkAll = (checked: boolean) => {
 }
 
 const getDetails = async (orders: (string | null)[]) => {
-    try {
-        const res = await axios.post(`/dashboard/admin/orders/details`, {orders});
-        if (res.status === 200) {
-            return res.data.data;
-        }
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log(error)
-        }
-        return null;
+    const res = await doPost('/dashboard/admin/orders/details', { orders });
+    if (res) {
+        return res.data.data;
     }
 }
 

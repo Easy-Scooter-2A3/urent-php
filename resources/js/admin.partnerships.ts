@@ -42,16 +42,9 @@ const checkAll = (checked: boolean, parentNode: ParentNode) => {
 }
 
 const getDetails = async (partnershipsIds: (string | null)[]) => {
-    try {
-        const res = await axios.post(`/dashboard/admin/partnership/details`, {partnershipsIds});
-        if (res.status === 200) {
-            return res.data.data;
-        }
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log(error)
-        }
-        return null;
+    const res = await doPost('/dashboard/admin/partnership/details', { partnershipsIds });
+    if (res) {
+        return res.data.data;
     }
 }
 

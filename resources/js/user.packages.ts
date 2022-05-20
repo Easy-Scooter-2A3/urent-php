@@ -5,17 +5,14 @@ import notification from './notif';
 // import { MDCDialog } from '@material/dialog';
 
 const selectPackage = async (packageId: number, option: number = 0, paymentMethod: string) => {
-    try {
-        const res = await axios.post(`/dashboard/packages/edit`, {
-            paymentMethod,
-            package: packageId,
-            option,
-        });
-        return res;
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log(error)
-        }
+    const data = {
+        paymentMethod,
+        package: packageId,
+        option,
+    };
+    const res = await doPost(`/dashboard/packages/edit`, data);
+    if (res) {
+        return res
     }
 }
 

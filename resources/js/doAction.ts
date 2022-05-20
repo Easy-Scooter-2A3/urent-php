@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { doPost } from './utils';
 
 const doAction = async (data: { [k: string]: any; }, action: string, mode: string) => {
     if (data.length === 0) {
@@ -17,16 +18,9 @@ const doAction = async (data: { [k: string]: any; }, action: string, mode: strin
         _token
     };
 
-    try {
-        const res = await axios.post(`/dashboard/admin/${mode}/action`, payload);
-        if (res.status === 200) {
-            console.log(res.data);
-            location.reload();
-        }
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log(error)
-        }
+    const res = await doPost(`/dashboard/admin/${mode}/action`, payload);
+    if (res) {
+        location.reload();
     }
 }
 

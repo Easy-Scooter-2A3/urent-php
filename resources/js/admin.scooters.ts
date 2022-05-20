@@ -3,6 +3,7 @@ import doAction from './doAction';
 import IScooter from './interfaces/scooter';
 import searchField from './searchField';
 import selectedRows from './selectedRows';
+import { doPost } from './utils';
 
 const checkAll = (checked: boolean) => {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
@@ -12,16 +13,9 @@ const checkAll = (checked: boolean) => {
 }
 
 const getDetails = async (scooters: (string | null)[]) => {
-    try {
-        const res = await axios.post(`/dashboard/admin/scooters/details`, {scooters});
-        if (res.status === 200) {
-            return res.data.data as IScooter[];
-        }
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log(error)
-        }
-        return null;
+    const res = await doPost(`/dashboard/packages/edit`, {scooters});
+    if (res) {
+        return res.data.data as IScooter[];
     }
 }
 
