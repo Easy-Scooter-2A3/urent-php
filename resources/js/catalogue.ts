@@ -1,5 +1,7 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import { MDCTextField } from '@material/textfield';
-import { filters, updateProducts } from './filters';
+import { filters } from './filters';
 import notification from './notif';
 import { doPost } from './utils';
 

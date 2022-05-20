@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import { doPost } from './utils';
 
 const doAction = async (data: { [k: string]: any; }, action: string, mode: string) => {
@@ -5,8 +7,8 @@ const doAction = async (data: { [k: string]: any; }, action: string, mode: strin
     console.log('Nothing selected');
     return;
   }
-  const _token = document.querySelector<HTMLInputElement>("[name='_token']")?.value;
-  if (!_token) {
+  const token = document.querySelector<HTMLInputElement>("[name='_token']")?.value;
+  if (!token) {
     console.error('Could not find CSRF token');
     return;
   }
@@ -14,7 +16,7 @@ const doAction = async (data: { [k: string]: any; }, action: string, mode: strin
   const payload = {
     data,
     action,
-    _token,
+    _token: token,
   };
 
   const res = await doPost(`/dashboard/admin/${mode}/action`, payload);

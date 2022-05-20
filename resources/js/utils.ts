@@ -22,14 +22,14 @@ const doPost = async (url: string, data: {[k: string]: any}) => {
   }
 };
 
-const doDelete = async (url: string, data: {[k: string]: any}) => {
+const doDelete = async (url: string) => {
   try {
-    return axios.delete(url, data);
+    return axios.delete(url, {});
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log(error);
     }
-    return false;
+    return error;
   }
 };
 
@@ -44,6 +44,17 @@ const doPut = async (url: string, data: {[k: string]: any}) => {
   }
 };
 
+const doPatch = async (url: string, data: {[k: string]: any}) => {
+  try {
+    return axios.patch(url, data);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log(error);
+    }
+    return false;
+  }
+};
+
 export {
-  doGet, doPost, doDelete, doPut,
+  doGet, doPost, doDelete, doPut, doPatch,
 };

@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import { MDCSwitch } from '@material/switch';
 import { MDCTextField } from '@material/textfield';
 import Iproduct from './interfaces/product';

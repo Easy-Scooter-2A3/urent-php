@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import { MDCTextField } from '@material/textfield';
 import { MDCCheckbox } from '@material/checkbox';
 import { doGet, doPost } from './utils';

@@ -12,26 +12,21 @@ class GetPartnershipsDetails
 {
     use AsAction;
 
-    public function handle($partnershipsIds)
+    public function handle($partnershipsId)
     {
-        $partnerships = [];
-        foreach ($partnershipsIds as $key => $partnershipId) {   
-            $partnership = Partnership::where('id',$partnershipId)->get();
-            $users = GetPartnershipUsers::run($partnership->pluck('id'));
 
-            //TODO: add products
+        //TODO: check   -> data   or ['data']
+        $partnership = Partnership::find($partnershipsId);
+        $users = GetPartnershipUsers::run($partnership->pluck('id'))->data;
+        $products = GetPartnershipProductsList::run($partnership->pluck('id'))->data;
 
-            $partnerships[$partnershipId]['partnership'] = $partnership;
-            $partnerships[$partnershipId]['users'] = $users['users']; 
-        }
-
-        return ['success' => true, 'data' => $partnerships];
+        return ['success' => true, 'partnership' => $partnership, 'users' => $users, 'products' => $products];
     }
 
     public function asController(Request $request)
     {
         return $this->handle(
-            $request->input('partnershipsIds')
+            $request->input('partnershipsId')
         );
     }
 }

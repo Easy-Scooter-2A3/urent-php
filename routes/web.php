@@ -30,6 +30,10 @@ use App\Actions\Partnership\CreatePartnership;
 use App\Actions\Partnership\EditPartnership;
 use App\Actions\Partnership\GetPartnershipsDetails;
 use App\Actions\Partnership\GetPartnershipProductsList;
+
+use App\Actions\User\SetUserActivation;
+use App\Actions\User\SetUserRole;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,6 +47,9 @@ use App\Actions\Partnership\GetPartnershipProductsList;
 
 Route::get('/', [Index::class, 'index'])->name('index');
 Route::get('/logout', [Index::class, 'logout']);
+
+Route::patch('/user/{id}/activation', SetUserActivation::class)->middleware('admin')->name('user.edit.activation');
+Route::patch('/user/{id}/role', SetUserRole::class)->middleware('admin')->name('user.edit.role');
 
 Route::get('/forgot-password', [Authentication::class, 'forgotPassword'])->middleware('guest')->name('forgot-password');
 Route::post('/forgot-password', [Authentication::class, 'forgotPasswordSubmit']);
@@ -82,6 +89,7 @@ Route::get('/dashboard/admin/partnerships', [Dashboard::class, 'partnerships'])-
 Route::post('/dashboard/admin/partnerships', CreatePartnership::class)->middleware("admin")->name('admin.partnerships');
 Route::put('/dashboard/admin/partnerships/{id}', EditPartnership::class)->middleware("admin")->name('admin.partnerships.edit');
 Route::get('/dashboard/admin/partnerships/{id}/list', GetPartnershipProductsList::class)->middleware("admin")->name('admin.partnerships.list');
+Route::post('/dashboard/admin/partnership/details', GetPartnershipsDetails::class)->middleware("admin")->name('admin.products.details');
 
 Route::get('/weather', [Weather::class, 'list'])->middleware('admin')->name('weather');
 
@@ -98,6 +106,5 @@ Route::post('/dashboard/admin/products', CreateProduct::class)->middleware("admi
 Route::put('/dashboard/admin/products/{id}', EditProduct::class)->middleware("admin")->name('admin.products.edit');
 Route::post('/dashboard/admin/products/delete', DeleteProduct::class)->middleware("admin")->name('admin.products.delete');
 Route::post('/dashboard/admin/products/details', GetProductsDetails::class)->middleware("admin")->name('admin.products.details');
-Route::post('/dashboard/admin/partnership/details', GetPartnershipsDetails::class)->middleware("admin")->name('admin.products.details');
 
 Route::get('/getwaypoints', GetWaypoints::class)->middleware('auth')->name('getwaypoints');

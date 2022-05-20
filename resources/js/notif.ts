@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import { MDCSnackbar } from '@material/snackbar';
 
 const notification = (msg: string, timeout: number = 5000) => {

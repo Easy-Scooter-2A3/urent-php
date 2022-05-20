@@ -1,11 +1,11 @@
-import axios from 'axios';
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import IUser from './interfaces/user';
 import searchField from './searchField';
 import selectedRows from './selectedRows';
 import doAction from './doAction';
-import { doPost } from './utils';
+import { doPatch, doPost } from './utils';
 import checkAll from './checkAll';
-
 
 const getDetails = async (user: (string | null)) => {
   const res = await doPost('/dashboard/admin/users/details', { user });
@@ -13,7 +13,7 @@ const getDetails = async (user: (string | null)) => {
     return res.data.data as IUser;
   }
   return null;
-}
+};
 
 (async () => {
   const searchInput = document.getElementById('searchField') as HTMLInputElement;
@@ -30,17 +30,20 @@ const getDetails = async (user: (string | null)) => {
     return;
   }
 
+  // eslint-disable-next-line max-len
   if ([searchInput, checkboxAll, viewDetailsBtn, toggleAdminBtn, toggleActivationUserBtn].some((el) => !el)) {
     console.error('Could not find one or more elements');
     return;
   }
 
+  // eslint-disable-next-line no-unused-vars
   checkboxAll.addEventListener('click', (_e: MouseEvent) => {
     console.log('checkbox-all clicked');
     checkAll(checkboxAll.checked, document);
   });
 
-  viewDetailsBtn.addEventListener('click', async (_e: MouseEvent) => {
+  // eslint-disable-next-line no-unused-vars
+  viewDetailsBtn.addEventListener('click', (_e: MouseEvent) => {
     detailsBody.innerHTML = '';
     console.log('viewDetailsBtn clicked');
     const usersRow = selectedRows('[userid]').map((element) => element.getAttribute('userid'));
@@ -88,22 +91,44 @@ const getDetails = async (user: (string | null)) => {
     });
   });
 
+  // eslint-disable-next-line no-unused-vars
   toggleAdminBtn.addEventListener('click', async (_e: MouseEvent) => {
     console.log('toggleAdminBtn clicked');
-    const users = selectedRows('[userid]').map((element) => element.getAttribute('userid'));
-    const data = {
-      users,
-    };
-    await doAction(data, 'toggleAdmin', 'users');
+    const usersRows = selectedRows('[userid]');
+
+    usersRows.forEach(async (userRow) => {
+      const userId = userRow.getAttribute('userid');
+      const isAdmin = userRow.getAttribute('isAdmin');
+
+      const data = {
+        role: !isAdmin,
+      };
+      const res = await doPatch(`/user/${userId}/role`, data);
+      if (res) {
+        // TODO: notification
+        alert(res.data);
+      }
+    });
   });
 
+  // eslint-disable-next-line no-unused-vars
   toggleActivationUserBtn.addEventListener('click', async (_e: MouseEvent) => {
     console.log('toggleActivationUserBtn clicked');
-    const users = selectedRows('[userid]').map((element) => element.getAttribute('userid'));
-    const data = {
-      users,
-    };
-    await doAction(data, 'toggleActivationUser', 'users');
+    const usersRows = selectedRows('[userid]');
+
+    usersRows.forEach(async (userRow) => {
+      const userId = userRow.getAttribute('userid');
+      const isActive = userRow.getAttribute('isActive');
+
+      const data = {
+        active: !isActive,
+      };
+      const res = await doPatch(`/user/${userId}/activation`, data);
+      if (res) {
+        // TODO: notification
+        alert(res.data);
+      }
+    });
   });
 
   searchInput.addEventListener('keyup', (e) => {

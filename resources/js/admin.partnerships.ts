@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import { MDCSwitch } from '@material/switch';
 import { MDCTextField } from '@material/textfield';
 import IPartnership from './interfaces/partnership';
@@ -6,6 +8,7 @@ import searchField from './searchField';
 import selectedRows from './selectedRows';
 import { doPost, doPut, doGet } from './utils';
 import checkAll from './checkAll';
+import IProduct from './interfaces/product';
 
 const toMDCTextField = (element: HTMLElement | null) => {
   if (!element || !element.parentElement) {
@@ -36,7 +39,7 @@ const modalFieldsCreation = {
 const getDetails = async (partnershipsId: (string | null)) => {
   const res = await doPost('/dashboard/admin/partnership/details', { partnershipsId });
   if (res) {
-    return res.data.data;
+    return [res.data.partnership, res.data.users, res.data.products];
   }
   return null;
 };
@@ -48,7 +51,7 @@ const fillFields = async (partnershipId: string) => {
     return;
   }
 
-  const data = await getDetails(partnershipId);
+  const data = await getDetails(partnershipId) as [IPartnership, IUser[], IProduct[]];
   if (!data) {
     console.error('Error getting data');
     return;
@@ -60,47 +63,42 @@ const fillFields = async (partnershipId: string) => {
     return;
   }
 
+  const [partnership, users, products] = data;
+
   // no interface
-  const products = new Set<string>(productsRes.data.data.map((x: any) => String(x.product_id)));
-  console.log(products);
+  // console.log(products);
+  const productsSet = new Set<string>(products.map((x: any) => String(x.product_id)));
   const productsFields = document.querySelectorAll<HTMLInputElement>('[productattribute-edit]');
-  console.log(productsFields);
   productsFields.forEach((element) => {
     const attr = element.getAttribute('productattribute-edit');
-    element.checked = products.has(attr ?? '');
+    // element is in the DOM, so it can be reassigned
+    // eslint-disable-next-line no-param-reassign
+    element.checked = productsSet.has(attr ?? '');
   });
 
-  for (const partnershipId2 in data) {
-    if (Object.prototype.hasOwnProperty.call(data, partnershipId2)) {
-      const fullData = data[partnershipId2] as {partnership: IPartnership[], users: IUser[]};
-      if (!fullData) {
-        console.error('Error getting data');
-        return;
-      }
+  const {
+    name, from_date, to_date, voucher, max_people, active,
+  } = partnership as IPartnership;
+  modalFieldsEdit.name.value = name;
+  modalFieldsEdit.from_date.value = from_date.split(' ')[0];
+  modalFieldsEdit.to_date.value = to_date.split(' ')[0];
+  modalFieldsEdit.voucher.value = String(voucher);
+  modalFieldsEdit.max_people.value = String(max_people);
+  modalFieldsEdit.active.selected = active;
 
-      const { partnership, users } = fullData;
-      if (!partnership || !users) {
-        console.error('Error getting data');
-        return;
-      }
+  users.forEach((user) => {
+    // TODO: check shadowing
+    const { id, name } = user as IUser;
+    const e = document.createElement('h2');
+    e.textContent = `${id} - ${name}`;
+    usersList.appendChild(e);
+  });
 
-      const {
-        name, from_date, to_date, voucher, max_people, active,
-      } = partnership.shift() as IPartnership;
-      modalFieldsEdit.name.value = name;
-      modalFieldsEdit.from_date.value = from_date.split(' ')[0];
-      modalFieldsEdit.to_date.value = to_date.split(' ')[0];
-      modalFieldsEdit.voucher.value = String(voucher);
-      modalFieldsEdit.max_people.value = String(max_people);
-      modalFieldsEdit.active.selected = active;
-
-      for (const user of users) {
-        const e = document.createElement('h2');
-        e.textContent = `${user.id} - ${user.name}`;
-        usersList.appendChild(e);
-      }
-    }
-  }
+  users.forEach((user) => {
+    const e = document.createElement('h2');
+    e.textContent = `${user.id} - ${user.name}`;
+    usersList.appendChild(e);
+  });
 };
 
 (async () => {
@@ -195,7 +193,7 @@ const fillFields = async (partnershipId: string) => {
       from_date: (new Date(modalFieldsEdit.from_date.value)).toUTCString(),
       to_date: (new Date(modalFieldsEdit.to_date.value)).toUTCString(),
       voucher: parseFloat(modalFieldsEdit.voucher.value),
-      max_people: parseInt(modalFieldsEdit.max_people.value),
+      max_people: parseInt(modalFieldsEdit.max_people.value, 10),
       active: modalFieldsEdit.active.selected,
       products: [...products],
     };

@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import doAction from './doAction';
 import IScooter from './interfaces/scooter';
 import searchField from './searchField';
@@ -11,7 +13,7 @@ const getDetails = async (scooter: (string | null)) => {
     return res.data.data as IScooter;
   }
   return null;
-}
+};
 
 (async () => {
   const confirmCreationBtn = document.getElementById('confirmCreationBtn') as HTMLButtonElement | null;
@@ -64,7 +66,7 @@ const getDetails = async (scooter: (string | null)) => {
     const scooterRows = selectedRows('[scooterid]').map((element) => element.getAttribute('scooterid'));
     const data = {
       scooters: scooterRows,
-    }
+    };
     await doAction(data, 'delete', 'scooters');
   });
 
