@@ -2,13 +2,14 @@ import { doGet, doPost } from './utils';
 import { filters, updateProducts } from './filters';
 import { MDCTextField } from '@material/textfield';
 import { MDCCheckbox } from '@material/checkbox';
+import notification from './notif';
 // import { loadStripe } from '@stripe/stripe-js';
 
 const setQuantity = async (productId: number, quantity: number) => {
     if (await doPost('/cart/set', { productId, quantity })) {
-        console.log('Added to cart'); //TODO: create notification
+        notification('Added to cart');
     } else {
-        console.log('Failed to add to cart'); //TODO: create notification
+        notification('Failed to add to cart');
     }
 }
 
@@ -136,10 +137,9 @@ const payment = async () => {
         console.log('paymentMethod');
         console.log(paymentMethod);
         if (await doPost('/cart/payment', {paymentMethod, total: await getCartTotal(), mode: 'cart'})) {
-            console.log('Payment done'); //TODO: create notification
             window.location.href = '/';
         } else {
-            console.log('Payment failed'); //TODO: create notification
+            notification('Payment failed');
         }
 
     });

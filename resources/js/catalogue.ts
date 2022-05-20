@@ -1,12 +1,13 @@
 import { MDCTextField } from '@material/textfield';
 import { filters, updateProducts } from './filters';
+import notification from './notif';
 import { doPost } from './utils';
 
 const addToCart = async (productId: number, quantity: number) => {
     if (await doPost('/cart/add', { productId, quantity })) {
-        console.log('Added to cart'); //TODO: create notification
+        notification('Added to cart');
     } else {
-        console.log('Failed to add to cart'); //TODO: create notification
+        notification('Failed to add to cart');
     }
 }
 
@@ -43,7 +44,7 @@ const addEVH = () => {
         const quantity = quantityMCD.value.length === 0 ? 1 : parseInt(quantityMCD.value);
 
         if (quantity === 0) {
-            console.log("Quantity is 0"); //TODO: create notification
+            notification('Quantity must be greater than 0');
             return;
         }
 

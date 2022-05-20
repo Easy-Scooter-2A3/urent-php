@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { doPost } from './utils'
 import { MDCCheckbox } from '@material/checkbox';
+import notification from './notif';
 // import { MDCDialog } from '@material/dialog';
 
 const selectPackage = async (packageId: number, option: number = 0, paymentMethod: string) => {
@@ -95,10 +96,10 @@ const payment = async () => {
         }
 
         if (await selectPackage(parseInt(pkg), parseInt(option ?? ''), paymentMethod)) {
-            console.log('Payment done'); //TODO: create notification
             window.location.href = '/dashboard/packages';
         } else {
-            console.log('Payment failed'); //TODO: create notification
+            notification('Payment failed');
+
         }
 
     });
@@ -119,7 +120,7 @@ const payment = async () => {
                 let option = checkOption();
                 if (i == 2) {
                     if (option == '') {
-                        alert('Please select an option'); //TODO: notification
+                        notification('Please select an option');
                         return;
                     }
                 }
