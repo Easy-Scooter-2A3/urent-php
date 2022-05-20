@@ -160,13 +160,10 @@ class Dashboard extends Controller
     }
 
     public function details(Request $request) {
-        $input = $request->input('users');
-        $users = [];
-        if (count($input) > 0) {
-            $users = User::whereIn('id', $input)->get();
-        };
+        $input = $request->input('user');
+        $user = User::find($input);
 
-        return response()->json(['success' => true, 'data' => $users]);
+        return response()->json(['success' => true, 'data' => $user]);
     }
 
     public function changeAdmin() {

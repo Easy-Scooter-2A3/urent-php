@@ -12,13 +12,9 @@ use function PHPUnit\Framework\isNull;
 class ScooterController extends Controller
 {
     public function details(Request $request) {
-        $input = $request->input('scooters');
-        $users = [];
-        if (count($input) > 0) {
-            $users = Scooter::whereIn('id', $input)->get();
-        };
+        $scooter = Scooter::find($request->input('scooter'));
 
-        return response()->json(['success' => true, 'data' => $users]);
+        return response()->json(['success' => true, 'data' => $scooter]);
     }
 
     public function action(Request $request) {

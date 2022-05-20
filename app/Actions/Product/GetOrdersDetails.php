@@ -19,12 +19,9 @@ class GetOrdersDetails
 
     public function handle($input)
     {
-        $orders = [];
-        if (count($input) > 0) {
-            $orders = Order::whereIn('id', $input)->get();
-        }
+        $order = Order::find($input);
 
-        return ['success' => true, 'data' => $orders];
+        return ['success' => true, 'data' => $order];
     }
     
 

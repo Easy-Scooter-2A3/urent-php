@@ -11,25 +11,24 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.ts('resources/js/app.ts', 'public/js')
-    mix.sass('resources/sass/app.sass', 'public/css',)
-    // Compile CSS using PostCSS
-    .postCss('resources/css/tailwindcss.css', 'public/css', [
-        require('tailwindcss')
-    ])
-    .ts('resources/js/utils.ts', 'public/js')
-    .ts('resources/js/checkRedirect.ts', 'public/js')
-    .ts('resources/js/weather/daybar.ts', 'public/js')
-    .ts('resources/js/weather/canvas.ts', 'public/js')
-    .ts('resources/js/admin.scooters.ts', 'public/js')
-    .ts('resources/js/admin.users.ts', 'public/js')
-    .ts('resources/js/admin.products.ts', 'public/js')
-    .ts('resources/js/searchField.ts', 'public/js')
-    .ts('resources/js/selectedRows.ts', 'public/js')
-    .ts('resources/js/doAction.ts', 'public/js')
-    .ts('resources/js/catalogue.ts', 'public/js')
-    .ts('resources/js/panier.ts', 'public/js')
-    .ts('resources/js/waypoints.ts', 'public/js')
-    .ts('resources/js/user.orders.ts', 'public/js')
-    .ts('resources/js/admin.partnerships.ts', 'public/js')
-    .ts('resources/js/user.packages.ts', 'public/js');
+mix.sass('resources/sass/app.sass', 'public/css')
+// Compile CSS using PostCSS
+  .postCss('resources/css/tailwindcss.css', 'public/css', [
+    require('tailwindcss'),
+  ])
+  .ts('resources/js/utils.ts', 'public/js')
+  .ts('resources/js/checkRedirect.ts', 'public/js')
+  .ts('resources/js/weather/daybar.ts', 'public/js')
+  .ts('resources/js/weather/canvas.ts', 'public/js')
+  .ts('resources/js/admin.scooters.ts', 'public/js')
+  .ts('resources/js/admin.users.ts', 'public/js')
+  .ts('resources/js/admin.products.ts', 'public/js')
+  .ts('resources/js/searchField.ts', 'public/js')
+  .ts('resources/js/selectedRows.ts', 'public/js')
+  .ts('resources/js/doAction.ts', 'public/js')
+  .ts('resources/js/catalogue.ts', 'public/js')
+  .ts('resources/js/panier.ts', 'public/js')
+  .ts('resources/js/waypoints.ts', 'public/js')
+  .ts('resources/js/user.orders.ts', 'public/js')
+  .ts('resources/js/admin.partnerships.ts', 'public/js')
+  .ts('resources/js/user.packages.ts', 'public/js');
