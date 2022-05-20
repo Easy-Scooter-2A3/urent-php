@@ -25,6 +25,7 @@ use App\Actions\Product\GetWaypoints;
 use App\Actions\Product\SingleCharge;
 use App\Actions\Product\GetOrdersDetails;
 use App\Actions\Product\GetOrderProducts;
+use App\Actions\Product\GenerateInvoice;
 
 
 /*
@@ -63,6 +64,7 @@ Route::get('/dashboard/stripe-portal', function (Request $request) {
 })->name('dashboard.stripe-portal');
 
 Route::get('/dashboard/orders', [Dashboard::class, 'orders'])->middleware('auth')->name('user.orders');
+Route::get('/dashboard/orders/pdf/{orderId}', GenerateInvoice::class)->middleware('auth')->name('user.pdf');
 
 Route::get('/dashboard/weather', [Dashboard::class, 'weather'])->middleware('auth')->name('dashboard_weather');
 Route::get('/dashboard/invoices', [Dashboard::class, 'invoices'])->middleware('auth')->name('dashboard_invoices');

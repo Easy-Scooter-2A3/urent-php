@@ -53,6 +53,7 @@ const getOrderContent = async (orderId: number) => {
 
     const searchInput = document.getElementById("searchField") as HTMLInputElement | null;
     const viewDetailsBtn = document.getElementById('viewDetailsBtn') as HTMLButtonElement | null;
+    const getOrdersBtn = document.getElementById('getOrdersBtn') as HTMLButtonElement | null;
 
     const detailsBody = document.getElementById('modal-details-body') as HTMLElement | null;
     const detailsBodyTemplate = document.getElementById('modal-details-body-template') as HTMLTemplateElement | null;
@@ -74,6 +75,11 @@ const getOrderContent = async (orderId: number) => {
 
     if (!searchInput || !viewDetailsBtn) {
         console.error("Could not find search input");
+        return;
+    }
+
+    if(!getOrdersBtn) {
+        console.error("Could not find getOrdersBtn");
         return;
     }
 
@@ -232,6 +238,23 @@ const getOrderContent = async (orderId: number) => {
             }
         }
     });
+
+    getOrdersBtn.addEventListener('click', async function (e: MouseEvent) {
+        const _orders = selectedRows("[orderid]").map((element) => element.getAttribute("orderid"));
+        if (_orders.length === 0) {
+            return;
+        }
+
+        const orders = await getDetails(_orders) as IOrder[];
+        if (!orders) {
+            console.error("Could not get details");
+            return;
+        }
+
+        const url = `/dashboard/orders/pdf/${orders[0].id}`;
+        window.location.href = url;
+        
+    })
 
     searchInput.addEventListener('keyup', (e) => {
         searchField(e, 1, '[orderidParent]');
