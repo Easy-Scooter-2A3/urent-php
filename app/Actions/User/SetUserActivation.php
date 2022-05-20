@@ -23,7 +23,7 @@ class SetUserActivation
     public function asController(Request $request, int $id)
     {
         return $this->handle(
-            $request->input('role'),
+            $request->input('active'),
             $id
         );
     }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 
 
-class SetUserStatus
+class SetUserRole
 {
     use AsAction;
 
@@ -23,7 +23,7 @@ class SetUserStatus
     public function asController(Request $request, int $id)
     {
         return $this->handle(
-            $request->input('active'),
+            $request->input('role'),
             $id
         );
     }
