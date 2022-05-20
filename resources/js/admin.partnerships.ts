@@ -3,10 +3,9 @@ import IPartnership from './interfaces/partnership';
 import IUser from './interfaces/user';
 import searchField from './searchField';
 import selectedRows from './selectedRows';
-import { doPost, doDelete, doPut, doGet } from './utils';
+import { doPost, doPut, doGet } from './utils';
 import { MDCSwitch } from '@material/switch';
 import { MDCTextField } from '@material/textfield';
-import IProduct from './interfaces/product';
 
 const toMDCTextField = (element: HTMLElement | null) => {
     if (!element || !element.parentElement) {
@@ -231,22 +230,22 @@ const fillFields = async (partnershipId: string) => {
         return;
     }
 
-    checkboxes.main.addEventListener('click', function (e: MouseEvent) {
+    checkboxes.main.addEventListener('click', function (_e: MouseEvent) {
         console.log('checkbox-all clicked');
         checkAll(checkboxes.main.checked, checkboxes.mainParent);
     });
 
-    checkboxes.edit.addEventListener('click', function (e: MouseEvent) {
+    checkboxes.edit.addEventListener('click', function (_e: MouseEvent) {
         console.log('checkbox-all edit clicked');
         checkAll(checkboxes.edit.checked, checkboxes.editParent);
     });
 
-    checkboxes.creation.addEventListener('click', function (e: MouseEvent) {
+    checkboxes.creation.addEventListener('click', function (_e: MouseEvent) {
         console.log('checkbox-all creation clicked');
         checkAll(checkboxes.creation.checked, checkboxes.creationParent);
     });
 
-    searchInput.addEventListener('keyup', (e) => {
-        searchField(e, 1, '[partnershipidParent]');
+    searchInput.addEventListener('keyup', (_e) => {
+        searchField(_e, 1, '[partnershipidParent]');
     });
 })();

@@ -81,12 +81,12 @@ const getDetails = async (scooters: (string | null)[]) => {
         await doAction(data, 'create', 'scooters');
     });
 
-    checkboxAll.addEventListener('click', function (e: MouseEvent) {
+    checkboxAll.addEventListener('click', function (_e: MouseEvent) {
         console.log('checkbox-all clicked');
         checkAll(checkboxAll.checked);
     });
 
-    viewDetailsBtn.addEventListener('click', async function (e: MouseEvent) {
+    viewDetailsBtn.addEventListener('click', async function (_e: MouseEvent) {
         detailsBody.innerHTML = "";
         console.log('viewDetailsBtn clicked');
         const _scooters = selectedRows("[scooterid]").map((element) => element.getAttribute("scooterid"));

@@ -110,8 +110,8 @@
                                     </div>
                                 </td>
 
-                                <td class="mdc-data-table__cell" scope="row">{{ $attribute->name }}</td>
-                                <td class="mdc-data-table__cell" scope="row">TODO</td>
+                                <td class="mdc-data-table__cell">{{ $attribute->name }}</td>
+                                <td class="mdc-data-table__cell">TODO</td>
                               </tr>
                             @endforeach
                             </tbody>

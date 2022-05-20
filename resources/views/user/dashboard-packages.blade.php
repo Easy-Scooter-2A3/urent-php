@@ -3,7 +3,7 @@
 <div class="p-4 gap-3 xl:w-2/12 lg:w-1/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md justify-between">
     <h1 class="text-center text-2xl">Pay as you go 
         @if ($current_package == 1)
-        <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</i>
+        <em class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</em>
         @endif
     </h1>
 
@@ -32,7 +32,7 @@
 <div class="p-4 gap-3 xl:w-2/12 lg:w-1/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md justify-between">
     <h1 class="text-center text-2xl">Mensuel
         @if ($current_package == 2)
-        <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</i>
+        <em class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</em>
         @endif
     </h1>
 
@@ -110,7 +110,7 @@
 <div class="p-4 gap-3 xl:w-2/12 lg:w-1/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md justify-between">
     <h1 class="text-center text-2xl">Journalier
         @if ($current_package == 3)
-        <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</i>
+        <em class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</em>
         @endif
     </h1>
 

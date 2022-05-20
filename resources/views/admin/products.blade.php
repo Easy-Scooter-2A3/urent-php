@@ -22,7 +22,7 @@
                         <label for="{{$product->id}}-label" class="sr-only">checkbox</label>
                     </div>
                 </td>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                <th  class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                     {{ $product->name }}
                 </th>
                 <td class="px-6 py-4">

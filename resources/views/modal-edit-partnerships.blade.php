@@ -121,8 +121,8 @@
                                 </div>
                             </td>
 
-                            <td class="mdc-data-table__cell" scope="row">{{ $product->name }}</td>
-                            <td class="mdc-data-table__cell" scope="row">{{ $product->price }} €</td>
+                            <td class="mdc-data-table__cell" >{{ $product->name }}</td>
+                            <td class="mdc-data-table__cell" >{{ $product->price }} €</td>
                           </tr>
                         @endforeach
                         </tbody>
