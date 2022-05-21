@@ -55,6 +55,13 @@ const doPatch = async (url: string, data: {[k: string]: any}) => {
   }
 };
 
+function* range(start: number, end: number): Generator<number> {
+  yield start;
+  if (start < end) {
+    yield* range(start + 1, end);
+  }
+}
+
 export {
-  doGet, doPost, doDelete, doPut, doPatch,
+  doGet, doPost, doDelete, doPut, doPatch, range,
 };
