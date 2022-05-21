@@ -1,4 +1,4 @@
-<footer class="darkBackground flex justify-evenly pt-5 fixed bottom-0">
+<footer class="darkBackground flex justify-evenly pt-5">
     <div class="flex justify-between w-10/12 mt-5 text-white border-slate-200 border-t-2">
         <hr>
         <ul class="flex w-3/6">

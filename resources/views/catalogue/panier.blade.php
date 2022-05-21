@@ -210,4 +210,3 @@
 
 </body>
 <script src="/js/panier.js"></script>
-@include('footer')

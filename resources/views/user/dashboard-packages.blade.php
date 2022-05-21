@@ -1,4 +1,6 @@
-@include('modal-payment')
+@if (!Auth::guest())
+    @include('modal-payment')
+@endif
 
 <div class="p-4 gap-3 xl:w-2/12 lg:w-1/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md justify-between">
     <h1 class="text-center text-2xl">Pay as you go 
@@ -138,6 +140,7 @@
         @endcomponent
     </div>
 
-
+    @if (!Auth::guest())
     <script src="/js/user.packages.js"></script>
+    @endif
 </div>

@@ -191,4 +191,3 @@
 
 </body>
 <script src="/js/catalogue.js"></script>
-@include('footer')
