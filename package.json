@@ -28,13 +28,17 @@
         "typescript": "^4.6.2"
     },
     "dependencies": {
+        "@kurkle/color": "^0.1.9",
         "@material/checkbox": "^14.0.0",
         "@material/dialog": "^14.0.0",
         "@material/snackbar": "^14.0.0",
         "@material/switch": "^14.0.0",
         "@material/textfield": "^14.0.0",
         "axios": "^0.25",
+        "chart.js": "^3.7.1",
+        "chartjs-adapter-luxon": "^1.1.0",
         "flowbite": "^1.4.1",
+        "luxon": "^2.4.0",
         "material-components-web": "^13.0.0"
     }
 }
