@@ -12,12 +12,17 @@ class Index extends Controller
 {
     public function index(Request $request)
     {
+        $packages = Package::all();
+        if (Auth::guest()) {
+            return view('index', [
+                'current_package' => null,
+                'packages' => $packages,
+            ]);
+        }
+
         $currentPackage = GetCurrentPackage::run($request->user());
         $package = Package::where('id', $currentPackage)->first();
-        $packages = Package::all();
         // TODO: translate package name
-
-        $partner = GetUserPartnerships::run($request->user()->id);
 
         return view('index', [
             'current_package' => $package->type,
