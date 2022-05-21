@@ -91,7 +91,7 @@ Route::put('/dashboard/admin/partnerships/{id}', EditPartnership::class)->middle
 Route::get('/dashboard/admin/partnerships/{id}/list', GetPartnershipProductsList::class)->middleware("admin")->name('admin.partnerships.list');
 Route::post('/dashboard/admin/partnership/details', GetPartnershipsDetails::class)->middleware("admin")->name('admin.products.details');
 
-Route::get('/weather', [Weather::class, 'list'])->middleware('admin')->name('weather');
+Route::get('/weather/{day}', [Weather::class, 'list'])->middleware('admin')->name('weather');
 
 Route::post('/dashboard/packages/edit', EditUserPackage::class)->middleware('auth')->name('user.packages.edit');
 

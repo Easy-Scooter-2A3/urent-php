@@ -9,8 +9,11 @@ class GetCurrentPackage
 {
     use AsAction;
 
-    public function handle(User $user)
+    public function handle(User $user = null)
     {
+        if ($user == null) {
+            return null;
+        }
         $currentPackage = users_packages::where('user', $user->id)->first();
         if ($currentPackage) {
             return $currentPackage->package;
