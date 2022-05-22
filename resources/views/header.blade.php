@@ -8,11 +8,12 @@
             <ul class="flex gap-9 items-center">
                 <li class="hover:text-red-600 m-2">
                     <a href="/">
-                        HOME
+                        Home
                     </a>
                 </li>
-                <li class="hover:text-red-600 m-2">Application</li>
-                <li class="hover:text-red-600 m-2">About us</li>
+                <li class="hover:text-red-600 m-2"><a href="/demo">Demo</a></li>
+                <li class="hover:text-red-600 m-2"><a href="/catalogue">Catalogue</a></li>
+                <li class="hover:text-red-600 m-2"><a href="#">About us</a></li>
                 <li>
                     <button data-dropdown-toggle="userDropdown" type="button">
                         <span class="mdc-button__ripple"></span>
@@ -47,6 +48,9 @@
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                     <li>
                         <a href="{{ route('dashboard') }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/cart" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cart</a>
                     </li>
                     <li>
                         <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
