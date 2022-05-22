@@ -44,7 +44,7 @@ use App\Actions\User\SetUserRole;
 | contains the "web" middleware group. Now create something great!
 |
 */
-    Route::redirect('/', '/en');
+    Route::redirect('/', app()->getLocale());
 
 Route::group(['prefix' => '{language}'], function () {
 
