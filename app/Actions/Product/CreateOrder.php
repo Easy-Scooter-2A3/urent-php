@@ -15,7 +15,7 @@ class CreateOrder
 {
     use AsAction;
 
-    public function handle($total, $paymentMethod, $recu)
+    public function handle($total, $paymentMethod, $recu, $voucher = null)
     {
         $userId = auth()->user()->id;
         $cart = Cart::where('user_id', $userId)->get();
@@ -39,6 +39,7 @@ class CreateOrder
             'total_discount' => 0.0,
             'payment_method' => $paymentMethod,
             'recu' => $recu,
+            'voucher' => $voucher,
         ]);
 
         foreach ($cart as $item) {

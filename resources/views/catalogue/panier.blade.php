@@ -54,7 +54,7 @@
                     <thead>
                       <tr class="mdc-data-table__header-row">
                         <th class="mdc-data-table__header-cell" role="columnheader" scope="col">
-                          <h2 class="text-lg">Total : <span id="cart-total">{{ $total }}</span> €</h2>
+                          <h2 class="text-lg">Total : <span id="cart-total">{{ $total }}</span> € (Voucher(s) included)</h2>
                         </th>
                         <th class="mdc-data-table__header-cell w-2/6" role="columnheader" scope="col">
                           @component('components.button', [
