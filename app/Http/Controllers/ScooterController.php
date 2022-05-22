@@ -30,34 +30,6 @@ class ScooterController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function action(Request $request) {
-        $action = $request->input('action');
-        $data = $request->input('data');
-
-        switch ($action) {
-            case 'create':
-                $validator = Validator::make($data, [
-                    'model' => ['required', 'string', 'max:255'],
-                    'status' => ['required', 'string', 'max:255'],
-                ])->validate();
-
-                $scooter = new Scooter([
-                    'model' => $data['model'],
-                    'status' => $data['status'],
-                ]);
-
-                if (!isNull($request->status)) {
-                    $scooter->status = 'available';
-                }
-                $scooter->save();
-                break;
-            default:
-                break;
-        }
-
-        return response()->json(['success' => true, 'action' => $action]);
-    }
-
     public function list(Request $request) { 
         return response()->json(['data' => Scooter::all()]);
     }

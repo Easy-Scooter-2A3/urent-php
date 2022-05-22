@@ -103,6 +103,9 @@ Route::controller(Dashboard::class)->group(function () {
                 Route::get('/', 'scooter')->name('admin.scooters');
                 Route::post('/action', [ScooterController::class, 'action'])->name('admin.scooters.action');
                 Route::post('/details', [ScooterController::class, 'details'])->name('admin.scooters.details');
+
+                Route::post('/create', [ScooterController::class, 'create'])->middleware("admin")->name('admin.scooters.create');
+                Route::post('/delete', [ScooterController::class, 'delete'])->middleware("admin")->name('admin.scooters.delete');
             });
 
             Route::group(['prefix' => 'products'], function () {

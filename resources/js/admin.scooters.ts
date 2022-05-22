@@ -1,6 +1,5 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
-import doAction from './doAction';
 import IScooter from './interfaces/scooter';
 import searchField from './searchField';
 import selectedRows from './selectedRows';
@@ -67,15 +66,19 @@ const getDetails = async (scooter: (string | null)) => {
     const data = {
       scooters: scooterRows,
     };
-    await doAction(data, 'delete', 'scooters');
+    if (await doPost('/dashboard/admin/scooters/delete', data)) {
+      window.location.reload();
+    }
   });
 
   confirmCreationBtn.addEventListener('click', async (_e: MouseEvent) => {
     const data = {
       model: modalCreationModel.value,
       status: modalCreationStatus.value,
+    };
+    if (await doPost('/dashboard/admin/scooters/create', data)) {
+      window.location.reload();
     }
-    await doAction(data, 'create', 'scooters');
   });
 
   checkboxAll.addEventListener('click', (_e: MouseEvent) => {
