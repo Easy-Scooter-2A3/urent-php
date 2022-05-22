@@ -92,13 +92,12 @@
                               </div>
                             </div>
                         </td>
-                        {{-- TODO: rework --}}
                         <td class="mdc-data-table__cell">
                             <div class="flex flex-col justify-around">
                                 <ul class="list-disc mb-5">
                                     @isset($attributesList[$product->id])
                                         @foreach ($attributesList[$product->id] as $attribute)
-                                        <li attr={{ $attributes[$attribute]['id'] }} class="text-lg">{{ $attributes[$attribute]['name'] }}</li>
+                                        <li attr={{ $attributes[$attribute->attribute_id]->id }} class="text-lg">{{ $attributes[$attribute->attribute_id]->name }}</li>
                                         @endforeach
                                     @endisset
                                 </ul>
