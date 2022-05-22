@@ -11,7 +11,12 @@ class Catalogue extends Controller
 {
     public function index()
     {
-        $data = GetProductsDetails::run();
+        $products = Product::all()->pluck('id');
+        foreach ($products as $key => $product) {
+            $tmp = GetProductsDetails::run($product);
+            $data['data'][] = $tmp['data'];
+            $data['attributes'][] = $tmp['attributes'];
+        }
 
         return view('catalogue.catalogue', [
             'attributes' => Attribute::all(),
