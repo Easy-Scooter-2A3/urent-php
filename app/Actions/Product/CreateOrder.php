@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\order_product;
+use App\Models\User;
 
 class CreateOrder
 {
@@ -16,7 +17,8 @@ class CreateOrder
 
     public function handle($total, $paymentMethod, $recu)
     {
-        $cart = Cart::where('user_id', auth()->user()->id)->get();
+        $userId = auth()->user()->id;
+        $cart = Cart::where('user_id', $userId)->get();
 
         foreach ($cart as $item) {
             $product = Product::find($item->product_id);
@@ -24,10 +26,10 @@ class CreateOrder
             $product->save();
         }
 
-        Cart::where('user_id', auth()->user()->id)->delete();
+        Cart::where('user_id', $userId)->delete();
 
         Order::create([
-            'user_id' => Auth()->user()->id,
+            'user_id' => $userId,
             'status' => 'pending',
             'delivery_place' => 'ratio',
             'delivery_date' => date('Y-m-d H:i:s', strtotime('+1 day')),
@@ -41,11 +43,20 @@ class CreateOrder
 
         foreach ($cart as $item) {
             order_product::create([
-                'order_id' => Order::where('user_id', Auth()->user()->id)->orderBy('created_at', 'desc')->first()->id,
+                'order_id' => Order::where('user_id', $userId)->orderBy('created_at', 'desc')->first()->id,
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
             ]);
         }
+
+        $user = User::find($userId);
+
+        $priceInEuro = $total / 100.0;
+
+        $bonusNb = floor($priceInEuro / 100);
+        
+        $user->fidelity_points += intval((1 * $bonusNb) + round(0.3 * $priceInEuro));
+        $user->save();
 
         return response()->json(['success' => true]);
     }
