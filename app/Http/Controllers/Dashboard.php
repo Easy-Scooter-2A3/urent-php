@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Actions\Package\GetCurrentPackage;
 use App\Actions\Partnership\GetPartnerships;
-use App\Actions\Partnership\GetUserPartnerships;
+use App\Actions\Partnership\GetUserPartnership;
 
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -13,6 +13,7 @@ use App\Models\Attribute;
 use App\Models\Order;
 use App\Models\users_packages;
 use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 class Dashboard extends Controller
 {
@@ -37,14 +38,13 @@ class Dashboard extends Controller
         $package = Package::where('id', $currentPackage)->first();
         // TODO: translate package name
 
-        $partner = GetUserPartnerships::run($request->user()->id);
+        $partner = GetUserPartnership::run($request->user()->id);
 
         return view('dashboard', [
             'view' => 'user.dashboard-account',
             'collection' => $this->collection,
             'current_package' => $package->type,
-            'partnerships' => $partner['partnerships'],
-            'userPartnerships' => $partner['userPartnerships'],
+            'partnership' => $partner['partnership'] ?? null,
         ]);
     }
 

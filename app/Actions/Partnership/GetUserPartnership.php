@@ -8,16 +8,19 @@ use App\Models\Partnership;
 use App\Models\partnership_user;
 
 
-class GetUserPartnerships
+class GetUserPartnership
 {
     use AsAction;
 
     public function handle(int $userId)
     {
-        $userPartnerships = partnership_user::where('user_id', $userId)->get();
-        $partnerships = Partnership::whereIn('id', $userPartnerships->pluck('partnership_id'))->get();
+        $partnership = null;
+        $userPartnership = partnership_user::where('user_id', $userId)->first();
+        if ($userPartnership) {
+            $partnership = Partnership::where('id', $userPartnership->partnership_id)->first();
+        }
 
-        return ['success' => true, 'partnerships' => $partnerships, 'userPartnerships' => $userPartnerships];
+        return ['success' => true, 'partnership' => $partnership];
     }
 
     public function asController(Request $request)

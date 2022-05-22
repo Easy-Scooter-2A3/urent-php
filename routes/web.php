@@ -46,6 +46,9 @@ use App\Actions\User\ConvertUserFidelity;
 |
 */
 Route::redirect('/', app()->getLocale());
+Route::get('/dashboard/stripe-portal', function (Request $request) {
+    return $request->user()->redirectToBillingPortal(route('index'));
+})->name('dashboard.stripe-portal');
 
 Route::group(['prefix' => '{language}'], function () {
     Route::get('/', [Index::class, 'index'])->name('index');
@@ -79,9 +82,7 @@ Route   ::post('/dashboard/packages/edit', EditUserPackage::class)->middleware('
     Route::controller(Dashboard::class)->group(function () {
 
         Route::get('/dashboard', 'index')->middleware('auth')->name('dashboard');
-        Route::get('/dashboard/stripe-portal', function (Request $request) {
-            return $request->user()->redirectToBillingPortal(route('index'));
-        })->name('dashboard.stripe-portal');
+        
 
         Route::group(['prefix' => 'dashboard/admin'], function () {
             Route::middleware(['auth'])->group(function () {

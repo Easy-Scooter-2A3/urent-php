@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Actions\Package\GetCurrentPackage;
 use App\Models\Package;
-use App\Actions\Partnership\GetUserPartnerships;
 
 class Index extends Controller
 {
