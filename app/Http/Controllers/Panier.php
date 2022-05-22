@@ -16,13 +16,11 @@ class Panier extends Controller
         $cart = Cart::where('user_id', auth()->user()->id)->pluck('product_id')->toArray();
         
         $data = [];
-        if (count($cart) > 0) {
-            $data = GetProductsDetails::run($cart);
-        } else {
-            $data = [
-                'attributes' => [[]],
-                'data' => [],
-            ];
+        $quantity = [];
+        foreach ($cart as $key => $cartProduct) {
+            $tmp = GetProductsDetails::run($cartProduct);
+            $data['data'][] = $tmp['data'];
+            $data['attributes'][$cartProduct] = $tmp['attributes'];
         }
 
         $quantity = [];
@@ -34,7 +32,7 @@ class Panier extends Controller
 
         return view('catalogue.panier', [
             'attributes' => Attribute::all(),
-            'attributesList' => $data['attributes'][0],
+            'attributesList' => $data['attributes'],
             'products' => $data['data'],
             'quantity' => $quantity,
             'total' => $total['data']
