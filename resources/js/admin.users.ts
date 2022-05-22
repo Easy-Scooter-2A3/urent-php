@@ -3,7 +3,7 @@
 import IUser from './interfaces/user';
 import searchField from './searchField';
 import selectedRows from './selectedRows';
-import doAction from './doAction';
+import notification from './notif';
 import { doPatch, doPost } from './utils';
 import checkAll from './checkAll';
 
@@ -105,8 +105,7 @@ const getDetails = async (user: (string | null)) => {
       };
       const res = await doPatch(`/user/${userId}/role`, data);
       if (res) {
-        // TODO: notification
-        alert(res.data);
+        notification('success');
       }
     });
   });
@@ -125,8 +124,7 @@ const getDetails = async (user: (string | null)) => {
       };
       const res = await doPatch(`/user/${userId}/activation`, data);
       if (res) {
-        // TODO: notification
-        alert(res.data);
+        notification('success');
       }
     });
   });
