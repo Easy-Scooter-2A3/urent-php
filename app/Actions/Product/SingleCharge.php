@@ -20,9 +20,9 @@ class SingleCharge
         ];
     }
 
-    public function handle(string $paymentMethod, int $total, string $mode)
+    public function handle(string $paymentMethod, float $total, string $mode)
     {
-        $total *= 100;
+        $total *= 100.0;
 
         $payment = auth()->user()->charge(
             $total, $paymentMethod

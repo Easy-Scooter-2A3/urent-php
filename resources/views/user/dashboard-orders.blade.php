@@ -29,7 +29,7 @@
                     {{ $order->transporter }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $order->total_price }}
+                    {{ $order->total_price / 100.0 }} €
                 </td>
                 <td class="px-6 py-4">
                     {{ $order->created_at }}

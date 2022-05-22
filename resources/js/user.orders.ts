@@ -26,17 +26,6 @@ const toMDCTextField = (element: HTMLElement | null) => {
 const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/orders/${orderId}/content`);
 
 (async () => {
-  // const confirmEditBtn = document.getElementById('confirmEditBtn') as HTMLButtonElement | null;
-  // const confirmCreationBtn = document.getElementById('confirmCreationBtn') as HTMLButtonElement | null;
-  const modalCreationName = document.getElementById('modal-creation-name') as HTMLInputElement | null;
-  const modalCreationPrice = document.getElementById('modal-creation-price') as HTMLInputElement | null;
-  const modalCreationDesc = document.getElementById('modal-creation-description') as HTMLInputElement | null;
-  const modalCreationStock = document.getElementById('modal-creation-stock') as HTMLInputElement | null;
-  const _modalCreationAvailable = document.getElementById('modal-creation-available') as HTMLButtonElement | null;
-
-  // const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement | null;
-  // const editBtn = document.getElementById('editBtn') as HTMLButtonElement | null;
-
   const searchInput = document.getElementById('searchField') as HTMLInputElement | null;
   const viewDetailsBtn = document.getElementById('viewDetailsBtn') as HTMLButtonElement | null;
 
@@ -91,7 +80,7 @@ const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/order
         fields[5].textContent += order.transporter_tracking_number;
         fields[6].textContent += `${creationDate.toLocaleTimeString()} ${creationDate.toLocaleDateString()}`;
         fields[7].textContent += `${updatedDate.toLocaleTimeString()} ${updatedDate.toLocaleDateString()}`;
-        fields[8].textContent += `${order.total_price} €`;
+        fields[8].textContent += `${order.total_price / 100.0} €`;
         fields[9].textContent += 'Carte';
         fields[10].textContent += order.fidelityPoints; // TODO: add fidelity points
         fields[11].innerHTML += `<a href="${order.recu}">Voir le recu</a>`; // TODO: color
