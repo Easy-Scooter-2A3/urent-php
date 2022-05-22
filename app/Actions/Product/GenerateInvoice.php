@@ -25,7 +25,10 @@ class GenerateInvoice
         $file ='user.pdf';
         $pdf = pdf::loadView($file, ['order' => Order::find($id), 'product' => $product]);
         return $pdf->download('invoice.pdf'); 
-        return $pdf->stream();
+        // return $pdf->stream('invoice.pdf',
+        // [
+        //     'Attachment' => true
+        // ]);
         return ['success' => true];
     }
 
