@@ -68,6 +68,7 @@ const confirmMFA = async (CSRF: HTMLInputElement, MFADialogCode: HTMLInputElemen
   const MFADialogOpen = document.getElementById('mfa_dialog_open') as HTMLElement | null;
   const MFADialogMenu = document.getElementById('mfa_dialog2') as HTMLElement | null;
   const CSRF = document.querySelector('input[name="_token"]') as HTMLInputElement | null;
+
   if (!MFASwitchE
     || !CSRF) {
     console.error('Could not find one or more elements');

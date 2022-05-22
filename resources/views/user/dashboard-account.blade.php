@@ -75,6 +75,13 @@
         'href' => route('dashboard.stripe-portal'),
     ])
     @endcomponent
+
+    @component('components.button', [
+        'text' => 'Convert points',
+        'type' => 'button',
+        'id' => 'fidelityBtn',
+    ])
+    @endcomponent
     
     {{-- @include('dialogs.MFA') --}}
 

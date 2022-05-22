@@ -10,3 +10,4 @@
     </div>
 
 </body>
+<script src="/js/dialog.js"></script>

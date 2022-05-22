@@ -86,3 +86,5 @@
       </div>
     </div>
   </aside>
+
+@include('dialogs.yesno')

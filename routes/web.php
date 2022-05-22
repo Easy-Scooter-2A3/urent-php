@@ -33,6 +33,7 @@ use App\Actions\Partnership\GetPartnershipProductsList;
 
 use App\Actions\User\SetUserActivation;
 use App\Actions\User\SetUserRole;
+use App\Actions\User\ConvertUserFidelity;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,7 @@ Route::get('/', [Index::class, 'index'])->name('index');
 Route::get('/logout', [Index::class, 'logout']);
 Route::get('/catalogue', [Catalogue::class, 'index'])->middleware('auth')->name('catalogue');
 
+Route::post('/user/convertfidelity', ConvertUserFidelity::class)->middleware('auth')->name('user.convert.fidelity');
 Route::patch('/user/{id}/activation', SetUserActivation::class)->middleware('admin')->name('user.edit.activation');
 Route::patch('/user/{id}/role', SetUserRole::class)->middleware('admin')->name('user.edit.role');
 

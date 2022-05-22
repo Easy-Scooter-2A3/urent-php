@@ -17,14 +17,24 @@ class ScooterController extends Controller
         return response()->json(['success' => true, 'data' => $scooter]);
     }
 
+    public function create(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'model' => ['required', 'string', 'max:255'],
+            'status' => ['string', 'max:255', 'default:available'],
+        ])->validate();
+
+        Scooter::create([
+            'model' => $request->input('model'),
+            'status' => $request->input('status') ?? 'available',
+        ]);
+        return response()->json(['success' => true]);
+    }
+
     public function action(Request $request) {
         $action = $request->input('action');
         $data = $request->input('data');
 
         switch ($action) {
-            case 'delete':
-                Scooter::destroy($data['scooters']);
-                break;
             case 'create':
                 $validator = Validator::make($data, [
                     'model' => ['required', 'string', 'max:255'],
@@ -57,7 +67,7 @@ class ScooterController extends Controller
     }
 
     public function delete(Request $request) {
-        $status = Scooter::destroy($request->id);
+        $status = Scooter::destroy($request->input('scooters'));
         return response()->json(['success' => boolval($status)]);
     }
 
