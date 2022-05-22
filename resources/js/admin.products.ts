@@ -8,10 +8,10 @@ import selectedRows from './selectedRows';
 import { doPost, doPut } from './utils';
 import checkAll from './checkAll';
 
-const getDetails = async (products: (string | null)) => {
-  const res = await doPost('/dashboard/admin/product/details', { products });
+const getDetails = async (product: (string | null)) => {
+  const res = await doPost('/dashboard/admin/products/details', { product });
   if (res) {
-    return [res.data.data, res.data.attributes];
+    return [res.data.data, res.data.attributes.map((attribute: any) => attribute.attribute_id)];
   }
   return null;
 };

@@ -15,7 +15,7 @@ class GetProductsDetails
     public function rules()
     {
         return [
-            'products' => ['required'],
+            'product' => ['required'],
         ];
     }
 
