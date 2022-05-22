@@ -61,7 +61,6 @@
             'text' => 'Download order',
             'type' => 'button',
             'id' => 'getOrdersBtn',
-            'modal' => 'modal-details',
         ])
         @endcomponent
     </div>
