@@ -16,7 +16,7 @@ const setQuantity = async (productId: number, quantity: number) => {
 };
 
 const getCartTotal = async () => {
-  const data = await doGet('/cart/total');
+  const data = await doGet('/en/cart/total');
   if (!data) {
     return 0;
   }

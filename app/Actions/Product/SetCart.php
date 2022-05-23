@@ -13,10 +13,12 @@ class SetCart
 
     public function handle(int $productId, int $quantity)
     {
+        $userId = auth()->user()->id;
         $product = Product::find($productId);
+        $cart = Cart::where('user_id', $userId)->where('product_id', $productId)->first();
 
         if ($quantity == 0) {
-            Cart::destroy($productId);
+            $cart->delete();
             return response()->json(['success' => true]);
         }
 
@@ -24,13 +26,12 @@ class SetCart
             return response()->json(['success' => false, 'message' => 'Not enough stock']);
         }
 
-        $cart = Cart::where('user_id', auth()->user()->id)->where('product_id', $productId)->first();
         if ($cart) {
             $cart->quantity = $quantity;
             $cart->save();
         } else {
             Cart::create([
-                'user_id' => auth()->user()->id,
+                'user_id' => $userId,
                 'product_id' => $productId,
                 'quantity' => $quantity,
             ]);

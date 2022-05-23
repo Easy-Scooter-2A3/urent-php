@@ -13,7 +13,8 @@ class Panier extends Controller
 {
     public function index()
     {
-        $cart = Cart::where('user_id', auth()->user()->id)->pluck('product_id')->toArray();
+        $userId = auth()->user()->id;
+        $cart = Cart::where('user_id', $userId)->pluck('product_id')->toArray();
         
         $data = [];
         $quantity = [];
@@ -25,7 +26,7 @@ class Panier extends Controller
 
         $quantity = [];
         foreach ($data['data'] as $key => $product) {
-            $quantity[$product->id] = Cart::where('user_id', auth()->user()->id)->where('product_id', $product->id)->first()->quantity;
+            $quantity[$product->id] = Cart::where('user_id', $userId)->where('product_id', $product->id)->first()->quantity;
         }
 
         $total = GetCartTotal::run();

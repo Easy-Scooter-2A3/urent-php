@@ -37,7 +37,7 @@
                 </div>
                 <li class="hover:text-red-600 m-2">{{ __('About us') }}</li>
                 <li class="hover:text-red-600 m-2"><a href="/demo">Demo</a></li>
-                <li class="hover:text-red-600 m-2"><a href="/catalogue">Catalogue</a></li>
+                <li class="hover:text-red-600 m-2"><a href="{{ route('catalogue', app()->getLocale()) }}">Catalogue</a></li>
                 <li>
                     <button data-dropdown-toggle="userDropdown" type="button">
                         <span class="mdc-button__ripple"></span>
