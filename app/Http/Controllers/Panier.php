@@ -25,8 +25,14 @@ class Panier extends Controller
         }
 
         $quantity = [];
-        foreach ($data['data'] as $key => $product) {
-            $quantity[$product->id] = Cart::where('user_id', $userId)->where('product_id', $product->id)->first()->quantity;
+        if (count($cart) > 0) {
+            $quantity = Cart::where('user_id', $userId)->pluck('quantity', 'product_id')->toArray();
+            foreach ($data['data'] as $key => $product) {
+                $quantity[$product->id] = Cart::where('user_id', $userId)->where('product_id', $product->id)->first()->quantity;
+            }
+        } else {
+            $data['attributes'] = [];
+            $data['data'] = [];
         }
 
         $total = GetCartTotal::run();
