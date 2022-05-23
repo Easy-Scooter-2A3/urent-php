@@ -67,7 +67,7 @@ Route::group(['prefix' => '{language}'], function () {
 
     Route::post('/pay/package', SingleCharge::class)->middleware('auth')->name('cart.payment');
 
-Route   ::post('/dashboard/packages/edit', EditUserPackage::class)->middleware('auth')->name('user.packages.edit');
+    Route::post('/dashboard/packages/edit', EditUserPackage::class)->middleware('auth')->name('user.packages.edit');
 
     Route::group(['prefix' => 'cart'], function () {
         Route::middleware(['auth'])->group(function () {

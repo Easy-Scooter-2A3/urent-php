@@ -45,7 +45,7 @@ class EditPartnership
         }
     }
 
-    public function asController(Request $request, int $id)
+    public function asController(Request $request, string $lang, int $id)
     {
         $this->handle(
             $request->all(),

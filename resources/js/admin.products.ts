@@ -9,7 +9,7 @@ import { doPost, doPut } from './utils';
 import checkAll from './checkAll';
 
 const getDetails = async (product: (string | null)) => {
-  const res = await doPost('/dashboard/admin/products/details', { product });
+  const res = await doPost('/en/dashboard/admin/products/details', { product });
   if (res) {
     return [res.data.data, res.data.attributes.map((attribute: any) => attribute.attribute_id)];
   }
@@ -161,7 +161,7 @@ const fillFields = async (productId: string) => {
       products,
     };
 
-    if (await doPost('/dashboard/admin/products/delete', data)) {
+    if (await doPost('/en/dashboard/admin/products/delete', data)) {
       window.location.reload();
     }
   });
@@ -196,7 +196,7 @@ const fillFields = async (productId: string) => {
       attributes: [...attributes],
     };
 
-    if (await doPost('/dashboard/admin/products', data)) {
+    if (await doPost('/en/dashboard/admin/products', data)) {
       window.location.reload();
     }
   });
@@ -219,7 +219,7 @@ const fillFields = async (productId: string) => {
       attributes: [...attributes],
     };
 
-    if (await doPut(`/dashboard/admin/products/${id}`, data)) {
+    if (await doPut(`/en/dashboard/admin/products/${id}`, data)) {
       window.location.reload();
     }
   });

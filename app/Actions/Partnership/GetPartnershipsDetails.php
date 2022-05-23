@@ -17,8 +17,8 @@ class GetPartnershipsDetails
 
         //TODO: check   -> data   or ['data']
         $partnership = Partnership::find($partnershipsId);
-        $users = GetPartnershipUsers::run($partnership->pluck('id'))->data;
-        $products = GetPartnershipProductsList::run($partnership->pluck('id'))->data;
+        $users = GetPartnershipUsers::run($partnershipsId)['users'];
+        $products = GetPartnershipProductsList::run($partnershipsId)['data'];
 
         return ['success' => true, 'partnership' => $partnership, 'users' => $users, 'products' => $products];
     }

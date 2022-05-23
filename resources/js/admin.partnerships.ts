@@ -37,7 +37,7 @@ const modalFieldsCreation = {
 };
 
 const getDetails = async (partnershipsId: (string | null)) => {
-  const res = await doPost('/dashboard/admin/partnership/details', { partnershipsId });
+  const res = await doPost('/en/dashboard/admin/partnerships/details', { partnershipsId });
   if (res) {
     return [res.data.partnership, res.data.users, res.data.products];
   }
@@ -57,7 +57,7 @@ const fillFields = async (partnershipId: string) => {
     return;
   }
 
-  const productsRes = await doGet(`/dashboard/admin/partnerships/${partnershipId}/list`);
+  const productsRes = await doGet(`/en/dashboard/admin/partnerships/${partnershipId}/list`);
   if (!productsRes) {
     console.error('Error getting products');
     return;
@@ -173,7 +173,7 @@ const fillFields = async (partnershipId: string) => {
 
     console.log(data);
 
-    if (await doPost('/dashboard/admin/partnerships', data)) {
+    if (await doPost('/en/dashboard/admin/partnerships', data)) {
       window.location.reload();
     }
   });
@@ -198,7 +198,7 @@ const fillFields = async (partnershipId: string) => {
       products: [...products],
     };
 
-    if (await doPut(`/dashboard/admin/partnerships/${id}`, data)) {
+    if (await doPut(`/en/dashboard/admin/partnerships/${id}`, data)) {
       window.location.reload();
     }
   });

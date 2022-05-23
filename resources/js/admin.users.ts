@@ -8,7 +8,7 @@ import { doPatch, doPost } from './utils';
 import checkAll from './checkAll';
 
 const getDetails = async (user: (string | null)) => {
-  const res = await doPost('/dashboard/admin/users/details', { user });
+  const res = await doPost('/en/dashboard/admin/users/details', { user });
   if (res) {
     return res.data.data as IUser;
   }

@@ -7,7 +7,7 @@ import { doPost } from './utils';
 import checkAll from './checkAll';
 
 const getDetails = async (scooter: (string | null)) => {
-  const res = await doPost('/dashboard/admin/scooters/details', { scooter });
+  const res = await doPost('/en/dashboard/admin/scooters/details', { scooter });
   if (res) {
     return res.data.data as IScooter;
   }
@@ -66,7 +66,7 @@ const getDetails = async (scooter: (string | null)) => {
     const data = {
       scooters: scooterRows,
     };
-    if (await doPost('/dashboard/admin/scooters/delete', data)) {
+    if (await doPost('/en/dashboard/admin/scooters/delete', data)) {
       window.location.reload();
     }
   });
@@ -76,7 +76,7 @@ const getDetails = async (scooter: (string | null)) => {
       model: modalCreationModel.value,
       status: modalCreationStatus.value,
     };
-    if (await doPost('/dashboard/admin/scooters/create', data)) {
+    if (await doPost('/en/dashboard/admin/scooters/create', data)) {
       window.location.reload();
     }
   });
