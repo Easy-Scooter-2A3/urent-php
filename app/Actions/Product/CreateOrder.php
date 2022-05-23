@@ -10,12 +10,13 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\order_product;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class CreateOrder
 {
     use AsAction;
 
-    public function handle($total, $paymentMethod, $recu, $vouchersApplied, $voucher = null)
+    public function handle($total, $paymentMethod, $recu, $vouchersApplied, $productsBasePrice, $voucher = null)
     {
         $userId = auth()->user()->id;
         $cart = Cart::where('user_id', $userId)->get();
@@ -34,19 +35,24 @@ class CreateOrder
             'delivery_place' => 'ratio',
             'delivery_date' => date('Y-m-d H:i:s', strtotime('+1 day')),
             'transporter_tracking_number' => '123',
-            'total_price' => $total,
+            'total_price' => round($total),
             'total_tax' => 20.0,
             'total_discount' => 0.0,
             'payment_method' => $paymentMethod,
             'recu' => $recu,
         ]);
 
+        Log::info('Order created');
+        Log::info($vouchersApplied);
+
         foreach ($cart as $item) {
+            Log::info($vouchersApplied[$item->product_id]);
             order_product::create([
                 'order_id' => Order::where('user_id', $userId)->orderBy('created_at', 'desc')->first()->id,
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
-                'voucher' => $vouchersApplied[$item->product_id] ?? null,
+                'voucher' => round($vouchersApplied[$item->product_id]) ?? null,
+                'price' => round($productsBasePrice[$item->product_id]),
             ]);
         }
 

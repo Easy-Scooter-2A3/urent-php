@@ -19,5 +19,7 @@ class order_product extends Model
         'order_id',
         'product_id',
         'quantity',
+        'voucher',
+        'price'
     ];
 }

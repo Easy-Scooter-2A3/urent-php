@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('attribute_id')->constrained('attributes')->onDelete('cascade');
             $table->timestamp('created_at')->default(now());
             $table->timestamp('updated_at')->nullable()->default(null);
+            $table->unique(['product_id', 'attribute_id']);
         });
     }
 

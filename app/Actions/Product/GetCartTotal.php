@@ -37,9 +37,11 @@ class GetCartTotal
         }
 
         $vouchersApplied = [];
+        $productsBasePrice = [];
         foreach ($products as $product) {
             $pprice = $product->price;
             $totalWithoutVoucher += $pprice * $productsInCart[$product->id];
+            $productsBasePrice[$product->id] = $pprice;
             if ($userPartnership) {
                 $vouchersApplied[$product->id] = $voucher;
                 $pprice = $pprice - ($pprice * $voucher / 100);
@@ -47,7 +49,7 @@ class GetCartTotal
             $total += $pprice * $productsInCart[$product->id]; //get price
         }
 
-        return ['success' => true, 'total' => $total, 'voucher' => $voucher, 'totalWithoutVoucher' => $totalWithoutVoucher, 'vouchersApplied' => $vouchersApplied];
+        return ['success' => true, 'productsBasePrice' => $productsBasePrice, 'total' => $total, 'voucher' => $voucher, 'totalWithoutVoucher' => $totalWithoutVoucher, 'vouchersApplied' => $vouchersApplied];
     }
 
     public function asController(Request $request)

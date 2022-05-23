@@ -23,7 +23,7 @@ const toMDCTextField = (element: HTMLElement | null) => {
   return new MDCTextField(element.parentElement);
 };
 
-const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/orders/${orderId}/content`);
+const getOrderContent = async (orderId: number) => doGet(`/en/dashboard/admin/orders/${orderId}/content`);
 
 (async () => {
   const searchInput = document.getElementById('searchField') as HTMLInputElement | null;
@@ -93,7 +93,7 @@ const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/order
         fields[12].innerHTML = 'Objets : <br>';
 
         Object.values<any>(orderContent.data.data).forEach((product: any) => {
-          fields[12].innerHTML += `${product.nb} x ${product.name} <br>`;
+          fields[12].innerHTML += `${product.nb} x ${product.name} ${product.price} € ${product.voucher ? ` - ${product.voucher}% off  (${product.price - (product.price * product.voucher / 100)} €)` : ''}<br>`;
         });
 
         detailsBody.appendChild(clone);

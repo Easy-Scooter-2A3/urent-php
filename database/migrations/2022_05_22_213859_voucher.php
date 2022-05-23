@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('order_products', function (Blueprint $table) {
+            $table->integer('price');
             $table->integer('voucher')->nullable();
         });
     }
@@ -26,6 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('order_products', function (Blueprint $table) {
+            $table->dropColumn('price');
             $table->dropColumn('voucher');
         });
     }

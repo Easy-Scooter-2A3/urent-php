@@ -31,6 +31,7 @@ class SingleCharge
                 $totalWithoutVoucher = $cartPrice['totalWithoutVoucher'];
                 $voucher = $cartPrice['voucher'];
                 $vouchersApplied = $cartPrice['vouchersApplied'];
+                $productsBasePrice = $cartPrice['productsBasePrice'];
                 
                 if ($total != $cartPrice['total']) {
                     Log::debug('total is not equal to cart price');
@@ -58,7 +59,7 @@ class SingleCharge
 
             switch ($mode) {
                 case 'cart':
-                    CreateOrder::dispatch($totalWithoutVoucher, $paymentMethod, $recu, $vouchersApplied, $voucher);
+                    CreateOrder::dispatch($totalWithoutVoucher, $paymentMethod, $recu, $vouchersApplied, $productsBasePrice, $voucher);
                     //TODO: send mail
                     break;
                 case 'package':
