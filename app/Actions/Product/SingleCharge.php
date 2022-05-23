@@ -46,6 +46,7 @@ class SingleCharge
         }
 
         $total *= 100.0;
+        $totalWithoutVoucher *= 100.0;
         //check promo code
 
         $payment = auth()->user()->charge(
