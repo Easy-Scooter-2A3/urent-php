@@ -86,17 +86,12 @@ const fillFields = async (partnershipId: string) => {
   modalFieldsEdit.max_people.value = String(max_people);
   modalFieldsEdit.active.selected = active;
 
+  usersList.innerHTML = '';
   users.forEach((user) => {
     // TODO: check shadowing
     const { id, name } = user as IUser;
     const e = document.createElement('h2');
     e.textContent = `${id} - ${name}`;
-    usersList.appendChild(e);
-  });
-
-  users.forEach((user) => {
-    const e = document.createElement('h2');
-    e.textContent = `${user.id} - ${user.name}`;
     usersList.appendChild(e);
   });
 };
