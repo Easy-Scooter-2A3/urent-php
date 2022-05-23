@@ -16,7 +16,7 @@ class CreateOrder
 {
     use AsAction;
 
-    public function handle($total, $paymentMethod, $recu, $vouchersApplied, $productsBasePrice, $voucher = null)
+    public function handle($total, $paymentMethod, $recu, $vouchersApplied, $productsBasePrice)
     {
         $userId = auth()->user()->id;
         $cart = Cart::where('user_id', $userId)->get();
@@ -42,16 +42,13 @@ class CreateOrder
             'recu' => $recu,
         ]);
 
-        Log::info('Order created');
-        Log::info($vouchersApplied);
-
         foreach ($cart as $item) {
-            Log::info($vouchersApplied[$item->product_id]);
+            $voucher = isset($vouchersApplied[$item->product_id]) ? round($vouchersApplied[$item->product_id]) : null;
             order_product::create([
                 'order_id' => Order::where('user_id', $userId)->orderBy('created_at', 'desc')->first()->id,
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
-                'voucher' => round($vouchersApplied[$item->product_id]) ?? null,
+                'voucher' => $voucher,
                 'price' => round($productsBasePrice[$item->product_id]),
             ]);
         }

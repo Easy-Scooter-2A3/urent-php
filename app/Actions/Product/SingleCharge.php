@@ -59,7 +59,7 @@ class SingleCharge
 
             switch ($mode) {
                 case 'cart':
-                    CreateOrder::dispatch($totalWithoutVoucher, $paymentMethod, $recu, $vouchersApplied, $productsBasePrice, $voucher);
+                    CreateOrder::dispatch($totalWithoutVoucher, $paymentMethod, $recu, $vouchersApplied, $productsBasePrice);
                     //TODO: send mail
                     break;
                 case 'package':

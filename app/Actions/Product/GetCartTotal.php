@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Partnership;
+use App\Models\partnership_product;
 use App\Models\partnership_user;
 use Illuminate\Support\Facades\Log;
 
@@ -36,13 +37,15 @@ class GetCartTotal
             $voucher = $userPartnership->voucher;
         }
 
+        $partnershipProducts = partnership_product::whereIn('product_id', array_keys($productsInCart))->get();
         $vouchersApplied = [];
         $productsBasePrice = [];
         foreach ($products as $product) {
             $pprice = $product->price;
             $totalWithoutVoucher += $pprice * $productsInCart[$product->id];
             $productsBasePrice[$product->id] = $pprice;
-            if ($userPartnership) {
+            
+            if ($userPartnership && isset($partnershipProducts[$product->id])) {
                 $vouchersApplied[$product->id] = $voucher;
                 $pprice = $pprice - ($pprice * $voucher / 100);
             }
