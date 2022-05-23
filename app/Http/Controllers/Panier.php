@@ -36,7 +36,7 @@ class Panier extends Controller
             'attributesList' => $data['attributes'],
             'products' => $data['data'],
             'quantity' => $quantity,
-            'total' => $total['data']
+            'total' => $total['total']
         ]);
     }
 }

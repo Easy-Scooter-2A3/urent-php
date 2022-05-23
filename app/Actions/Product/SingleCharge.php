@@ -27,13 +27,17 @@ class SingleCharge
         switch ($mode) {
             case 'cart':
                 $cartPrice = GetCartTotal::run();
-                if ($total != $cartPrice['totalWithoutVoucher']) {
-                    Log::debug('total is not equal to cart price');
-                    return response()->json(['success' => false, 'message' => 'cart error']);
-                }
 
-                $total = $cartPrice['total'];
+                $totalWithoutVoucher = $cartPrice['totalWithoutVoucher'];
                 $voucher = $cartPrice['voucher'];
+                $vouchersApplied = $cartPrice['vouchersApplied'];
+                
+                if ($total != $cartPrice['total']) {
+                    Log::debug('total is not equal to cart price');
+                    return response()->json(['success' => false, 'message' => 'cart error'])->setStatusCode(400);
+                }
+                $total = $cartPrice['total'];
+
 
                 break;
 
@@ -53,7 +57,7 @@ class SingleCharge
 
             switch ($mode) {
                 case 'cart':
-                    CreateOrder::dispatch($total, $paymentMethod, $recu, $voucher);
+                    CreateOrder::dispatch($totalWithoutVoucher, $paymentMethod, $recu, $vouchersApplied, $voucher);
                     //TODO: send mail
                     break;
                 case 'package':

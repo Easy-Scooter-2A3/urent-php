@@ -15,7 +15,7 @@ class CreateOrder
 {
     use AsAction;
 
-    public function handle($total, $paymentMethod, $recu, $voucher = null)
+    public function handle($total, $paymentMethod, $recu, $vouchersApplied, $voucher = null)
     {
         $userId = auth()->user()->id;
         $cart = Cart::where('user_id', $userId)->get();
@@ -39,7 +39,6 @@ class CreateOrder
             'total_discount' => 0.0,
             'payment_method' => $paymentMethod,
             'recu' => $recu,
-            'voucher' => $voucher,
         ]);
 
         foreach ($cart as $item) {
@@ -47,6 +46,7 @@ class CreateOrder
                 'order_id' => Order::where('user_id', $userId)->orderBy('created_at', 'desc')->first()->id,
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
+                'voucher' => $vouchersApplied[$item->product_id] ?? null,
             ]);
         }
 
@@ -59,7 +59,7 @@ class CreateOrder
         $user->fidelity_points += intval((1 * $bonusNb) + round(0.3 * $priceInEuro));
         $user->save();
 
-        return response()->json(['success' => true]);
+        return ['success' => true];
     }
 
 }

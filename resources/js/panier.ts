@@ -20,7 +20,7 @@ const getCartTotal = async () => {
   if (!data) {
     return 0;
   }
-  return data.data.data;
+  return data.data.total;
 };
 
 const addEVH2 = () => {
