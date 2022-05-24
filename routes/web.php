@@ -65,7 +65,7 @@ Route::group(['prefix' => '{language}'], function () {
     Route::get('/forgot-password', [Authentication::class, 'forgotPassword'])->middleware('guest')->name('forgot-password');
     Route::post('/forgot-password', [Authentication::class, 'forgotPasswordSubmit']);
 
-    Route::post('/pay/package', SingleCharge::class)->middleware('auth')->name('cart.payment');
+    Route::post('/pay/package', SingleCharge::class)->middleware('auth')->name('package.payment');
 
     Route::post('/dashboard/packages/edit', EditUserPackage::class)->middleware('auth')->name('user.packages.edit');
 
@@ -116,10 +116,10 @@ Route::group(['prefix' => '{language}'], function () {
 
                 Route::group(['prefix' => 'partnerships'], function () {
                     Route::get('/', 'partnerships')->name('admin.partnerships');
-                    Route::post('/', CreatePartnership::class)->name('admin.partnerships');
+                    Route::post('/', CreatePartnership::class)->name('admin.partnerships.create');
                     Route::put('/{id}', EditPartnership::class)->name('admin.partnerships.edit');
                     Route::get('/{id}/list', GetPartnershipProductsList::class)->name('admin.partnerships.list');
-                    Route::post('/details', GetPartnershipsDetails::class)->name('admin.products.details');
+                    Route::post('/details', GetPartnershipsDetails::class)->name('admin.partnerships.details');
                 });
 
                 Route::group(['prefix' => 'orders'], function () { // TODO: check
