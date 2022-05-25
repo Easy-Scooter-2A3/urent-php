@@ -28,6 +28,10 @@ class EditProduct
         if ($image) {
             $type = $image->getMimeType();
             $extension = $image->getClientOriginalExtension();
+            $size = $image->getSize();
+            if ($size > 2097152) {
+                return response()->json(['error' => 'File size is too big'], 400);
+            }
 
             if (!in_array($type, ['image/jpeg', 'image/png', 'image/jpg'])) {
                 return response()->json(['error' => 'Wrong file type'], 400);

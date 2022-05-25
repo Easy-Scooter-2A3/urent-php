@@ -26,6 +26,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 RUN php artisan config:cache
 RUN php artisan route:cache
 RUN php artisan view:cache
+RUN php artisan storage:link
 
 
 COPY --from=builder-node /app/public .

@@ -62,7 +62,7 @@
                       <tr productattributeParent rowid="{{ $product->id }}" class="mdc-data-table__row">
                         <td class="mdc-data-table__cell">
                             <div class="p-3 flex">
-                              <img src="{{ asset('/img/koba.png') }}" alt="">
+                              <img class="h-80" src="{{ asset('storage/images/'.$product->image) }}" alt="">
                               <div class="ml-3 flex flex-col justify-around">
                                   <div>
                                       <h2 class="text-lg ">{{ $product->name }}</h2>
