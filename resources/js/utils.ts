@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
-const doGet = async (url: string) => {
+const doGet = async (url: string, config: AxiosRequestConfig = {}) => {
   try {
-    return axios.get(url);
+    return axios.get(url, config);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log(error);
@@ -11,9 +11,9 @@ const doGet = async (url: string) => {
   }
 };
 
-const doPost = async (url: string, data: {[k: string]: any}) => {
+const doPost = async (url: string, data: {[k: string]: any}, config: AxiosRequestConfig = {}) => {
   try {
-    return axios.post(url, data);
+    return axios.post(url, data, config);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log(error);
@@ -22,9 +22,9 @@ const doPost = async (url: string, data: {[k: string]: any}) => {
   }
 };
 
-const doDelete = async (url: string) => {
+const doDelete = async (url: string, config: AxiosRequestConfig = {}) => {
   try {
-    return axios.delete(url, {});
+    return axios.delete(url, config);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log(error);
@@ -33,9 +33,9 @@ const doDelete = async (url: string) => {
   }
 };
 
-const doPut = async (url: string, data: {[k: string]: any}) => {
+const doPut = async (url: string, data: {[k: string]: any}, config: AxiosRequestConfig = {}) => {
   try {
-    return axios.put(url, data);
+    return axios.put(url, data, config);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log(error);
@@ -44,9 +44,9 @@ const doPut = async (url: string, data: {[k: string]: any}) => {
   }
 };
 
-const doPatch = async (url: string, data: {[k: string]: any}) => {
+const doPatch = async (url: string, data: {[k: string]: any}, config: AxiosRequestConfig = {}) => {
   try {
-    return axios.patch(url, data);
+    return axios.patch(url, data, config);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log(error);

@@ -110,7 +110,7 @@ Route::group(['prefix' => '{language}'], function () {
                     Route::get('/', 'products')->name('admin.products');
                     Route::post('/details', GetProductsDetails::class)->name('admin.products.details');
                     Route::post('/', CreateProduct::class)->middleware("admin")->name('admin.products.create');
-                    Route::put('/{id}', EditProduct::class)->middleware("admin")->name('admin.products.edit');
+                    Route::post('/{id}', EditProduct::class)->middleware("admin")->name('admin.products.edit');
                     Route::post('/delete', DeleteProduct::class)->middleware("admin")->name('admin.products.delete');
                 });
 

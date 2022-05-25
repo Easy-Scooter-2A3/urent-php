@@ -74,6 +74,7 @@ const fillFields = async (productId: string) => {
 (async () => {
   const confirmEditBtn = document.getElementById('confirmEditBtn') as HTMLButtonElement | null;
   const confirmCreationBtn = document.getElementById('confirmCreationBtn') as HTMLButtonElement | null;
+  const uploadEditBtn = document.getElementById('uploadEditBtn') as HTMLButtonElement | null;
 
   const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement | null;
   const editBtn = document.getElementById('editBtn') as HTMLButtonElement | null;
@@ -85,6 +86,12 @@ const fillFields = async (productId: string) => {
   const detailsBodyTemplate = document.getElementById('modal-details-body-template') as HTMLTemplateElement | null;
 
   const checkboxAll = document.getElementById('checkbox-all') as HTMLInputElement | null;
+
+  const fileLoadedEdit = document.getElementById('fileLoadedEdit');
+  if (!fileLoadedEdit) {
+    console.error('Could not find fileLoadedEdit');
+    return;
+  }
 
   const modalFieldsCreation = {
     name: toMDCTextField(document.getElementById('modal-creation-name')) as MDCTextField,
@@ -100,6 +107,7 @@ const fillFields = async (productId: string) => {
     description: toMDCTextField(document.getElementById('modal-edit-description')) as MDCTextField,
     stock: toMDCTextField(document.getElementById('modal-edit-stock')) as MDCTextField,
     available: new MDCSwitch(document.getElementById('modal-edit-available') as HTMLButtonElement) as MDCSwitch,
+    image: document.getElementById('imageEdit') as HTMLInputElement,
   };
 
   if (!detailsBody || !detailsBodyTemplate) {
@@ -127,6 +135,11 @@ const fillFields = async (productId: string) => {
     return;
   }
 
+  if (!uploadEditBtn) {
+    console.error('Could not find uploadEditBtn');
+    return;
+  }
+
   if (!confirmCreationBtn) {
     console.error('Could not find confirmCreation');
     return;
@@ -147,8 +160,26 @@ const fillFields = async (productId: string) => {
     return;
   }
 
+  uploadEditBtn.addEventListener('click', () => {
+    fileLoadedEdit.hidden = true;
+    modalFieldsEdit.image.click();
+  });
+
+  modalFieldsEdit.image.onchange = async () => {
+    if (!modalFieldsEdit.image.files) {
+      return;
+    }
+
+    const file = modalFieldsEdit.image.files[0];
+    if (!file) {
+      return;
+    }
+
+    fileLoadedEdit.hidden = false;
+  };
+
   deleteBtn.addEventListener('click', async (e: MouseEvent) => {
-    //TODO: dialog
+    // TODO: dialog
     if (!confirm('Are you sure you want to delete these products?')) return;
     const products = selectedRows('[productid]').map((element) => element.getAttribute('productid'));
 
@@ -219,7 +250,21 @@ const fillFields = async (productId: string) => {
       attributes: [...attributes],
     };
 
-    if (await doPut(`/en/dashboard/admin/products/${id}`, data)) {
+    const formData = new FormData();
+
+    if (modalFieldsEdit.image.files && modalFieldsEdit.image.files[0]) {
+      const file = modalFieldsEdit.image.files[0];
+      formData.append('image', file);
+    }
+
+    formData.append('name', data.name);
+    formData.append('price', data.price);
+    formData.append('description', data.description);
+    formData.append('stock', data.stock);
+    formData.append('available', JSON.stringify(data.available));
+    formData.append('attributes', JSON.stringify(data.attributes));
+
+    if (await doPost(`/en/dashboard/admin/products/${id}`, formData)) {
       window.location.reload();
     }
   });
