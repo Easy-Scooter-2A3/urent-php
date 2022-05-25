@@ -7,6 +7,7 @@ import searchField from './searchField';
 import selectedRows from './selectedRows';
 import { doPost, doPut } from './utils';
 import checkAll from './checkAll';
+import notification from './notif';
 
 const getDetails = async (product: (string | null)) => {
   const res = await doPost('/en/dashboard/admin/products/details', { product });
@@ -75,6 +76,7 @@ const fillFields = async (productId: string) => {
   const confirmEditBtn = document.getElementById('confirmEditBtn') as HTMLButtonElement | null;
   const confirmCreationBtn = document.getElementById('confirmCreationBtn') as HTMLButtonElement | null;
   const uploadEditBtn = document.getElementById('uploadEditBtn') as HTMLButtonElement | null;
+  const uploadCreateBtn = document.getElementById('uploadCreateBtn') as HTMLButtonElement | null;
 
   const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement | null;
   const editBtn = document.getElementById('editBtn') as HTMLButtonElement | null;
@@ -93,12 +95,19 @@ const fillFields = async (productId: string) => {
     return;
   }
 
+  const fileLoadedCreate = document.getElementById('fileLoadedCreate');
+  if (!fileLoadedCreate) {
+    console.error('Could not find fileLoadedCreate');
+    return;
+  }
+
   const modalFieldsCreation = {
     name: toMDCTextField(document.getElementById('modal-creation-name')) as MDCTextField,
     price: toMDCTextField(document.getElementById('modal-creation-price')) as MDCTextField,
     description: toMDCTextField(document.getElementById('modal-creation-description')) as MDCTextField,
     stock: toMDCTextField(document.getElementById('modal-creation-stock')) as MDCTextField,
     available: new MDCSwitch(document.getElementById('modal-creation-available') as HTMLButtonElement) as MDCSwitch,
+    image: document.getElementById('imageCreate') as HTMLInputElement,
   };
 
   const modalFieldsEdit = {
@@ -140,6 +149,11 @@ const fillFields = async (productId: string) => {
     return;
   }
 
+  if (!uploadCreateBtn) {
+    console.error('Could not find uploadCreateBtn');
+    return;
+  }
+
   if (!confirmCreationBtn) {
     console.error('Could not find confirmCreation');
     return;
@@ -176,6 +190,24 @@ const fillFields = async (productId: string) => {
     }
 
     fileLoadedEdit.hidden = false;
+  };
+
+  uploadCreateBtn.addEventListener('click', () => {
+    fileLoadedCreate.hidden = true;
+    modalFieldsCreation.image.click();
+  });
+
+  modalFieldsCreation.image.onchange = async () => {
+    if (!modalFieldsCreation.image.files) {
+      return;
+    }
+
+    const file = modalFieldsCreation.image.files[0];
+    if (!file) {
+      return;
+    }
+
+    fileLoadedCreate.hidden = false;
   };
 
   deleteBtn.addEventListener('click', async (e: MouseEvent) => {
@@ -227,7 +259,23 @@ const fillFields = async (productId: string) => {
       attributes: [...attributes],
     };
 
-    if (await doPost('/en/dashboard/admin/products', data)) {
+    const formData = new FormData();
+
+    if (!modalFieldsCreation.image.files || modalFieldsCreation.image.files.length === 0) {
+      notification('No image selected');
+      return;
+    }
+
+    const file = modalFieldsCreation.image.files[0];
+    formData.append('name', data.name);
+    formData.append('price', data.price);
+    formData.append('description', data.description);
+    formData.append('stock', data.stock);
+    formData.append('available', JSON.stringify(data.available));
+    formData.append('attributes', JSON.stringify(data.attributes));
+    formData.append('image', file);
+
+    if (await doPost('/en/dashboard/admin/products', formData)) {
       window.location.reload();
     }
   });
