@@ -24,5 +24,11 @@
         'action' => 'homepage',
     ]) !!}
 
+    <script>
+        window.addEventListener("load", function(event) {
+            mdc.autoInit();
+        });
+    </script>
+
     <title>Document</title>
 </head>
