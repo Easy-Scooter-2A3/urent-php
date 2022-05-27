@@ -28,6 +28,7 @@ const getOrderContent = async (orderId: number) => doGet(`/en/dashboard/admin/or
 (async () => {
   const searchInput = document.getElementById('searchField') as HTMLInputElement | null;
   const viewDetailsBtn = document.getElementById('viewDetailsBtn') as HTMLButtonElement | null;
+  const getOrdersBtn = document.getElementById('getOrdersBtn') as HTMLButtonElement | null;
 
   const detailsBody = document.getElementById('modal-details-body') as HTMLElement | null;
   const detailsBodyTemplate = document.getElementById('modal-details-body-template') as HTMLTemplateElement | null;
@@ -39,7 +40,7 @@ const getOrderContent = async (orderId: number) => doGet(`/en/dashboard/admin/or
     return;
   }
 
-  if (!searchInput || !viewDetailsBtn) {
+  if (!searchInput || !viewDetailsBtn || !getOrdersBtn) {
     console.error('Could not find search input');
     return;
   }
@@ -102,6 +103,24 @@ const getOrderContent = async (orderId: number) => doGet(`/en/dashboard/admin/or
         }
       }
     });
+  });
+
+  searchInput.addEventListener('keyup', (e) => {
+    searchField(e, 1, '[orderidParent]');
+  });
+  getOrdersBtn.addEventListener('click', async (e: MouseEvent) => {
+    const orderRows = selectedRows('[orderid]').map((element) => element.getAttribute('orderid'));
+    if (orderRows.length === 0) {
+      return;
+    }
+
+    const row = orderRows.shift();
+    if (!row) {
+      return;
+    }
+
+    const url = `/dashboard/orders/pdf/${row}`;
+    window.location.href = url;
   });
 
   searchInput.addEventListener('keyup', (e) => {

@@ -21,7 +21,7 @@ class Dashboard extends Controller
         ['dashboard', "Account"],
         ['dashboard', "History"],
         ['dashboard', "Fidelity"],
-        ['dashboard', "Invoices"],
+        ['dashboard_invoices', "Invoices"],
         ['dashboard', "Statistics"],
         ['dashboard.orders', "Orders"],
         ['dashboard.weather', "Weather"],

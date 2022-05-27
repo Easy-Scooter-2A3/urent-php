@@ -57,6 +57,12 @@
             'modal' => 'modal-details',
         ])
         @endcomponent
+        @component('components.button', [
+            'text' => 'Download order',
+            'type' => 'button',
+            'id' => 'getOrdersBtn',
+        ])
+        @endcomponent
     </div>
 </div>
 @include('modal-details')

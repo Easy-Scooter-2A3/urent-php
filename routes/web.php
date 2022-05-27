@@ -25,6 +25,7 @@ use App\Actions\Product\GetWaypoints;
 use App\Actions\Product\SingleCharge;
 use App\Actions\Product\GetOrdersDetails;
 use App\Actions\Product\GetOrderProducts;
+use App\Actions\Product\GenerateInvoice;
 
 use App\Actions\Partnership\CreatePartnership;
 use App\Actions\Partnership\EditPartnership;
@@ -82,6 +83,7 @@ Route::group(['prefix' => '{language}'], function () {
     Route::controller(Dashboard::class)->group(function () {
 
         Route::get('/dashboard', 'index')->middleware('auth')->name('dashboard');
+        Route::get('/dashboard/orders/pdf/{orderId}', GenerateInvoice::class)->middleware('auth')->name('user.pdf');
         
 
         Route::group(['prefix' => 'dashboard/admin'], function () {
