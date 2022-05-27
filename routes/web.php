@@ -51,6 +51,9 @@ Route::get('/dashboard/stripe-portal', function (Request $request) {
     return $request->user()->redirectToBillingPortal(route('index'));
 })->name('dashboard.stripe-portal');
 
+Route::get('/dashboard/orders/pdf/{orderId}', GenerateInvoice::class)->middleware('auth')->name('user.pdf');
+
+
 Route::group(['prefix' => '{language}'], function () {
     Route::get('/', [Index::class, 'index'])->name('index');
     Route::get('/logout', [Index::class, 'logout']);
@@ -83,7 +86,6 @@ Route::group(['prefix' => '{language}'], function () {
     Route::controller(Dashboard::class)->group(function () {
 
         Route::get('/dashboard', 'index')->middleware('auth')->name('dashboard');
-        Route::get('/dashboard/orders/pdf/{orderId}', GenerateInvoice::class)->middleware('auth')->name('user.pdf');
         
 
         Route::group(['prefix' => 'dashboard/admin'], function () {

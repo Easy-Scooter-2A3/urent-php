@@ -19,10 +19,6 @@ class Dashboard extends Controller
 {
     private $collection = [
         ['dashboard', "Account"],
-        ['dashboard', "History"],
-        ['dashboard', "Fidelity"],
-        ['dashboard_invoices', "Invoices"],
-        ['dashboard', "Statistics"],
         ['dashboard.orders', "Orders"],
         ['dashboard.weather', "Weather"],
         ['dashboard.packages', "Packages"],
