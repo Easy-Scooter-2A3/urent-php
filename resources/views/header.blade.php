@@ -24,15 +24,25 @@
                 </li>
                 <div id="languageDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                    
+                    @php
+
+                        $path = lang_path();
+                        function isFile($file) {
+                            $path = lang_path();
+                            return is_file("$path/$file");
+                        }
+
+                        $langs = array_diff(scandir($path), array('..', '.'));
+                        $langs = array_filter($langs, function($lang) {
+                            return isFile($lang);
+                        });
+                    @endphp
                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
-                        
-                        <li >
-                            <a href="{{ route(Route::currentRouteName(), 'en') }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">EN</a>
-                        </li>
-                        <li>
-                            <a href="{{ route(Route::currentRouteName(), 'fr') }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">FR</a>
-                        </li>
-                        
+                        @foreach ($langs as $lang)
+                            <li>
+                                <a href="{{ route('setlang', explode(".", $lang)[0]) }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ strtoupper(explode(".", $lang)[0]) }}</a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
                 <li class="hover:text-red-600 m-2">{{ __('About us') }}</li>

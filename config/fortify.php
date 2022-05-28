@@ -74,7 +74,7 @@ return [
     |
     */
 
-    'prefix' => '{language}',
+    'prefix' => '',
 
     'domain' => null,
 
@@ -89,7 +89,7 @@ return [
     |
     */
 
-    'middleware' => ['web'],
+    'middleware' => ['web', 'lang'],
 
     /*
     |--------------------------------------------------------------------------
