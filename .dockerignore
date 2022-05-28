@@ -7,3 +7,4 @@ node_modules/
 Dockerfile*
 *.md
 yarn-error.log
+.env*

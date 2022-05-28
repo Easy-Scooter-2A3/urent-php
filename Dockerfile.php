@@ -8,7 +8,7 @@ RUN yarn install --production=false
 RUN yarn production
 
 
-FROM php:8.0-fpm as builder-php
+FROM php:8.1-fpm as builder-php
 
 EXPOSE 9000
 WORKDIR /var/www
@@ -21,12 +21,18 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN docker-php-ext-install pdo_mysql curl iconv intl
 
 COPY . .
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --optimize-autoloader --no-interaction --no-dev
 
-RUN php artisan config:cache
-RUN php artisan route:cache
-RUN php artisan view:cache
-RUN php artisan storage:link
+RUN pecl install redis
+
+RUN docker-php-ext-enable redis
+
+RUN php artisan config:clear
+# && php artisan config:cache
+RUN php artisan route:clear
+# && php artisan route:cache
+RUN php artisan view:clear
+# && php artisan view:cache
 
 
 COPY --from=builder-node /app/public .

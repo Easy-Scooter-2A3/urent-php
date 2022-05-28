@@ -17,8 +17,8 @@ class SetLanguage
      */
     public function handle(Request $request, Closure $next)
     {
-        $lang = $request->cookie('lang');
-        App::setLocale($lang ?? 'en');
+        $lang = $request->cookie('lang') ?? 'en';
+        App::setLocale($lang);
         return $next($request);
     }
 }
