@@ -12,44 +12,22 @@ use function PHPUnit\Framework\isNull;
 class ScooterController extends Controller
 {
     public function details(Request $request) {
-        $input = $request->input('scooters');
-        $users = [];
-        if (count($input) > 0) {
-            $users = Scooter::whereIn('id', $input)->get();
-        };
+        $scooter = Scooter::find($request->input('scooter'));
 
-        return response()->json(['success' => true, 'data' => $users]);
+        return response()->json(['success' => true, 'data' => $scooter]);
     }
 
-    public function action(Request $request) {
-        $action = $request->input('action');
-        $data = $request->input('data');
+    public function create(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'model' => ['required', 'string', 'max:255'],
+            'status' => ['string', 'max:255', 'default:available'],
+        ])->validate();
 
-        switch ($action) {
-            case 'delete':
-                Scooter::destroy($data['scooters']);
-                break;
-            case 'create':
-                $validator = Validator::make($data, [
-                    'model' => ['required', 'string', 'max:255'],
-                    'status' => ['required', 'string', 'max:255'],
-                ])->validate();
-
-                $scooter = new Scooter([
-                    'model' => $data['model'],
-                    'status' => $data['status'],
-                ]);
-
-                if (!isNull($request->status)) {
-                    $scooter->status = 'available';
-                }
-                $scooter->save();
-                break;
-            default:
-                break;
-        }
-
-        return response()->json(['success' => true, 'action' => $action]);
+        Scooter::create([
+            'model' => $request->input('model'),
+            'status' => $request->input('status') ?? 'available',
+        ]);
+        return response()->json(['success' => true]);
     }
 
     public function list(Request $request) { 
@@ -61,7 +39,7 @@ class ScooterController extends Controller
     }
 
     public function delete(Request $request) {
-        $status = Scooter::destroy($request->id);
+        $status = Scooter::destroy($request->input('scooters'));
         return response()->json(['success' => boolval($status)]);
     }
 

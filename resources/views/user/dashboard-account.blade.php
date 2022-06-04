@@ -4,6 +4,11 @@
     <h2>Email: {{ Auth::user()->email }}</h2>
     <h2>Phone number: {{ Auth::user()->phone }}</h2>
     <h2>Location: {{ Auth::user()->location }}</h2>
+
+    @if ($partnership)
+        <h2>Partenariat: {{ $partnership->name }}</h2>
+    @endif
+
     <h2>MFA: 
         <form id="mfa_form" action="/user/two-factor-authentication" method="post">
             @csrf
@@ -62,7 +67,22 @@
         
     </h2>
     <h2>Fidelity points: {{ Auth::user()->fidelity_points }}</h2>
-    <h2>Credits: {{ Auth::user()->credit_points }}</h2>
+    <h2>Credits: {{ Auth::user()->balance() }}</h2>
+    <h2>Package: {{ $current_package }}</h2>
+    @component('components.button', [
+        'text' => 'Stripe',
+        'type' => 'button',
+        'href' => route('dashboard.stripe-portal'),
+    ])
+    @endcomponent
+
+    @component('components.button', [
+        'text' => 'Convert points',
+        'type' => 'button',
+        'id' => 'fidelityBtn',
+    ])
+    @endcomponent
+    
     {{-- @include('dialogs.MFA') --}}
 
     @if (session('status') == 'two-factor-authentication-enabled')
@@ -71,5 +91,6 @@
             {{-- @include('dialogs.MFA') --}}
         </div>
     @endif
+    @include('modal-payment')
     <script src="/js/dashboard.js"></script>
 </div>

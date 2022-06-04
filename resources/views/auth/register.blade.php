@@ -102,4 +102,3 @@
     </div>
     
 </body>
-@include('footer')

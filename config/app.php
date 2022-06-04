@@ -18,6 +18,7 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
 
     'openweathermap' => env('OPENWEATHERMAP', '/home/kazuh/openweathermap/build/openweathermap'),
+    'weathersvc' => env('WEATHER_SVC', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -195,6 +196,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // ...
+        "PDF" => Barryvdh\DomPDF\Facade::class,
     ])->toArray(),
 
 ];

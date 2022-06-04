@@ -2,6 +2,7 @@
 @include('header')
 
 <body class="bg-gray-100">
+
     <div class="flex flex-col md:flex-row">
         @include('collections')
 
@@ -9,4 +10,4 @@
     </div>
 
 </body>
-@include('footer')
+<script src="/js/dialog.js"></script>

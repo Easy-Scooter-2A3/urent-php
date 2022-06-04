@@ -22,7 +22,7 @@
                         <label for="{{$scooter->id}}-label" class="sr-only">checkbox</label>
                     </div>
                 </td>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                <th  class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                     {{ $scooter->status }}
                 </th>
                 <td class="px-6 py-4">
@@ -77,7 +77,7 @@
 </div>
 
 @include('modal-details')
-@include('modal-creation')
+@include('modal-creation-scooters')
 
 <template id="modal-details-body-template">
     <div>

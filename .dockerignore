@@ -1,0 +1,10 @@
+.git/
+.certs/
+node_modules/
+.gitattributes
+.gitignore
+.styleci.yml
+Dockerfile*
+*.md
+yarn-error.log
+.env*

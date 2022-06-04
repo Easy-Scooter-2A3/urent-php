@@ -40,8 +40,6 @@
         @endforeach
     
         <div class="flex-1">
-        </div>	
-    
-        <script src="/js/daybar.js"></script>
+        </div>
     </div>
 </div>

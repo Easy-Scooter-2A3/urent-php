@@ -1,30 +1,102 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Actions\Package\GetCurrentPackage;
+use App\Actions\Partnership\GetPartnerships;
+use App\Actions\Partnership\GetUserPartnership;
 
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Scooter;
+use App\Models\Package;
+use App\Models\Attribute;
+use App\Models\Order;
+use App\Models\users_packages;
+use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 class Dashboard extends Controller
 {
     private $collection = [
         ['dashboard', "Account"],
-        ['dashboard', "History"],
-        ['dashboard', "Fidelity"],
-        ['dashboard', "Invoices"],
-        ['dashboard', "Statistics"],
-        ['dashboard_weather', "Weather"],
-        ['dashboard', "Packages"],
+        ['dashboard.orders', "Orders"],
+        ['dashboard.weather', "Weather"],
+        ['dashboard.packages', "Packages"],
         ['dashboard', "Travels"],
         ['admin.accounts', "Accounts (admin)"],
         ['admin.scooters', "Scooters (admin)"],
+        ['admin.products', "Products (admin)"],
+        ['admin.partnerships', "Partnerships (admin)"],
     ];
 
     public function index(Request $request) {
+        $currentPackage = GetCurrentPackage::run($request->user());
+        $package = Package::where('id', $currentPackage)->first();
+        // TODO: translate package name
+
+        $partner = GetUserPartnership::run($request->user()->id);
+
         return view('dashboard', [
             'view' => 'user.dashboard-account',
-            'collection' => $this->collection
+            'collection' => $this->collection,
+            'current_package' => $package->type,
+            'partnership' => $partner['partnership'] ?? null,
+        ]);
+    }
+
+    public function orders(Request $request) {
+        $orders = Order::where('user_id', $request->user()->id)->get();
+        $cols = ['Status', 'Transporter', 'Total', 'Commandée le', 'Livraison le'];
+
+        return view('dashboard', [
+            'view' => 'user.dashboard-orders',
+            'collection' => $this->collection,
+            'orders' => $orders,
+            'cols' => $cols
+        ]);
+    }
+
+    public function partnerships(Request $request) {
+        $cols = ['Company', 'From', 'To', 'Voucher', 'Max', 'Active'];
+        $cols2 = ['User', 'Partnership with', 'Since'];
+
+        // $partnerships = GetUserPartnerships::run(auth()->user()->id);
+
+        return view('dashboard', [
+            'view' => 'user.dashboard-partnerships',
+            'collection' => $this->collection,
+            'cols' => $cols,
+            'cols2' => $cols2,
+            'partnerships' => GetPartnerships::run(),
+            'products' => Product::all(),
+        ]);
+    }
+
+    public function packages(Request $request) {
+        $packages = Package::all();
+        $currentPackage = GetCurrentPackage::run($request->user());
+
+        return view('dashboard', [
+            'view' => 'user.dashboard-packages',
+            'collection' => $this->collection,
+            'current_package' => $currentPackage,
+            'packages' => $packages,
+        ]);
+    }
+
+    public function products(Request $request) {
+        $cols = ['Name', 'Price', 'Nb. Achats', 'Desc', 'Stock', 'Achats', 'Available'];
+        $products = Product::all();
+
+        // TODO: pagination -> action
+        $attributes = Attribute::all();
+
+        return view('dashboard', [
+            'view' => 'admin.products',
+            'collection' => $this->collection,
+            'products' => $products,
+            'cols' => $cols,
+            'attributes' => $attributes,
         ]);
     }
 
@@ -75,7 +147,7 @@ class Dashboard extends Controller
                     $user->save();
                 }
                 break;
-            
+
             default:
                 break;
         }
@@ -84,13 +156,10 @@ class Dashboard extends Controller
     }
 
     public function details(Request $request) {
-        $input = $request->input('users');
-        $users = [];
-        if (count($input) > 0) {
-            $users = User::whereIn('id', $input)->get();
-        };
+        $input = $request->input('user');
+        $user = User::find($input);
 
-        return response()->json(['success' => true, 'data' => $users]);
+        return response()->json(['success' => true, 'data' => $user]);
     }
 
     public function changeAdmin() {
