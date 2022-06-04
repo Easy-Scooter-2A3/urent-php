@@ -1,13 +1,16 @@
+ARG tag=0.1.0
+ARG image=kazuh/urent-php:$tag
+
+FROM $image as tmp
+
 FROM nginx:alpine
-
 WORKDIR /var/www
-
 EXPOSE 80
 
 COPY . .
 COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=kazuh/urent-php:0.37 /var/www/public .
+COPY --from=tmp /var/www/public .
 
 RUN chown -R nginx:nginx /var/cache/
 
