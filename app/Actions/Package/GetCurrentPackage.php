@@ -15,9 +15,14 @@ class GetCurrentPackage
             return null;
         }
         $currentPackage = users_packages::where('user', $user->id)->first();
-        if ($currentPackage) {
-            return $currentPackage->package;
+
+        if (!$currentPackage) {
+            $currentPackage = users_packages::create([
+                'user' => $user->id,
+                'package' => 1,
+            ]);
         }
-        return -1;
+
+        return $currentPackage->package;
     }
 }
