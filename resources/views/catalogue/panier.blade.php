@@ -8,7 +8,7 @@
             'text' => 'Catalogue',
             'type' => 'button',
             'id' => 'catalogueBtn',
-            'href' => route('catalogue', app()->getLocale()),
+            'href' => route('catalogue'),
         ])
         @endcomponent
     </div>

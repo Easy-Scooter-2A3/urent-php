@@ -8,7 +8,7 @@
             'text' => 'Voir le panier',
             'type' => 'button',
             'id' => 'cartCheckBtn',
-            'href' => route('cart', app()->getLocale()),
+            'href' => route('cart'),
         ])
         @endcomponent
     </div>

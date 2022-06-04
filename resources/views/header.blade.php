@@ -47,7 +47,7 @@
                 </div>
                 <li class="hover:text-red-600 m-2">{{ __('About us') }}</li>
                 <li class="hover:text-red-600 m-2"><a href="/demo">Demo</a></li>
-                <li class="hover:text-red-600 m-2"><a href="{{ route('catalogue', app()->getLocale()) }}">Catalogue</a></li>
+                <li class="hover:text-red-600 m-2"><a href="{{ route('catalogue') }}">Catalogue</a></li>
                 <li>
                     <button data-dropdown-toggle="userDropdown" type="button">
                         <span class="mdc-button__ripple"></span>
@@ -81,7 +81,7 @@
                 @endauth
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                     <li>
-                        <a href="{{ route('dashboard', app()->getLocale()) }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ __('Dashboard') }}</a>
+                        <a href="{{ route('dashboard') }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ __('Dashboard') }}</a>
                     </li>
                     <li>
                         <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ __('Settings') }}</a>
@@ -90,12 +90,12 @@
                 </ul>
                 @auth
                 <div class="py-1">
-                    <a href="{{ route('logout', app()->getLocale()) }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{{ __('Sing out') }}</a>
+                    <a href="{{ route('logout') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{{ __('Sing out') }}</a>
                 </div>
                 @else
                 <div class="py-1">
-                    <a href="{{ route('login', app()->getLocale()) }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Login</a>
-                    <a href="{{ route('register', app()->getLocale()) }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Register</a>
+                    <a href="{{ route('login') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Login</a>
+                    <a href="{{ route('register') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Register</a>
                 </div>
                 @endauth
             </div>
