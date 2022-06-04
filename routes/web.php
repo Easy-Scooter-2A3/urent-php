@@ -146,5 +146,5 @@ Route::controller(Dashboard::class)->group(function () {
     });
 });
 
-Route::get('/weather/{day}', [Weather::class, 'list'])->middleware('admin')->name('weather');
+Route::get('/weather/{day}', [Weather::class, 'list'])->middleware('auth')->name('weather');
 Route::get('/getwaypoints', GetWaypoints::class)->middleware('auth')->name('getwaypoints');
