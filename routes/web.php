@@ -46,6 +46,10 @@ use App\Actions\User\ConvertUserFidelity;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/reset-password/{token}', [Authentication::class, 'resetPassword'])->middleware('guest')->name('password.reset');
+Route::get('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->middleware('guest')->name('password.resetSubmit');
+
 Route::get('/dashboard/stripe-portal', function (Request $request) {
     return $request->user()->redirectToBillingPortal(route('index'));
 })->name('dashboard.stripe-portal');
