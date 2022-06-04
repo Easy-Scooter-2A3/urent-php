@@ -51,6 +51,7 @@ Route::get('/reset-password/{token}', [Authentication::class, 'resetPassword'])-
 Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->middleware('guest')->name('password.resetSubmit');
 
 Route::get('/dashboard/stripe-portal', function (Request $request) {
+    $request->user->hasStripeId() ? $request->user->syncStripeCustomerDetails() : $request->user->createAsStripeCustomer();
     return $request->user()->redirectToBillingPortal(route('index'));
 })->name('dashboard.stripe-portal');
 
