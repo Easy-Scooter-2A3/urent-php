@@ -57,8 +57,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/${{ github.event.repository.name }}:buildcache
-          cache-to: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/${{ github.event.repository.name }}:buildcache,mode=max
+          cache-from: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-php:buildcache
+          cache-to: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-php:buildcache,mode=max
           file: Dockerfile.php
       
       - name: Build and push nginx
@@ -68,8 +68,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/${{ github.event.repository.name }}:buildcache
-          cache-to: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/${{ github.event.repository.name }}:buildcache,mode=max
+          cache-from: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-nginx:buildcache
+          cache-to: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-nginx:buildcache,mode=max
           file: Dockerfile.nginx
 
       - name: 📘 Release Drafter
