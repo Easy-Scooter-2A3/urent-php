@@ -37,6 +37,11 @@ jobs:
     needs: generate-version
 
     steps:
+      - name: "Checkout Action"
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -77,6 +82,11 @@ jobs:
     needs: build-php
 
     steps:
+      - name: "Checkout Action"
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
