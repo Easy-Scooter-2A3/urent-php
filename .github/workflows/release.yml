@@ -92,7 +92,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ${{ secrets.REGISTRY_USERNAME }}/urent-php
+            ${{ secrets.REGISTRY_USERNAME }}/urent-nginx
           tags: |
             type=ref,event=branch
             type=ref,event=pr
