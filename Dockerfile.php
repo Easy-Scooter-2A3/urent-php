@@ -14,12 +14,12 @@ EXPOSE 9000
 WORKDIR /var/www
 
 RUN apk add --no-cache git curl curl-dev icu-dev
-RUN apk del curl-dev icu-dev
 
 # install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN docker-php-ext-install pdo_mysql curl intl
+RUN apk del curl-dev icu-dev
 
 COPY . .
 RUN composer install --optimize-autoloader --no-interaction --no-dev
