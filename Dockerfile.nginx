@@ -1,21 +1,26 @@
-ARG tag=0.1.0
-ARG image=kazuh/urent-php:$tag
+FROM node:16-slim as builder-node
 
-FROM $image as tmp
-
-FROM nginx:alpine
-WORKDIR /var/www
-EXPOSE 80
+WORKDIR /app
 
 COPY . .
+
+RUN yarn install --production=false
+RUN yarn production
+
+
+FROM nginx:alpine
+WORKDIR /var/www/public
+EXPOSE 80
+
+# COPY . .
 COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=tmp /var/www/public .
+COPY --from=builder-node /app/public .
 
 RUN chown -R nginx:nginx /var/cache/
 
-RUN chmod -R 755 /var/www
-RUN chown -R nginx:nginx /var/www
+RUN chmod -R 755 /var/www/public
+RUN chown -R nginx:nginx /var/www/public
 
 # USER nginx
 

@@ -1,14 +1,4 @@
-FROM node:16-slim as builder-node
-
-WORKDIR /app
-
-COPY . .
-
-RUN yarn install --production=false
-RUN yarn production
-
-
-FROM php:8.1-fpm-alpine as builder-php
+FROM php:8.1-fpm-alpine
 
 EXPOSE 9000
 WORKDIR /var/www
@@ -31,10 +21,26 @@ RUN php artisan route:clear
 RUN php artisan view:clear
 # && php artisan view:cache
 
-
-COPY --from=builder-node /app/public .
-
 RUN chmod -R 755 /var/www
 RUN chown -R www-data:www-data /var/www
 
+# clean
+RUN rm -rf /var/cache/apk/* && rm -rf \
+    yarn.lock \
+    webpack.mix.js \
+    tsconfig.json \
+    package.json \
+    docker \
+    database \
+    html \
+    tests \
+    tailwind.config.js \
+    phpunit.xml \
+    composer*
+
+
+RUN chmod +x run.sh && cp run.sh /usr/local/bin/run
+
 USER www-data
+
+CMD [ "run" ]
