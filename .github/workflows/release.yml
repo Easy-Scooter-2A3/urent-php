@@ -43,7 +43,7 @@ jobs:
           fetch-depth: 0
 
       - name: Docker meta
-        id: meta
+        id: meta1
         uses: docker/metadata-action@v4
         with:
           images: |
@@ -70,8 +70,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta1.outputs.tags }}
+          labels: ${{ steps.meta1.outputs.labels }}
           cache-from: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-php:buildcache
           cache-to: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-php:buildcache,mode=max
           file: Dockerfile.php
@@ -88,7 +88,7 @@ jobs:
           fetch-depth: 0
 
       - name: Docker meta
-        id: meta
+        id: meta2
         uses: docker/metadata-action@v4
         with:
           images: |
@@ -115,11 +115,12 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta2.outputs.tags }}
+          labels: ${{ steps.meta2.outputs.labels }}
           cache-from: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-nginx:buildcache
           cache-to: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-nginx:buildcache,mode=max
           file: Dockerfile.nginx
+          build-args: tag=${{ needs.generate-version.outputs.tag }}
 
   generate-changelog:
     name: "Generate changelog & release"
