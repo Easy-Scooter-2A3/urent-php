@@ -34,6 +34,7 @@ jobs:
   build-php:
     name: "Build and push Docker images (PHP)"
     runs-on: ubuntu-latest
+    needs: generate-version
 
     steps:
       - name: Docker meta
