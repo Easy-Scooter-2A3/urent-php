@@ -11,12 +11,13 @@ on:
       - '.github/**'
 
 jobs:
-  build:
-    name: "Build and push Docker image"
+  generate-version:
+    name: "Generate version"
     runs-on: ubuntu-latest
-
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
     steps:
-      - name : "Checkout Action"
+      - name: "Checkout Action"
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -27,18 +28,26 @@ jobs:
         with:
           minor-identifier: 'feat:'
 
+      - id: tag
+        run: echo "::set-output name=tag::${{ steps.version.outputs.version }}"
+
+  build-php:
+    name: "Build and push Docker images (PHP)"
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
           images: |
-            ${{ secrets.REGISTRY_USERNAME }}/${{ github.event.repository.name }}
+            ${{ secrets.REGISTRY_USERNAME }}/urent-php
           tags: |
             type=ref,event=branch
             type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-            type=raw,value=${{ steps.version.outputs.version }}
+            type=raw,value=${{ needs.generate-version.outputs.tag }}
 
       - name: Docker Login
         uses: docker/login-action@v2.0.0
@@ -60,7 +69,36 @@ jobs:
           cache-from: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-php:buildcache
           cache-to: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-php:buildcache,mode=max
           file: Dockerfile.php
-      
+
+  build-nginx:
+    name: "Build and push Docker image (nginx)"
+    runs-on: ubuntu-latest
+    needs: build-php
+
+    steps:
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ secrets.REGISTRY_USERNAME }}/urent-php
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=${{ needs.generate-version.outputs.tag }}
+
+      - name: Docker Login
+        uses: docker/login-action@v2.0.0
+        with:
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Build and push nginx
         uses: docker/build-push-action@v2
         with:
@@ -72,10 +110,16 @@ jobs:
           cache-to: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-nginx:buildcache,mode=max
           file: Dockerfile.nginx
 
+  generate-changelog:
+    name: "Generate changelog & release"
+    runs-on: ubuntu-latest
+    needs: [generate-version, build-php, build-nginx]
+
+    steps:
       - name: 📘 Release Drafter
         uses: release-drafter/release-drafter@v5.20.0
         with:
-          version: ${{ steps.version.outputs.version }}
+          version: ${{ needs.generate-version.outputs.tag }}
           publish: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
