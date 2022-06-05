@@ -30,6 +30,15 @@ jobs:
 
       - id: tag
         run: echo "::set-output name=tag::${{ steps.version.outputs.version }}"
+  
+  # test:
+  #   name: "Test"
+  #   needs: generate-version
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - run: |
+  #         echo ${{ needs.generate-version.outputs.tag }}
 
   build-php:
     name: "Build and push Docker images (PHP)"
@@ -79,7 +88,7 @@ jobs:
   build-nginx:
     name: "Build and push Docker image (nginx)"
     runs-on: ubuntu-latest
-    needs: build-php
+    needs: generate-version
 
     steps:
       - name: "Checkout Action"
@@ -120,7 +129,8 @@ jobs:
           cache-from: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-nginx:buildcache
           cache-to: type=registry,ref=${{ secrets.REGISTRY_USERNAME }}/urent-nginx:buildcache,mode=max
           file: Dockerfile.nginx
-          build-args: tag=${{ needs.generate-version.outputs.tag }}
+          build-args: |
+            tag=${{ needs.generate-version.outputs.tag }}
 
   generate-changelog:
     name: "Generate changelog & release"
