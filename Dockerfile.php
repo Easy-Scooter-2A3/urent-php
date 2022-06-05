@@ -1,4 +1,4 @@
-FROM node:16 as builder-node
+FROM node:16-slim as builder-node
 
 WORKDIR /app
 
@@ -8,24 +8,21 @@ RUN yarn install --production=false
 RUN yarn production
 
 
-FROM php:8.1-fpm as builder-php
+FROM php:8.1-fpm-alpine as builder-php
 
 EXPOSE 9000
 WORKDIR /var/www
 
-RUN apt update && apt install -y git curl libcurl4-openssl-dev libicu-dev
+RUN apk add --no-cache git curl curl-dev icu-dev
+RUN apk del curl-dev icu-dev
 
 # install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN docker-php-ext-install pdo_mysql curl iconv intl
+RUN docker-php-ext-install pdo_mysql curl intl
 
 COPY . .
 RUN composer install --optimize-autoloader --no-interaction --no-dev
-
-RUN pecl install redis
-
-RUN docker-php-ext-enable redis
 
 RUN php artisan config:clear
 # && php artisan config:cache
