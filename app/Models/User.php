@@ -29,7 +29,8 @@ class User extends Authenticatable
         'partner_code',
         'fidelity_points',
         'credit_points',
-        'is_admin',
+        'isAdmin',
+        'isActive'
     ];
 
     /**

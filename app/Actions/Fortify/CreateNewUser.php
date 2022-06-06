@@ -4,10 +4,12 @@ namespace App\Actions\Fortify;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
-
+use App\Mail\NewUser;
+use App\Models\Token;
 class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
@@ -35,13 +37,29 @@ class CreateNewUser implements CreatesNewUsers
             // 'partner_code' => ['string', 'max:255'],
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'location' => $input['location'],
             'phone' => $input['phone'],
             'password' => Hash::make($input['password']),
             'partner_code' => $input['partner_code'] ?? null,
+            'isActive' => false,
         ]);
+
+        if ($user) {
+            $bytes = random_bytes(32);
+            $token = bin2hex($bytes);
+            $tk = Token::create([
+                'user_id' => $user->id,
+                'token' => $token,
+                'action' => 'confirm-account'
+            ]);
+            $user->activation_token = $tk->id;
+            $user->save();
+            Mail::to("kazuh.m@protonmail.ch")->send(new NewUser($user, $token));
+        }
+
+        return $user;
     }
 }

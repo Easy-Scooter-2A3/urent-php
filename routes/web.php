@@ -35,6 +35,7 @@ use App\Actions\Partnership\GetPartnershipProductsList;
 use App\Actions\User\SetUserActivation;
 use App\Actions\User\SetUserRole;
 use App\Actions\User\ConvertUserFidelity;
+use App\Actions\User\UserActivation;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,8 @@ use App\Actions\User\ConvertUserFidelity;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/confirm-account/{token}', UserActivation::class)->name('confirm-account');
 
 Route::get('/reset-password/{token}', [Authentication::class, 'resetPassword'])->middleware('guest')->name('password.reset');
 Route::post('/reset-password', [Authentication::class, 'resetPasswordSubmit'])->middleware('guest')->name('password.resetSubmit');
@@ -64,7 +67,7 @@ Route::get('/setlang/{lang}', function (Request $request) {
 })->name('setlang');
 
 Route::get('/', [Index::class, 'index'])->name('index');
-Route::get('/logout', [Index::class, 'logout']);
+Route::get('/logout', [Index::class, 'logout'])->name('logout')->withoutMiddleware([CheckUserStatus::class]);
 Route::get('/catalogue', [Catalogue::class, 'index'])->middleware('auth')->name('catalogue');
 
 Route::post('/user/convertfidelity', ConvertUserFidelity::class)->middleware('auth')->name('user.convert.fidelity');
