@@ -41,6 +41,18 @@ class Authentication extends Controller
         $user = null;
         switch ($driver) {
             case 'github':
+                //check if user exists
+                $user = User::where('email', $githubUser->email)->first();
+                if ($user && $user->github_id == null) {
+                    // TODO: check if it's the same github user
+                    $user->github_id = $githubUser->id;
+                    $user->github_token = $githubUser->token;
+                    $user->github_refresh_token = $githubUser->refreshToken;
+                    $user->oauth = $driver;
+                    $user->save();
+                    break;
+                }
+
                 $user = User::where('github_id', $githubUser->id)->first();
                 break;
             
