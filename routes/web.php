@@ -48,6 +48,9 @@ use App\Actions\User\UserActivation;
 |
 */
 
+Route::get('/auth/{driver}', [Authentication::class, 'socialAuth'])->middleware('guest')->name('auth.github');
+Route::get('/auth/{driver}/callback', [Authentication::class, 'socialAuthCallback'])->middleware('guest')->name('auth.github.callback');
+
 Route::get('/confirm-account/{token}', UserActivation::class)->name('confirm-account');
 
 Route::get('/reset-password/{token}', [Authentication::class, 'resetPassword'])->middleware('guest')->name('password.reset');

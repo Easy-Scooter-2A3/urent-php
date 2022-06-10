@@ -10,9 +10,16 @@ use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use App\Mail\NewUser;
 use App\Models\Token;
+use Lorisleiva\Actions\Concerns\AsAction;
 class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
+    use AsAction;
+
+    public function handle(array $input)
+    {
+        return $this->create($input);
+    }
 
     /**
      * Validate and create a newly registered user.
@@ -44,10 +51,10 @@ class CreateNewUser implements CreatesNewUsers
             'phone' => $input['phone'],
             'password' => Hash::make($input['password']),
             'partner_code' => $input['partner_code'] ?? null,
-            'isActive' => false,
+            'isActive' => $input['isActive'] ?? false,
         ]);
 
-        if ($user) {
+        if ($user && !$input['isActive']) {
             $bytes = random_bytes(32);
             $token = bin2hex($bytes);
             $tk = Token::create([

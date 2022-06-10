@@ -10,10 +10,80 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
 use App\Actions\Fortify\PasswordValidationRules;
+use App\Actions\Fortify\CreateNewUser;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
+use Laravel\Socialite\Facades\Socialite;
+
+
 
 class Authentication extends Controller
 {
     use PasswordValidationRules;
+
+    public function socialAuth(Request $request, $driver)
+    {
+        return Socialite::driver($driver)->redirect();
+    }
+
+    public function githubLogin()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    public function socialAuthCallback(Request $request, $driver)
+    {
+        $githubUser = Socialite::driver($driver)
+            ->scopes(['user:email', 'user:read'])
+            ->stateless()
+            ->user();
+
+        $user = null;
+        switch ($driver) {
+            case 'github':
+                $user = User::where('github_id', $githubUser->id)->first();
+                break;
+            
+            default:
+                break;
+        }
+
+        if ($user) {
+            Auth::login($user);
+            return redirect('/');
+        }
+
+        $data = [
+            'name' => $githubUser->name,
+            'email' => $githubUser->email,
+            'github_id' => $githubUser->id,
+            'github_token' => $githubUser->token,
+            'github_refresh_token' => $githubUser->refreshToken,
+            'isActive' => true,
+            'password' => 'github',
+            'password_confirmation' => 'github',
+            'location' => 'default',
+            'phone' => 'default',
+            'oauth' => $driver,
+        ];
+
+        $user = CreateNewUser::run($data);
+        switch ($driver) {
+            case 'github':
+                $user->github_id = $githubUser->id;
+                $user->github_token = $githubUser->token;
+                $user->github_refresh_token = $githubUser->refreshToken;
+                break;
+
+            default:
+                break;
+        }
+        $user->save();
+
+        Auth::login($user);
+
+        return redirect()->to('/');
+    }
 
     public function resetPassword(Request $request, String $token)
     {
