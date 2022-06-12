@@ -33,27 +33,38 @@ class Authentication extends Controller
 
     public function socialAuthCallback(Request $request, $driver)
     {
-        $githubUser = Socialite::driver($driver)
+        $tmpUser = Socialite::driver($driver)
             ->scopes(['user:email', 'user:read'])
             ->stateless()
             ->user();
 
         $user = null;
         switch ($driver) {
-            case 'github':
-                //check if user exists
-                $user = User::where('email', $githubUser->email)->first();
+            case 'google':
+                $user = User::where('email', $tmpUser->email)->first();
                 if ($user && $user->github_id == null) {
-                    // TODO: check if it's the same github user
-                    $user->github_id = $githubUser->id;
-                    $user->github_token = $githubUser->token;
-                    $user->github_refresh_token = $githubUser->refreshToken;
+                    $user->google_id = $tmpUser->id;
+                    $user->google_token = $tmpUser->token;
                     $user->oauth = $driver;
                     $user->save();
                     break;
                 }
 
-                $user = User::where('github_id', $githubUser->id)->first();
+                $user = User::where('github_id', $tmpUser->id)->first();
+                break;
+            case 'github':
+                //check if user exists
+                $user = User::where('email', $tmpUser->email)->first();
+                if ($user && $user->github_id == null) {
+                    $user->github_id = $tmpUser->id;
+                    $user->github_token = $tmpUser->token;
+                    $user->github_refresh_token = $tmpUser->refreshToken;
+                    $user->oauth = $driver;
+                    $user->save();
+                    break;
+                }
+
+                $user = User::where('github_id', $tmpUser->id)->first();
                 break;
             
             default:
@@ -66,11 +77,11 @@ class Authentication extends Controller
         }
 
         $data = [
-            'name' => $githubUser->name,
-            'email' => $githubUser->email,
-            'github_id' => $githubUser->id,
-            'github_token' => $githubUser->token,
-            'github_refresh_token' => $githubUser->refreshToken,
+            'name' => $tmpUser->name,
+            'email' => $tmpUser->email,
+            'github_id' => $tmpUser->id,
+            'github_token' => $tmpUser->token,
+            'github_refresh_token' => $tmpUser->refreshToken,
             'isActive' => true,
             'password' => 'github',
             'password_confirmation' => 'github',
@@ -82,9 +93,9 @@ class Authentication extends Controller
         $user = CreateNewUser::run($data);
         switch ($driver) {
             case 'github':
-                $user->github_id = $githubUser->id;
-                $user->github_token = $githubUser->token;
-                $user->github_refresh_token = $githubUser->refreshToken;
+                $user->github_id = $tmpUser->id;
+                $user->github_token = $tmpUser->token;
+                $user->github_refresh_token = $tmpUser->refreshToken;
                 break;
 
             default:
