@@ -83,13 +83,16 @@
             @component('components.button', [
                 'text' => 'Github',
                 'type' => 'button',
-                'href' => route('auth.github', 'github'),
+                'href' => route('oauth', 'github'),
+            ])      
+            @endcomponent
+
+            @component('components.button', [
+                'text' => 'Google',
+                'type' => 'button',
+                'href' => route('oauth', 'google'),
             ])
             @endcomponent
-            <h3>TODO</h3>
-            <h3>TODO</h3>
-            <h3>TODO</h3>
-            <h3>TODO</h3>
         </div>
     </div>
     

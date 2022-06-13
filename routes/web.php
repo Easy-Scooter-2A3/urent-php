@@ -48,8 +48,8 @@ use App\Actions\User\UserActivation;
 |
 */
 
-Route::get('/auth/{driver}', [Authentication::class, 'socialAuth'])->middleware('guest')->name('auth.driver');
-Route::get('/auth/{driver}/callback', [Authentication::class, 'socialAuthCallback'])->middleware('guest')->name('auth.github.callback');
+Route::get('/auth/{driver}', [Authentication::class, 'socialAuth'])->middleware('guest')->name('oauth');
+Route::get('/auth/{driver}/callback', [Authentication::class, 'socialAuthCallback'])->middleware('guest')->name('oauth.github.callback');
 
 Route::get('/confirm-account/{token}', UserActivation::class)->name('confirm-account');
 
