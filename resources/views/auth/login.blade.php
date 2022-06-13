@@ -80,6 +80,12 @@
         </form>
         <span class="border"></span>
         <div class="m-5 md:w-2/5 sm:w-full border">
+            @component('components.button', [
+                'text' => 'Github',
+                'type' => 'button',
+                'href' => route('auth.github', 'github'),
+            ])
+            @endcomponent
             <h3>TODO</h3>
             <h3>TODO</h3>
             <h3>TODO</h3>

@@ -30,7 +30,8 @@ class User extends Authenticatable
         'fidelity_points',
         'credit_points',
         'isAdmin',
-        'isActive'
+        'isActive',
+        'oauth'
     ];
 
     /**
