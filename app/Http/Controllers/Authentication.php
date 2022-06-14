@@ -10,10 +10,103 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
 use App\Actions\Fortify\PasswordValidationRules;
+use App\Actions\Fortify\CreateNewUser;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
+use Laravel\Socialite\Facades\Socialite;
+
+
 
 class Authentication extends Controller
 {
     use PasswordValidationRules;
+
+    public function socialAuth(Request $request, $driver)
+    {
+        return Socialite::driver($driver)->redirect();
+    }
+
+    public function githubLogin()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    public function socialAuthCallback(Request $request, $driver)
+    {
+        $tmpUser = Socialite::driver($driver)
+            ->scopes(['user:email', 'user:read'])
+            ->stateless()
+            ->user();
+
+        $user = null;
+        switch ($driver) {
+            case 'google':
+                $user = User::where('email', $tmpUser->email)->first();
+                if ($user && $user->github_id == null) {
+                    $user->google_id = $tmpUser->id;
+                    $user->google_token = $tmpUser->token;
+                    $user->oauth = $driver;
+                    $user->save();
+                    break;
+                }
+
+                $user = User::where('github_id', $tmpUser->id)->first();
+                break;
+            case 'github':
+                //check if user exists
+                $user = User::where('email', $tmpUser->email)->first();
+                if ($user && $user->github_id == null) {
+                    $user->github_id = $tmpUser->id;
+                    $user->github_token = $tmpUser->token;
+                    $user->github_refresh_token = $tmpUser->refreshToken;
+                    $user->oauth = $driver;
+                    $user->save();
+                    break;
+                }
+
+                $user = User::where('github_id', $tmpUser->id)->first();
+                break;
+            
+            default:
+                break;
+        }
+
+        if ($user) {
+            Auth::login($user);
+            return redirect('/');
+        }
+
+        $data = [
+            'name' => $tmpUser->name,
+            'email' => $tmpUser->email,
+            'github_id' => $tmpUser->id,
+            'github_token' => $tmpUser->token,
+            'github_refresh_token' => $tmpUser->refreshToken,
+            'isActive' => true,
+            'password' => 'github',
+            'password_confirmation' => 'github',
+            'location' => 'default',
+            'phone' => 'default',
+            'oauth' => $driver,
+        ];
+
+        $user = CreateNewUser::run($data);
+        switch ($driver) {
+            case 'github':
+                $user->github_id = $tmpUser->id;
+                $user->github_token = $tmpUser->token;
+                $user->github_refresh_token = $tmpUser->refreshToken;
+                break;
+
+            default:
+                break;
+        }
+        $user->save();
+
+        Auth::login($user);
+
+        return redirect()->to('/');
+    }
 
     public function resetPassword(Request $request, String $token)
     {

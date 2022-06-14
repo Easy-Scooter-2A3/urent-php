@@ -11,6 +11,10 @@ class Index extends Controller
 {
     public function index(Request $request)
     {
+        if (Auth::check() && !Auth::user()->isActive) {
+            return $this->logout($request);
+        }
+
         $packages = Package::all();
         if (Auth::guest()) {
             return view('index', [

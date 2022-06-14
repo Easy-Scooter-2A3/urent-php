@@ -20,12 +20,13 @@ class ScooterController extends Controller
     public function create(Request $request) {
         $validator = Validator::make($request->all(), [
             'model' => ['required', 'string', 'max:255'],
-            'status' => ['string', 'max:255', 'default:available'],
+            // 'status' => ['string', 'max:255', 'default:available'],
         ])->validate();
 
         Scooter::create([
             'model' => $request->input('model'),
-            'status' => $request->input('status') ?? 'available',
+            'status' => 0, //TODO: use enum
+            // 'status' => $request->input('status') ?? 'available',
         ]);
         return response()->json(['success' => true]);
     }
