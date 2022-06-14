@@ -27,6 +27,7 @@ class Dashboard extends Controller
         ['admin.scooters', "Scooters (admin)"],
         ['admin.products', "Products (admin)"],
         ['admin.partnerships', "Partnerships (admin)"],
+        ['admin.maps', "Maps (admin)"],
     ];
 
     public function index(Request $request) {
@@ -41,6 +42,13 @@ class Dashboard extends Controller
             'collection' => $this->collection,
             'current_package' => $package->type,
             'partnership' => $partner['partnership'] ?? null,
+        ]);
+    }
+
+    public function maps(Request $request) {
+        return view('dashboard', [
+            'view' => 'admin.maps',
+            'collection' => $this->collection,
         ]);
     }
 

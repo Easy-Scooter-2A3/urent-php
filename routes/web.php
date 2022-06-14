@@ -114,6 +114,10 @@ Route::controller(Dashboard::class)->group(function () {
     Route::group(['prefix' => 'dashboard/admin'], function () {
         Route::middleware(['admin'])->group(function () {
             Route::get('/accounts', 'accounts')->name('admin.accounts');
+
+            Route::group(['prefix' => 'maps'], function () {
+                Route::get('/', 'maps')->name('admin.maps');
+            });
             
             Route::group(['prefix' => 'scooters'], function () {
                 Route::get('/', 'scooter')->name('admin.scooters');
