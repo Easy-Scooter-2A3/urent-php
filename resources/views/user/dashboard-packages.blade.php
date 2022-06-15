@@ -1,7 +1,7 @@
 @include('modal-payment')
 
 <div class="p-4 gap-3 xl:w-2/12 lg:w-1/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md justify-between">
-    <h1 class="text-center text-2xl">Pay as you go 
+    <h1 class="text-center text-2xl">@lang('Pay as you go')
         @if ($current_package == 1)
         <em class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</em>
         @endif
@@ -10,10 +10,10 @@
     <div class="mx-5">
         <ul class="list-disc m-4">
             <li>
-                Déverrouillage à 1€
+                @lang('Unlocking at 1€')
             </li>
             <li>
-                23 centimes / min
+                @lang('23 centimes / min')
             </li>
         </ul>
     </div>
@@ -30,7 +30,7 @@
 </div>
 
 <div class="p-4 gap-3 xl:w-2/12 lg:w-1/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md justify-between">
-    <h1 class="text-center text-2xl">Mensuel
+    <h1 class="text-center text-2xl">@lang('Monthly')
         @if ($current_package == 2)
         <em class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</em>
         @endif
@@ -42,10 +42,10 @@
                 3 Options
             </li>
             <li>
-                30 min par trajet
+                @lang('30 mins each way')
             </li>
             <li>
-                Déverrouillage gratuit
+                @lang('Free Unlock')
             </li>
         </ul>
     
@@ -88,7 +88,7 @@
                       <div class="mdc-checkbox__ripple"></div>
                     </div>
                     <label for="checkbox-1">
-                        {{ $nb[$i-1] }} trajets à {{ $prices[$i-1] }} €
+                        {{ $nb[$i-1] }} @lang('trips to') {{ $prices[$i-1] }} €
                     </label>
                 </div>
                 @endfor
@@ -108,22 +108,22 @@
 </div>
 
 <div class="p-4 gap-3 xl:w-2/12 lg:w-1/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md justify-between">
-    <h1 class="text-center text-2xl">Journalier
+    <h1 class="text-center text-2xl">@lang('Daily')
         @if ($current_package == 3)
-        <em class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">done</em>
+        <em class="material-icons mdc-text-field__icon mdc-text-field__icon--leading text-green-500">@lang('done')</em>
         @endif
     </h1>
 
     <div class="mx-5">
         <ul class="list-disc m-4">
             <li>
-                Tarif: 9.99€ / jour
+                @lang('Price: 9.99€ / day')
             </li>
             <li>
-                30 min par jour
+                @lang('30 mins per day')
             </li>
             <li>
-                Déverrouillage gratuit
+                @lang('Free Unlock')
             </li>
         </ul>
     </div>
