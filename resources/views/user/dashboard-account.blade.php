@@ -1,13 +1,13 @@
 <div class="p-4 gap-3 xl:w-5/12 lg:w-4/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md">
-    <strong class="text-lg">Personal information</strong>
-    <h2>Username: {{ Auth::user()->name }}</h2>
-    <h2>Email: {{ Auth::user()->email }}</h2>
-    <h2>Phone number: {{ Auth::user()->phone }}</h2>
-    <h2>Location: {{ Auth::user()->location }}</h2>
+    <strong class="text-lg">@lang('Personal information')</strong>
+    <h2>@lang('Username') : {{ Auth::user()->name }}</h2>
+    <h2>@lang('Email') : {{ Auth::user()->email }}</h2>
+    <h2>@lang('Phone number') : {{ Auth::user()->phone }}</h2>
+    <h2>@lang('Location') : {{ Auth::user()->location }}</h2>
 
-    @foreach ($userPartnerships as $partnership)
-    <h2>Partenariat: {{ $partnerships[$partnership]->name }}</h2>
-    @endforeach
+    @if ($partnership)
+        <h2>@lang('partnership') {{ $partnership->name }}</h2>
+    @endif
 
     <h2>MFA: 
         <form id="mfa_form" action="/user/two-factor-authentication" method="post">
@@ -20,9 +20,9 @@
         {{-- /user/confirmed-two-factor-authentication POST + CSRF --}}
         @if (Auth::user()->two_factor_secret)
             @if (Auth::user()->two_factor_confirmed_at)
-                Enabled
+                @lang('Enabled')
             @else
-                <button id="mfa_dialog_open" type="button">Confirm MFA</button>
+                <button id="mfa_dialog_open" type="button">@lang('Confirm MFA')</button>
                 <div id="custom_mfa_error" class="text-red-600 text-sm"></div>
 
                 <div id="mfa_dialog2" class="mdc-dialog">
@@ -32,9 +32,9 @@
                         aria-modal="true"
                         aria-labelledby="dialog"
                         aria-describedby="dialog-content">
-                        <h2 class="mdc-dialog__title" id="dialog">Confirm MFA</h2>
+                        <h2 class="mdc-dialog__title" id="dialog">@lang('Confirm MFA')</h2>
                         <div class="mdc-dialog__content" id="dialog-content">
-                            <h2 class="mb-3">Please scan the following QR Code in your Authenticator App</h2>
+                            <h2 class="mb-3">@lang('Please scan the following QR Code in your Authenticator App')</h2>
                             {!! Auth::user()->twoFactorQrCodeSvg() !!}
 
                             {{-- Code field --}}
@@ -49,7 +49,7 @@
                         <div class="mdc-dialog__actions">
                           <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
                             <div class="mdc-button__ripple"></div>
-                            <span class="mdc-button__label">Cancel</span>
+                            <span class="mdc-button__label">@lang('Cancel')</span>
                           </button>
                           <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="accept">
                             <div class="mdc-button__ripple"></div>
@@ -62,13 +62,13 @@
                 </div>
             @endif
         @else
-            Disabled
+            @lang('Disabled')
         @endif
         
     </h2>
-    <h2>Fidelity points: {{ Auth::user()->fidelity_points }}</h2>
-    <h2>Credits: {{ Auth::user()->balance() }}</h2>
-    <h2>Package: {{ $current_package }}</h2>
+    <h2>@lang('Fidelity points') : {{ Auth::user()->fidelity_points }}</h2>
+    <h2>@lang('Credits') : {{ Auth::user()->balance() }}</h2>
+    <h2>@lang('Package') : {{ $current_package }}</h2>
     @component('components.button', [
         'text' => 'Stripe',
         'type' => 'button',
@@ -80,7 +80,7 @@
 
     @if (session('status') == 'two-factor-authentication-enabled')
         <div class="mb-4 font-medium text-sm">
-            Please finish configuring two factor authentication below.
+            @lang('Please finish configuring two factor authentication below.')
             {{-- @include('dialogs.MFA') --}}
         </div>
     @endif
