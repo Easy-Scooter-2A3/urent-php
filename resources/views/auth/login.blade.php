@@ -58,9 +58,9 @@
             </div>
 
             <div class="flex">
-                <a href="/register" class="hover:text-red-600 text-gray-500 mt-3 text-sm hover:underline">No account ? Create one</a>
+                <a href="/register" class="hover:text-red-600 text-gray-500 mt-3 text-sm hover:underline">@lang('No account ? Create one')</a>
                 <h3 class="text-gray-500 mt-3 text-sm">&nbsp;/&nbsp;</h3>
-                <a href="/forgot-password" class="hover:text-red-600 text-gray-500 mt-3 text-sm hover:underline">Reset password</a>
+                <a href="/forgot-password" class="hover:text-red-600 text-gray-500 mt-3 text-sm hover:underline">@lang('Reset password')</a>
             </div>
             @isset($status)
                 <div class="text-green-600 text-sm">{{ $status }}</div>
