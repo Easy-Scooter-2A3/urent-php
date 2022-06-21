@@ -13,18 +13,11 @@ class GetPartnershipUsers
 {
     use AsAction;
 
-    public function handle($partnershipsIds)
+    public function handle($partnershipsId)
     {
-        $partnershipUsers = partnership_user::whereIn('partnership_id', $partnershipsIds)->get();
+        $partnershipUsers = partnership_user::where('partnership_id', $partnershipsId)->first();
         $users = User::whereIn('id', $partnershipUsers->pluck('user_id'))->get(['id','name']);
 
         return ['success' => true, 'users' => $users];
-    }
-
-    public function asController(Request $request)
-    {
-        return $this->handle(
-            $request->input('userId')
-        );
     }
 }

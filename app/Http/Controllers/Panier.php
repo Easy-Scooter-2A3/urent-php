@@ -13,31 +13,36 @@ class Panier extends Controller
 {
     public function index()
     {
-        $cart = Cart::where('user_id', auth()->user()->id)->pluck('product_id')->toArray();
+        $userId = auth()->user()->id;
+        $cart = Cart::where('user_id', $userId)->pluck('product_id')->toArray();
         
         $data = [];
-        if (count($cart) > 0) {
-            $data = GetProductsDetails::run($cart);
-        } else {
-            $data = [
-                'attributes' => [[]],
-                'data' => [],
-            ];
+        $quantity = [];
+        foreach ($cart as $key => $cartProduct) {
+            $tmp = GetProductsDetails::run($cartProduct);
+            $data['data'][] = $tmp['data'];
+            $data['attributes'][$cartProduct] = $tmp['attributes'];
         }
 
         $quantity = [];
-        foreach ($data['data'] as $key => $product) {
-            $quantity[$product->id] = Cart::where('user_id', auth()->user()->id)->where('product_id', $product->id)->first()->quantity;
+        if (count($cart) > 0) {
+            $quantity = Cart::where('user_id', $userId)->pluck('quantity', 'product_id')->toArray();
+            foreach ($data['data'] as $key => $product) {
+                $quantity[$product->id] = Cart::where('user_id', $userId)->where('product_id', $product->id)->first()->quantity;
+            }
+        } else {
+            $data['attributes'] = [];
+            $data['data'] = [];
         }
 
         $total = GetCartTotal::run();
 
         return view('catalogue.panier', [
             'attributes' => Attribute::all(),
-            'attributesList' => $data['attributes'][0],
+            'attributesList' => $data['attributes'],
             'products' => $data['data'],
             'quantity' => $quantity,
-            'total' => $total['data']
+            'total' => $total['total']
         ]);
     }
 }

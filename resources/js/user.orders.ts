@@ -9,7 +9,7 @@ import {
 import checkAll from './checkAll';
 
 const getDetails = async (orders: (string | null)) => {
-  const res = await doPost('/dashboard/admin/orders/details', { orders });
+  const res = await doPost('/en/dashboard/admin/orders/details', { orders });
   if (res) {
     return res.data.data;
   }
@@ -23,22 +23,12 @@ const toMDCTextField = (element: HTMLElement | null) => {
   return new MDCTextField(element.parentElement);
 };
 
-const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/orders/${orderId}/content`);
+const getOrderContent = async (orderId: number) => doGet(`/en/dashboard/admin/orders/${orderId}/content`);
 
 (async () => {
-  // const confirmEditBtn = document.getElementById('confirmEditBtn') as HTMLButtonElement | null;
-  // const confirmCreationBtn = document.getElementById('confirmCreationBtn') as HTMLButtonElement | null;
-  const modalCreationName = document.getElementById('modal-creation-name') as HTMLInputElement | null;
-  const modalCreationPrice = document.getElementById('modal-creation-price') as HTMLInputElement | null;
-  const modalCreationDesc = document.getElementById('modal-creation-description') as HTMLInputElement | null;
-  const modalCreationStock = document.getElementById('modal-creation-stock') as HTMLInputElement | null;
-  const _modalCreationAvailable = document.getElementById('modal-creation-available') as HTMLButtonElement | null;
-
-  // const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement | null;
-  // const editBtn = document.getElementById('editBtn') as HTMLButtonElement | null;
-
   const searchInput = document.getElementById('searchField') as HTMLInputElement | null;
   const viewDetailsBtn = document.getElementById('viewDetailsBtn') as HTMLButtonElement | null;
+  const getOrdersBtn = document.getElementById('getOrdersBtn') as HTMLButtonElement | null;
 
   const detailsBody = document.getElementById('modal-details-body') as HTMLElement | null;
   const detailsBodyTemplate = document.getElementById('modal-details-body-template') as HTMLTemplateElement | null;
@@ -50,7 +40,7 @@ const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/order
     return;
   }
 
-  if (!searchInput || !viewDetailsBtn) {
+  if (!searchInput || !viewDetailsBtn || !getOrdersBtn) {
     console.error('Could not find search input');
     return;
   }
@@ -91,7 +81,7 @@ const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/order
         fields[5].textContent += order.transporter_tracking_number;
         fields[6].textContent += `${creationDate.toLocaleTimeString()} ${creationDate.toLocaleDateString()}`;
         fields[7].textContent += `${updatedDate.toLocaleTimeString()} ${updatedDate.toLocaleDateString()}`;
-        fields[8].textContent += `${order.total_price} €`;
+        fields[8].textContent += `${order.total_price / 100.0} €`;
         fields[9].textContent += 'Carte';
         fields[10].textContent += order.fidelityPoints; // TODO: add fidelity points
         fields[11].innerHTML += `<a href="${order.recu}">Voir le recu</a>`; // TODO: color
@@ -104,7 +94,7 @@ const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/order
         fields[12].innerHTML = 'Objets : <br>';
 
         Object.values<any>(orderContent.data.data).forEach((product: any) => {
-          fields[12].innerHTML += `${product.nb} x ${product.name} <br>`;
+          fields[12].innerHTML += `${product.nb} x ${product.name} ${product.price} € ${product.voucher ? ` - ${product.voucher}% off  (${product.price - (product.price * product.voucher / 100)} €)` : ''}<br>`;
         });
 
         detailsBody.appendChild(clone);
@@ -113,6 +103,24 @@ const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/order
         }
       }
     });
+  });
+
+  searchInput.addEventListener('keyup', (e) => {
+    searchField(e, 1, '[orderidParent]');
+  });
+  getOrdersBtn.addEventListener('click', async (e: MouseEvent) => {
+    const orderRows = selectedRows('[orderid]').map((element) => element.getAttribute('orderid'));
+    if (orderRows.length === 0) {
+      return;
+    }
+
+    const row = orderRows.shift();
+    if (!row) {
+      return;
+    }
+
+    const url = `/dashboard/orders/pdf/${row}`;
+    window.location.href = url;
   });
 
   searchInput.addEventListener('keyup', (e) => {

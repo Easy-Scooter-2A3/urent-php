@@ -80,12 +80,20 @@
         </form>
         <span class="border"></span>
         <div class="m-5 md:w-2/5 sm:w-full border">
-            <h3>TODO</h3>
-            <h3>TODO</h3>
-            <h3>TODO</h3>
-            <h3>TODO</h3>
+            @component('components.button', [
+                'text' => 'Github',
+                'type' => 'button',
+                'href' => route('oauth', 'github'),
+            ])      
+            @endcomponent
+
+            @component('components.button', [
+                'text' => 'Google',
+                'type' => 'button',
+                'href' => route('oauth', 'google'),
+            ])
+            @endcomponent
         </div>
     </div>
     
 </body>
-@include('footer')

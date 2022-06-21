@@ -29,7 +29,7 @@
                     {{ $order->transporter }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $order->total_price }}
+                    {{ $order->total_price / 100.0 }} €
                 </td>
                 <td class="px-6 py-4">
                     {{ $order->created_at }}
@@ -55,6 +55,12 @@
             'type' => 'button',
             'id' => 'viewDetailsBtn',
             'modal' => 'modal-details',
+        ])
+        @endcomponent
+        @component('components.button', [
+            'text' => 'Download order',
+            'type' => 'button',
+            'id' => 'getOrdersBtn',
         ])
         @endcomponent
     </div>

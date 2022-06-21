@@ -24,20 +24,30 @@
                 </li>
                 <div id="languageDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                    
+                    @php
+
+                        $path = lang_path();
+                        function isFile($file) {
+                            $path = lang_path();
+                            return is_file("$path/$file");
+                        }
+
+                        $langs = array_diff(scandir($path), array('..', '.'));
+                        $langs = array_filter($langs, function($lang) {
+                            return isFile($lang);
+                        });
+                    @endphp
                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
-                        
-                        <li >
-                            <a href="{{ route(Route::currentRouteName(), 'en') }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">EN</a>
-                        </li>
-                        <li>
-                            <a href="{{ route(Route::currentRouteName(), 'fr') }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">FR</a>
-                        </li>
-                        
+                        @foreach ($langs as $lang)
+                            <li>
+                                <a href="{{ route('setlang', explode(".", $lang)[0]) }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ strtoupper(explode(".", $lang)[0]) }}</a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
-                <li class="hover:text-red-600 m-2">Application</li>
                 <li class="hover:text-red-600 m-2">{{ __('About us') }}</li>
-                
+                <li class="hover:text-red-600 m-2"><a href="/demo">Demo</a></li>
+                <li class="hover:text-red-600 m-2"><a href="{{ route('catalogue') }}">Catalogue</a></li>
                 <li>
                     <button data-dropdown-toggle="userDropdown" type="button">
                         <span class="mdc-button__ripple"></span>
@@ -71,7 +81,7 @@
                 @endauth
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                     <li>
-                        <a href="{{ route('dashboard', app()->getLocale()) }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ __('Dashboard') }}</a>
+                        <a href="{{ route('dashboard') }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ __('Dashboard') }}</a>
                     </li>
                     <li>
                         <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ __('Settings') }}</a>
@@ -84,8 +94,8 @@
                 </div>
                 @else
                 <div class="py-1">
-                    <a href="{{ route('login') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">@lang('Login')</a>
-                    <a href="{{ route('register') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">@lang('Register')</a>
+                    <a href="{{ route('login') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Login</a>
+                    <a href="{{ route('register') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Register</a>
                 </div>
                 @endauth
             </div>
@@ -93,3 +103,19 @@
         </div>
     </div>
 </header>
+
+<aside id="notif-snackbar" class="mdc-snackbar">
+    <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+      <div class="mdc-snackbar__label" aria-atomic="false">
+        Can't send photo. Retry in 5 seconds.
+      </div>
+      <div class="mdc-snackbar__actions" aria-atomic="true">
+        <button type="button" class="mdc-button mdc-snackbar__action">
+          <div class="mdc-button__ripple"></div>
+          <span class="mdc-button__label">Retry</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+@include('dialogs.yesno')

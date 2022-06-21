@@ -11,7 +11,7 @@ const selectPackage = async (packageId: number, paymentMethod: string, option: n
     package: packageId,
     option,
   };
-  const res = await doPost('/dashboard/packages/edit', data);
+  const res = await doPost('/en/dashboard/packages/edit', data);
   if (res) {
     return res;
   }

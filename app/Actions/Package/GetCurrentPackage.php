@@ -9,12 +9,20 @@ class GetCurrentPackage
 {
     use AsAction;
 
-    public function handle(User $user)
+    public function handle(User $user = null)
     {
-        $currentPackage = users_packages::where('user', $user->id)->first();
-        if ($currentPackage) {
-            return $currentPackage->package;
+        if ($user == null) {
+            return null;
         }
-        return -1;
+        $currentPackage = users_packages::where('user', $user->id)->first();
+
+        if (!$currentPackage) {
+            $currentPackage = users_packages::create([
+                'user' => $user->id,
+                'package' => 1,
+            ]);
+        }
+
+        return $currentPackage->package;
     }
 }

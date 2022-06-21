@@ -62,7 +62,7 @@
                       <tr productattributeParent rowid="{{ $product->id }}" class="mdc-data-table__row">
                         <td class="mdc-data-table__cell">
                             <div class="p-3 flex">
-                              <img src="{{ asset('/img/koba.png') }}" alt="">
+                              <img class="h-80" src="{{ asset('storage/images/'.$product->image) }}" alt="">
                               <div class="ml-3 flex flex-col justify-around">
                                   <div>
                                       <h2 class="text-lg ">{{ $product->name }}</h2>
@@ -92,13 +92,12 @@
                               </div>
                             </div>
                         </td>
-                        {{-- TODO: rework --}}
                         <td class="mdc-data-table__cell">
                             <div class="flex flex-col justify-around">
                                 <ul class="list-disc mb-5">
                                     @isset($attributesList[$product->id])
                                         @foreach ($attributesList[$product->id] as $attribute)
-                                        <li attr={{ $attributes[$attribute]['id'] }} class="text-lg">{{ $attributes[$attribute]['name'] }}</li>
+                                        <li attr={{ $attributes[$attribute->attribute_id]->id }} class="text-lg">{{ $attributes[$attribute->attribute_id]->name }}</li>
                                         @endforeach
                                     @endisset
                                 </ul>
@@ -191,4 +190,3 @@
 
 </body>
 <script src="/js/catalogue.js"></script>
-@include('footer')

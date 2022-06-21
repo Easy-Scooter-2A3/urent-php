@@ -1525,59 +1525,6 @@ var MDCDialogFoundation = /** @class */ (function (_super) {
 
 /***/ }),
 
-/***/ "./node_modules/@material/dialog/index.js":
-/*!************************************************!*\
-  !*** ./node_modules/@material/dialog/index.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MDCDialog": () => (/* reexport safe */ _component__WEBPACK_IMPORTED_MODULE_1__.MDCDialog),
-/* harmony export */   "MDCDialogFoundation": () => (/* reexport safe */ _foundation__WEBPACK_IMPORTED_MODULE_3__.MDCDialogFoundation),
-/* harmony export */   "cssClasses": () => (/* reexport safe */ _constants__WEBPACK_IMPORTED_MODULE_2__.cssClasses),
-/* harmony export */   "numbers": () => (/* reexport safe */ _constants__WEBPACK_IMPORTED_MODULE_2__.numbers),
-/* harmony export */   "strings": () => (/* reexport safe */ _constants__WEBPACK_IMPORTED_MODULE_2__.strings),
-/* harmony export */   "util": () => (/* reexport module object */ _util__WEBPACK_IMPORTED_MODULE_0__)
-/* harmony export */ });
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./node_modules/@material/dialog/util.js");
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./component */ "./node_modules/@material/dialog/component.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants */ "./node_modules/@material/dialog/constants.js");
-/* harmony import */ var _foundation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./foundation */ "./node_modules/@material/dialog/foundation.js");
-/**
- * @license
- * Copyright 2019 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
-
-
-
-
-
-
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
 /***/ "./node_modules/@material/dialog/util.js":
 /*!***********************************************!*\
   !*** ./node_modules/@material/dialog/util.js ***!
@@ -2944,380 +2891,6 @@ var Selectors;
 
 /***/ }),
 
-/***/ "./node_modules/@material/switch/deprecated/component.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@material/switch/deprecated/component.js ***!
-  \***************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MDCSwitch": () => (/* binding */ MDCSwitch)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _material_base_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material/base/component */ "./node_modules/@material/base/component.js");
-/* harmony import */ var _material_dom_events__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material/dom/events */ "./node_modules/@material/dom/events.js");
-/* harmony import */ var _material_dom_ponyfill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material/dom/ponyfill */ "./node_modules/@material/dom/ponyfill.js");
-/* harmony import */ var _material_ripple_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material/ripple/component */ "./node_modules/@material/ripple/component.js");
-/* harmony import */ var _material_ripple_foundation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material/ripple/foundation */ "./node_modules/@material/ripple/foundation.js");
-/* harmony import */ var _foundation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./foundation */ "./node_modules/@material/switch/deprecated/foundation.js");
-/**
- * @license
- * Copyright 2018 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
-
-
-
-
-
-
-var MDCSwitch = /** @class */ (function (_super) {
-    (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__extends)(MDCSwitch, _super);
-    function MDCSwitch() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.rippleSurface = _this.createRipple();
-        return _this;
-    }
-    MDCSwitch.attachTo = function (root) {
-        return new MDCSwitch(root);
-    };
-    MDCSwitch.prototype.destroy = function () {
-        _super.prototype.destroy.call(this);
-        this.rippleSurface.destroy();
-        this.nativeControl.removeEventListener('change', this.changeHandler);
-    };
-    MDCSwitch.prototype.initialSyncWithDOM = function () {
-        var _this = this;
-        this.changeHandler = function () {
-            var _a;
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            (_a = _this.foundation).handleChange.apply(_a, (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__spreadArray)([], (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__read)(args)));
-        };
-        this.nativeControl.addEventListener('change', this.changeHandler);
-        // Sometimes the checked state of the input element is saved in the history.
-        // The switch styling should match the checked state of the input element.
-        // Do an initial sync between the native control and the foundation.
-        this.checked = this.checked;
-    };
-    MDCSwitch.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        var adapter = {
-            addClass: function (className) { return _this.root.classList.add(className); },
-            removeClass: function (className) { return _this.root.classList.remove(className); },
-            setNativeControlChecked: function (checked) { return _this.nativeControl.checked =
-                checked; },
-            setNativeControlDisabled: function (disabled) { return _this.nativeControl.disabled =
-                disabled; },
-            setNativeControlAttr: function (attr, value) {
-                _this.nativeControl.setAttribute(attr, value);
-            },
-        };
-        return new _foundation__WEBPACK_IMPORTED_MODULE_1__.MDCSwitchFoundation(adapter);
-    };
-    Object.defineProperty(MDCSwitch.prototype, "ripple", {
-        get: function () {
-            return this.rippleSurface;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(MDCSwitch.prototype, "checked", {
-        get: function () {
-            return this.nativeControl.checked;
-        },
-        set: function (checked) {
-            this.foundation.setChecked(checked);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(MDCSwitch.prototype, "disabled", {
-        get: function () {
-            return this.nativeControl.disabled;
-        },
-        set: function (disabled) {
-            this.foundation.setDisabled(disabled);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    MDCSwitch.prototype.createRipple = function () {
-        var _this = this;
-        var RIPPLE_SURFACE_SELECTOR = _foundation__WEBPACK_IMPORTED_MODULE_1__.MDCSwitchFoundation.strings.RIPPLE_SURFACE_SELECTOR;
-        var rippleSurface = this.root.querySelector(RIPPLE_SURFACE_SELECTOR);
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        var adapter = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)({}, _material_ripple_component__WEBPACK_IMPORTED_MODULE_2__.MDCRipple.createAdapter(this)), { addClass: function (className) { return rippleSurface.classList.add(className); }, computeBoundingRect: function () { return rippleSurface.getBoundingClientRect(); }, deregisterInteractionHandler: function (evtType, handler) {
-                _this.nativeControl.removeEventListener(evtType, handler, (0,_material_dom_events__WEBPACK_IMPORTED_MODULE_3__.applyPassive)());
-            }, isSurfaceActive: function () { return (0,_material_dom_ponyfill__WEBPACK_IMPORTED_MODULE_4__.matches)(_this.nativeControl, ':active'); }, isUnbounded: function () { return true; }, registerInteractionHandler: function (evtType, handler) {
-                _this.nativeControl.addEventListener(evtType, handler, (0,_material_dom_events__WEBPACK_IMPORTED_MODULE_3__.applyPassive)());
-            }, removeClass: function (className) {
-                rippleSurface.classList.remove(className);
-            }, updateCssVariable: function (varName, value) {
-                rippleSurface.style.setProperty(varName, value);
-            } });
-        return new _material_ripple_component__WEBPACK_IMPORTED_MODULE_2__.MDCRipple(this.root, new _material_ripple_foundation__WEBPACK_IMPORTED_MODULE_5__.MDCRippleFoundation(adapter));
-    };
-    Object.defineProperty(MDCSwitch.prototype, "nativeControl", {
-        get: function () {
-            var NATIVE_CONTROL_SELECTOR = _foundation__WEBPACK_IMPORTED_MODULE_1__.MDCSwitchFoundation.strings.NATIVE_CONTROL_SELECTOR;
-            return this.root.querySelector(NATIVE_CONTROL_SELECTOR);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    return MDCSwitch;
-}(_material_base_component__WEBPACK_IMPORTED_MODULE_6__.MDCComponent));
-
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@material/switch/deprecated/constants.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@material/switch/deprecated/constants.js ***!
-  \***************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "cssClasses": () => (/* binding */ cssClasses),
-/* harmony export */   "strings": () => (/* binding */ strings)
-/* harmony export */ });
-/**
- * @license
- * Copyright 2018 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-/** CSS classes used by the switch. */
-var cssClasses = {
-    /** Class used for a switch that is in the "checked" (on) position. */
-    CHECKED: 'mdc-switch--checked',
-    /** Class used for a switch that is disabled. */
-    DISABLED: 'mdc-switch--disabled',
-};
-/** String constants used by the switch. */
-var strings = {
-    /** Aria attribute for checked or unchecked state of switch */
-    ARIA_CHECKED_ATTR: 'aria-checked',
-    /** A CSS selector used to locate the native HTML control for the switch.  */
-    NATIVE_CONTROL_SELECTOR: '.mdc-switch__native-control',
-    /** A CSS selector used to locate the ripple surface element for the switch. */
-    RIPPLE_SURFACE_SELECTOR: '.mdc-switch__thumb-underlay',
-};
-
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@material/switch/deprecated/foundation.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/@material/switch/deprecated/foundation.js ***!
-  \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MDCSwitchFoundation": () => (/* binding */ MDCSwitchFoundation),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _material_base_foundation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material/base/foundation */ "./node_modules/@material/base/foundation.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./node_modules/@material/switch/deprecated/constants.js");
-/**
- * @license
- * Copyright 2018 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
-
-
-var MDCSwitchFoundation = /** @class */ (function (_super) {
-    (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__extends)(MDCSwitchFoundation, _super);
-    function MDCSwitchFoundation(adapter) {
-        return _super.call(this, (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)({}, MDCSwitchFoundation.defaultAdapter), adapter)) || this;
-    }
-    Object.defineProperty(MDCSwitchFoundation, "strings", {
-        /** The string constants used by the switch. */
-        get: function () {
-            return _constants__WEBPACK_IMPORTED_MODULE_1__.strings;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(MDCSwitchFoundation, "cssClasses", {
-        /** The CSS classes used by the switch. */
-        get: function () {
-            return _constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(MDCSwitchFoundation, "defaultAdapter", {
-        /** The default Adapter for the switch. */
-        get: function () {
-            return {
-                addClass: function () { return undefined; },
-                removeClass: function () { return undefined; },
-                setNativeControlChecked: function () { return undefined; },
-                setNativeControlDisabled: function () { return undefined; },
-                setNativeControlAttr: function () { return undefined; },
-            };
-        },
-        enumerable: false,
-        configurable: true
-    });
-    /** Sets the checked state of the switch. */
-    MDCSwitchFoundation.prototype.setChecked = function (checked) {
-        this.adapter.setNativeControlChecked(checked);
-        this.updateAriaChecked(checked);
-        this.updateCheckedStyling(checked);
-    };
-    /** Sets the disabled state of the switch. */
-    MDCSwitchFoundation.prototype.setDisabled = function (disabled) {
-        this.adapter.setNativeControlDisabled(disabled);
-        if (disabled) {
-            this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.DISABLED);
-        }
-        else {
-            this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.DISABLED);
-        }
-    };
-    /** Handles the change event for the switch native control. */
-    MDCSwitchFoundation.prototype.handleChange = function (evt) {
-        var nativeControl = evt.target;
-        this.updateAriaChecked(nativeControl.checked);
-        this.updateCheckedStyling(nativeControl.checked);
-    };
-    /** Updates the styling of the switch based on its checked state. */
-    MDCSwitchFoundation.prototype.updateCheckedStyling = function (checked) {
-        if (checked) {
-            this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.CHECKED);
-        }
-        else {
-            this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.CHECKED);
-        }
-    };
-    MDCSwitchFoundation.prototype.updateAriaChecked = function (checked) {
-        this.adapter.setNativeControlAttr(_constants__WEBPACK_IMPORTED_MODULE_1__.strings.ARIA_CHECKED_ATTR, "" + !!checked);
-    };
-    return MDCSwitchFoundation;
-}(_material_base_foundation__WEBPACK_IMPORTED_MODULE_2__.MDCFoundation));
-
-// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MDCSwitchFoundation);
-//# sourceMappingURL=foundation.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@material/switch/deprecated/index.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/@material/switch/deprecated/index.js ***!
-  \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MDCSwitch": () => (/* reexport safe */ _component__WEBPACK_IMPORTED_MODULE_0__.MDCSwitch),
-/* harmony export */   "MDCSwitchFoundation": () => (/* reexport safe */ _foundation__WEBPACK_IMPORTED_MODULE_2__.MDCSwitchFoundation),
-/* harmony export */   "cssClasses": () => (/* reexport safe */ _constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses),
-/* harmony export */   "strings": () => (/* reexport safe */ _constants__WEBPACK_IMPORTED_MODULE_1__.strings)
-/* harmony export */ });
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./component */ "./node_modules/@material/switch/deprecated/component.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./node_modules/@material/switch/deprecated/constants.js");
-/* harmony import */ var _foundation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./foundation */ "./node_modules/@material/switch/deprecated/foundation.js");
-/**
- * @license
- * Copyright 2019 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
-
-
-
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
 /***/ "./node_modules/@material/switch/foundation.js":
 /*!*****************************************************!*\
   !*** ./node_modules/@material/switch/foundation.js ***!
@@ -3467,59 +3040,6 @@ var MDCSwitchRenderFoundation = /** @class */ (function (_super) {
 }(MDCSwitchFoundation));
 
 //# sourceMappingURL=foundation.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@material/switch/index.js":
-/*!************************************************!*\
-  !*** ./node_modules/@material/switch/index.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "CssClasses": () => (/* reexport safe */ _constants__WEBPACK_IMPORTED_MODULE_2__.CssClasses),
-/* harmony export */   "MDCSwitch": () => (/* reexport safe */ _component__WEBPACK_IMPORTED_MODULE_1__.MDCSwitch),
-/* harmony export */   "MDCSwitchFoundation": () => (/* reexport safe */ _foundation__WEBPACK_IMPORTED_MODULE_3__.MDCSwitchFoundation),
-/* harmony export */   "MDCSwitchRenderFoundation": () => (/* reexport safe */ _foundation__WEBPACK_IMPORTED_MODULE_3__.MDCSwitchRenderFoundation),
-/* harmony export */   "Selectors": () => (/* reexport safe */ _constants__WEBPACK_IMPORTED_MODULE_2__.Selectors),
-/* harmony export */   "deprecated": () => (/* reexport module object */ _deprecated__WEBPACK_IMPORTED_MODULE_0__)
-/* harmony export */ });
-/* harmony import */ var _deprecated__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./deprecated */ "./node_modules/@material/switch/deprecated/index.js");
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./component */ "./node_modules/@material/switch/component.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants */ "./node_modules/@material/switch/constants.js");
-/* harmony import */ var _foundation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./foundation */ "./node_modules/@material/switch/foundation.js");
-/**
- * @license
- * Copyright 2021 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-// TODO(b/185410690): remove deprecated export
-
-
-
-
-
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -6991,29 +6511,19 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
+/* harmony import */ var _material_switch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material/switch */ "./node_modules/@material/switch/component.js");
+/* harmony import */ var _material_dialog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material/dialog */ "./node_modules/@material/dialog/component.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var __importDefault = undefined && undefined.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
 
-Object.defineProperty(__webpack_exports__, "__esModule", ({
-  value: true
-}));
 
-var switch_1 = __webpack_require__(/*! @material/switch */ "./node_modules/@material/switch/index.js");
 
-var dialog_1 = __webpack_require__(/*! @material/dialog */ "./node_modules/@material/dialog/index.js");
-
-var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 
 var enableMFA = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -7051,7 +6561,7 @@ var disableMFA = /*#__PURE__*/function () {
             console.log('disableMFA');
             _context2.prev = 1;
             _context2.next = 4;
-            return axios_1["default"]["delete"]('/user/two-factor-authentication');
+            return axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]('/user/two-factor-authentication');
 
           case 4:
             location.reload();
@@ -7062,7 +6572,7 @@ var disableMFA = /*#__PURE__*/function () {
             _context2.prev = 7;
             _context2.t0 = _context2["catch"](1);
 
-            if (!axios_1["default"].isAxiosError(_context2.t0)) {
+            if (!axios__WEBPACK_IMPORTED_MODULE_1___default().isAxiosError(_context2.t0)) {
               _context2.next = 14;
               break;
             }
@@ -7102,7 +6612,7 @@ var confirmMFA = /*#__PURE__*/function () {
             data.set('_token', CSRF.value);
             _context3.prev = 3;
             _context3.next = 6;
-            return axios_1["default"].post('/user/confirmed-two-factor-authentication', data);
+            return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/user/confirmed-two-factor-authentication', data);
 
           case 6:
             res = _context3.sent;
@@ -7118,7 +6628,7 @@ var confirmMFA = /*#__PURE__*/function () {
             _context3.prev = 10;
             _context3.t0 = _context3["catch"](3);
 
-            if (!axios_1["default"].isAxiosError(_context3.t0)) {
+            if (!axios__WEBPACK_IMPORTED_MODULE_1___default().isAxiosError(_context3.t0)) {
               _context3.next = 24;
               break;
             }
@@ -7178,7 +6688,7 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
           return _context6.abrupt("return");
 
         case 7:
-          MFASwitch = new switch_1.MDCSwitch(mfa_switch);
+          MFASwitch = new _material_switch__WEBPACK_IMPORTED_MODULE_2__.MDCSwitch(mfa_switch);
           mfa_switch.addEventListener('click', /*#__PURE__*/function () {
             var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(e) {
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
@@ -7221,7 +6731,7 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
             break;
           }
 
-          MFADialog = new dialog_1.MDCDialog(MFADialogMenu);
+          MFADialog = new _material_dialog__WEBPACK_IMPORTED_MODULE_3__.MDCDialog(MFADialogMenu);
           MFADialogCode = document.querySelector('input[name="code"]');
 
           if (MFADialogCode) {

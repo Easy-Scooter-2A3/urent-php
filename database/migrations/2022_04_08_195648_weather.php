@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('weather', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('created_at')->default(now());
+            $table->timestamp('created_at')->default(now()); // ALTER TABLE weather CHANGE `created_at` `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
             $table->double('temp');
             $table->double('temp_min');
             $table->double('temp_max');

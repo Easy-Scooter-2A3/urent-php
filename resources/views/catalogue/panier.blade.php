@@ -54,7 +54,7 @@
                     <thead>
                       <tr class="mdc-data-table__header-row">
                         <th class="mdc-data-table__header-cell" role="columnheader" scope="col">
-                          <h2 class="text-lg">Total : <span id="cart-total">{{ $total }}</span> €</h2>
+                          <h2 class="text-lg">Total : <span id="cart-total">{{ $total }}</span> € (Voucher(s) included)</h2>
                         </th>
                         <th class="mdc-data-table__header-cell w-2/6" role="columnheader" scope="col">
                           @component('components.button', [
@@ -72,7 +72,7 @@
                       <tr productattributeParent rowid="{{ $product->id }}" class="mdc-data-table__row">
                         <td class="mdc-data-table__cell">
                             <div class="p-3 flex">
-                              <img src="{{ asset('/img/koba.png') }}" alt="">
+                              <img class="h-80" src="{{ asset('storage/images/'.$product->image) }}" alt="">
                               <div class="ml-3 flex flex-col justify-around">
                                   <div>
                                       <h2 class="text-lg ">{{ $product->name }}</h2>
@@ -112,14 +112,14 @@
                         {{-- TODO: rework --}}
                         <td class="mdc-data-table__cell">
                             <div class="flex flex-col justify-around">
-                                <ul class="list-disc mb-5">
-                                    @isset($attributesList[$product->id])
-                                        @foreach ($attributesList[$product->id] as $attribute)
-                                        <li attr={{ $attributes[$attribute]['id'] }} class="text-lg">{{ $attributes[$attribute]['name'] }}</li>
-                                        @endforeach
-                                    @endisset
-                                </ul>
-                            </div>
+                              <ul class="list-disc mb-5">
+                                  @isset($attributesList[$product->id])
+                                      @foreach ($attributesList[$product->id] as $attribute)
+                                      <li attr={{ $attributes[$attribute->attribute_id]->id }} class="text-lg">{{ $attributes[$attribute->attribute_id]->name }}</li>
+                                      @endforeach
+                                  @endisset
+                              </ul>
+                          </div>
                         </td>
                       </tr>
                     @endforeach
@@ -210,4 +210,3 @@
 
 </body>
 <script src="/js/panier.js"></script>
-@include('footer')

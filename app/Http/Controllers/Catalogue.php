@@ -11,11 +11,20 @@ class Catalogue extends Controller
 {
     public function index()
     {
-        $data = GetProductsDetails::run();
+        $products = Product::all();
+        $data = [
+            'data' => [],
+            'attributes' => [],
+        ];
+        foreach ($products as $key => $product) {
+            $tmp = GetProductsDetails::run($product->id);
+            $data['data'][] = $tmp['data'] ?? [];
+            $data['attributes'][$product->id] = $tmp['attributes'] ?? [];
+        }
 
         return view('catalogue.catalogue', [
             'attributes' => Attribute::all(),
-            'attributesList' => $data['attributes'][0],
+            'attributesList' => $data['attributes'],
             'products' => $data['data'],
         ]);
     }

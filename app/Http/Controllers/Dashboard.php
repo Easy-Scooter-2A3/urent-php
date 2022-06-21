@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Actions\Package\GetCurrentPackage;
 use App\Actions\Partnership\GetPartnerships;
-use App\Actions\Partnership\GetUserPartnerships;
+use App\Actions\Partnership\GetUserPartnership;
 
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -13,23 +13,21 @@ use App\Models\Attribute;
 use App\Models\Order;
 use App\Models\users_packages;
 use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 class Dashboard extends Controller
 {
     private $collection = [
         ['dashboard', "Account"],
-        ['dashboard', "History"],
-        ['dashboard', "Fidelity"],
-        ['dashboard', "Invoices"],
-        ['dashboard', "Statistics"],
-        ['user.orders', "Orders"],
-        ['dashboard_weather', "Weather"],
-        ['user.packages', "Packages"],
+        ['dashboard.orders', "Orders"],
+        ['dashboard.weather', "Weather"],
+        ['dashboard.packages', "Packages"],
         ['dashboard', "Travels"],
         ['admin.accounts', "Accounts (admin)"],
         ['admin.scooters', "Scooters (admin)"],
         ['admin.products', "Products (admin)"],
         ['admin.partnerships', "Partnerships (admin)"],
+        ['admin.maps', "Maps (admin)"],
     ];
 
     public function index(Request $request) {
@@ -37,14 +35,20 @@ class Dashboard extends Controller
         $package = Package::where('id', $currentPackage)->first();
         // TODO: translate package name
 
-        $partner = GetUserPartnerships::run($request->user()->id);
+        $partner = GetUserPartnership::run($request->user()->id);
 
         return view('dashboard', [
             'view' => 'user.dashboard-account',
             'collection' => $this->collection,
             'current_package' => $package->type,
-            'partnerships' => $partner['partnerships'],
-            'userPartnerships' => $partner['userPartnerships'],
+            'partnership' => $partner['partnership'] ?? null,
+        ]);
+    }
+
+    public function maps(Request $request) {
+        return view('dashboard', [
+            'view' => 'admin.maps',
+            'collection' => $this->collection,
         ]);
     }
 

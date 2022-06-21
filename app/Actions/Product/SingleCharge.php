@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use Laravel\Cashier\Payment;
 use Laravel\Cashier\Concerns\ManagesPaymentMethods;
+use Illuminate\Support\Facades\Log;
 
 class SingleCharge
 {
@@ -20,9 +21,34 @@ class SingleCharge
         ];
     }
 
-    public function handle(string $paymentMethod, int $total, string $mode)
+    public function handle(string $paymentMethod, float $total, string $mode)
     {
-        $total *= 100;
+        $voucher = 0;
+        switch ($mode) {
+            case 'cart':
+                $cartPrice = GetCartTotal::run();
+
+                $totalWithoutVoucher = $cartPrice['totalWithoutVoucher'];
+                $voucher = $cartPrice['voucher'];
+                $vouchersApplied = $cartPrice['vouchersApplied'];
+                $productsBasePrice = $cartPrice['productsBasePrice'];
+                
+                if ($total != $cartPrice['total']) {
+                    Log::debug('total is not equal to cart price');
+                    return response()->json(['success' => false, 'message' => 'cart error'])->setStatusCode(400);
+                }
+                $total = $cartPrice['total'];
+
+
+                break;
+
+            default:
+                break;
+        }
+
+        $total *= 100.0;
+        $totalWithoutVoucher *= 100.0;
+        //check promo code
 
         $payment = auth()->user()->charge(
             $total, $paymentMethod
@@ -33,7 +59,7 @@ class SingleCharge
 
             switch ($mode) {
                 case 'cart':
-                    CreateOrder::dispatch($total, $paymentMethod, $recu);
+                    CreateOrder::dispatch($totalWithoutVoucher, $paymentMethod, $recu, $vouchersApplied, $productsBasePrice);
                     //TODO: send mail
                     break;
                 case 'package':

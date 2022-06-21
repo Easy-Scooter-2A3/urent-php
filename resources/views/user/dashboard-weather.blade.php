@@ -1,16 +1,16 @@
 <div class="w-full">
     <div class="p-4 gap-3 xl:w-9/12 lg:w-4/6 md:w-full flex flex-col mx-auto px-5 bg-white my-5 drop-shadow-md">
 
-        <div id="controls-carousel" class="relative" data-carousel="static">
-            <div class="flex justify-between">
+        <div class="relative">
+            {{-- <div class="flex justify-between">
                 <button class="hover:text-red-600" data-carousel-prev type="button">
                     <span class="material-icons">arrow_back</span>
                 </button>
                 <button class="hover:text-red-600" data-carousel-next type="button">
                     <span class="material-icons">arrow_forward</span>
                 </button>
-            </div>
-            <div class="overflow-hidden relative h-48 rounded-lg">
+            </div> --}}
+            {{-- <div class="overflow-hidden relative h-48 rounded-lg">
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <div class="flex justify-around">
                         <button type="button">
@@ -30,7 +30,7 @@
 
                 <div class="hidden duration-200 ease-linear" data-carousel-item>
                 </div>
-            </div>
+            </div> --}}
             <hr>
             {{-- Graphique --}}
 

@@ -33,6 +33,18 @@
                             'id' => 'modal-creation-price'
                         ])
                         @endcomponent
+
+                        @component('components.button', [
+                          'text' => 'Upload',
+                          'type' => 'button',
+                          'id' => 'uploadCreateBtn',
+                        ])
+                        @endcomponent
+                        
+                        <p class="text-sm mt-2">Max size: 2mo</p>
+                        <p class="text-sm mt-1" hidden id="fileLoadedCreate">File loaded</p>
+
+                        <input hidden type="file" name="image" id="imageCreate">
                     </div>
 
                     <div class="w-5/12 flex flex-col">

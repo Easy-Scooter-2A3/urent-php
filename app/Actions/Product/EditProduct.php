@@ -19,27 +19,45 @@ class EditProduct
             'description' => ['required'],
             'stock' => ['required'],
             'available' => ['required'],
-            // 'attributes' => ['required'], // check empty array
+            'attributes' => ['required'], // check empty array
         ];
     }
 
-    public function handle($id, string $name, string $price, string $description, string $stock, bool $available, $attributes)
+    public function handle($id, string $name, string $price, string $description, string $stock, $available, $attributes, $image)
     {
-        Log::debug($id);
-        Log::debug($name);
-        Log::debug($price);
-        Log::debug($description);
-        Log::debug($stock);
-        Log::debug($available);
-        Log::debug($attributes);
+        if ($image) {
+            $type = $image->getMimeType();
+            $extension = $image->getClientOriginalExtension();
+            $size = $image->getSize();
+            if ($size > 2097152) {
+                return response()->json(['error' => 'File size is too big'], 400);
+            }
 
-        $product = Product::where('id', $id)->update(
+            if (!in_array($type, ['image/jpeg', 'image/png', 'image/jpg'])) {
+                return response()->json(['error' => 'Wrong file type'], 400);
+            }
+
+            $hash = $image->hashName();
+            $image->storeAs('public/images', $hash);
+
+            $current = Product::where('id', $id)->first()->image;
+            if ($current) {
+                unlink(storage_path('app/public/' . $current));
+            }
+            Product::where('id', $id)->update(
+                [
+                    'image' => $hash,
+                ]
+            );
+        }
+
+        Product::where('id', $id)->update(
             [
                 'name' => $name,
                 'price' => $price,
                 'description' => $description,
                 'stock' => $stock,
-                'available' => $available,
+                'available' => json_decode($available),
             ]
         );
 
@@ -48,7 +66,7 @@ class EditProduct
             attribute_product::destroy($currentAttribute->id); //remove
         }
 
-        foreach ($attributes as $key => $attribute) {
+        foreach (json_decode($attributes) as $key => $attribute) {
             attribute_product::create(
                 [
                     'product_id' => $id,
@@ -58,16 +76,17 @@ class EditProduct
         }
     }
 
-    public function asController(Request $request, $id)
+    public function asController(Request $request, string $lang, $id)
     {
         $this->handle(
             $id,
-            $request->post('name'),
-            $request->post('price'),
-            $request->post('description'),
-            $request->post('stock'),
-            $request->post('available'),
-            $request->post('attributes'),
+            $request->input('name'),
+            $request->input('price'),
+            $request->input('description'),
+            $request->input('stock'),
+            $request->input('available'),
+            $request->input('attributes'),
+            $request->file('image'),
         );
 
         return response()->json(['success' => true]);

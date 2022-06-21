@@ -32,17 +32,18 @@ class GetOrderProducts
         foreach ($products as $key => $product) {
             $id = $product->product_id;
             $_product = Product::where('id', $id)->first();
-            $nb = $product->quantity;
             $name = $_product->name;
 
             $productsData[$id]['name'] = $name;
-            $productsData[$id]['nb'] = $nb;
+            $productsData[$id]['nb'] = $product->quantity;
+            $productsData[$id]['price'] = $product->price;
+            $productsData[$id]['voucher'] = $product->voucher;
         }
 
         return ['success' => true, 'data' => $productsData];
     }
 
-    public function asController(Request $request, $orderId)
+    public function asController(Request $request, string $lang, $orderId)
     {
         return response()->json($this->handle($orderId));
     }

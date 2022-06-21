@@ -19,8 +19,10 @@ const updateProducts = (activeAttributes: Set<number>) => {
 
 const filters = () => {
   const attributes = document.querySelectorAll('input[type=checkbox]');
+  const ids = Array.from(attributes).map((elem) => parseInt(elem.getAttribute('attributeId')!, 10));
 
   const attributesToShow = new Set<number>();
+  const allIdsSet = new Set<number>([...ids]);
   attributes.forEach((filter) => {
     filter.addEventListener('change', (event) => {
       const target = event.target as HTMLInputElement;
@@ -33,10 +35,15 @@ const filters = () => {
         return;
       }
 
+      const id = parseInt(attributeId, 10);
       if (target.checked) {
-        attributesToShow.add(parseInt(attributeId, 10));
+        attributesToShow.add(id);
       } else {
-        attributesToShow.delete(parseInt(attributeId, 10));
+        attributesToShow.delete(id);
+      }
+      if (attributesToShow.size === 0) {
+        updateProducts(allIdsSet);
+        return;
       }
       updateProducts(attributesToShow);
     });

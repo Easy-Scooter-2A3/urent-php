@@ -33,6 +33,20 @@
                             'id' => 'modal-edit-price'
                         ])
                         @endcomponent
+
+
+                        @component('components.button', [
+                          'text' => 'Upload',
+                          'type' => 'button',
+                          'id' => 'uploadEditBtn',
+                        ])
+                        @endcomponent
+                        
+                        <p class="text-sm mt-2">Max size: 2mo</p>
+                        <p class="text-sm mt-1" hidden id="fileLoadedEdit">File loaded</p>
+
+                        <input hidden type="file" name="image" id="imageEdit">
+                      
                     </div>
 
                     <div class="w-5/12 flex flex-col">
