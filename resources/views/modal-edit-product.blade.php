@@ -136,7 +136,7 @@
                           <div class="mdc-data-table__pagination-trailing">
                             <div class="mdc-data-table__pagination-rows-per-page">
                               <div class="mdc-data-table__pagination-rows-per-page-label">
-                                Rows per page
+                                @lang('Rows per page')
                               </div>
                       
                               <div class="mdc-select mdc-select--outlined mdc-select--no-label mdc-data-table__pagination-rows-per-page-select">
