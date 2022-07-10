@@ -29,7 +29,7 @@
                     {{ $scooter->created_at }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $scooter->date_last_maintenance ?? "Never" }}
+                    {{ $scooter->date_last_maintenance }}
                 </td>
                 <td class="px-6 py-4">
                     {{ $scooter->model }}

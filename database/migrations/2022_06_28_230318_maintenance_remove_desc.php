@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('maintenance', function (Blueprint $table) {
+        Schema::table('maintenances', function (Blueprint $table) {
             $table->dropColumn('description');
         });
     }

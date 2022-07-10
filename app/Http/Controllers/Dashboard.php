@@ -13,6 +13,7 @@ use App\Models\Attribute;
 use App\Models\Order;
 use App\Models\users_packages;
 use App\Models\Product;
+use App\Models\Maintenance;
 use Illuminate\Support\Facades\Log;
 
 class Dashboard extends Controller
@@ -187,6 +188,12 @@ class Dashboard extends Controller
         $cols = ['Status', 'Date', 'Dern. Maintenance', 'Model', 'ID', 'UUID'];
 
         $scooter = Scooter::all();
+        // maintenance
+        foreach ($scooter as $s) {
+            $res = Maintenance::where('scooter_id', $s->id)->orderBy('created_at', 'desc')->first();
+            $s->date_last_maintenance = $res ? $res->created_at : 'Never';
+        }
+
         return view('dashboard', [
             'view' => 'admin.scooters',
             'collection' => $this->collection,
