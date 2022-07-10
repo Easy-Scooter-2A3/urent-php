@@ -40,6 +40,7 @@ class Scooter extends Model
         'status',
         'latitude',
         'longitude',
+        'uuid',
     ];
 
     /**
