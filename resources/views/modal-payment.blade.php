@@ -33,7 +33,8 @@
                             <div class="mdc-checkbox__ripple"></div>
                         </div>
                         <label for="checkbox-{{ $pm->id }}">
-                            <img class="h-5" src="{{ asset('/img/'.$pm->card->brand.'.svgz') }}" alt="{{ $pm->card->brand }}">
+                            {{-- <img class="h-5" src="{{ asset('/img/'.$pm->card->brand.'.svgz') }}" alt="{{ $pm->card->brand }}"> --}}
+                            <img class="h-5" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="{{ $pm->card->brand }}">
                             XXXX XXXX XXXX {{ $pm->card->last4 }}   -   {{ $pm->card->exp_month." / ".$pm->card->exp_year }}
                         </label>
                     </div>

@@ -70,7 +70,7 @@
     <h2>@lang('Credits') : {{ Auth::user()->balance() }}</h2>
     <h2>@lang('Package') : {{ $current_package }}</h2>
     @component('components.button', [
-        'text' => 'Stripe',
+        'text' => 'Stripe (Payment)',
         'type' => 'button',
         'href' => route('dashboard.stripe-portal'),
     ])
