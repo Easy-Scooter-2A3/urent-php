@@ -9,7 +9,7 @@ import {
 import checkAll from './checkAll';
 
 const getDetails = async (orders: (string | null)) => {
-  const res = await doPost('/en/dashboard/admin/orders/details', { orders });
+  const res = await doPost('/dashboard/admin/orders/details', { orders });
   if (res) {
     return res.data.data;
   }

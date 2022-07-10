@@ -10,7 +10,7 @@ import checkAll from './checkAll';
 import notification from './notif';
 
 const getDetails = async (product: (string | null)) => {
-  const res = await doPost('/en/dashboard/admin/products/details', { product });
+  const res = await doPost('/dashboard/admin/products/details', { product });
   if (res) {
     return [res.data.data, res.data.attributes.map((attribute: any) => attribute.attribute_id)];
   }
@@ -224,7 +224,7 @@ const fillFields = async (productId: string) => {
       products,
     };
 
-    if (await doPost('/en/dashboard/admin/products/delete', data)) {
+    if (await doPost('/dashboard/admin/products/delete', data)) {
       window.location.reload();
     }
   });
@@ -275,7 +275,7 @@ const fillFields = async (productId: string) => {
     formData.append('attributes', JSON.stringify(data.attributes));
     formData.append('image', file);
 
-    if (await doPost('/en/dashboard/admin/products', formData)) {
+    if (await doPost('/dashboard/admin/products', formData)) {
       window.location.reload();
     }
   });
