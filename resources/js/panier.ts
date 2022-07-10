@@ -117,6 +117,10 @@ const payment = async () => {
 
   confirmPayBtn.addEventListener('click', async () => {
     const paymentMethod = getSelectedCard();
+    if (!paymentMethod) {
+      notification('Please select a payment method');
+      return;
+    }
     console.log('paymentMethod');
     console.log(paymentMethod);
     if (await doPost('/cart/payment', { paymentMethod, total: await getCartTotal(), mode: 'cart' })) {
