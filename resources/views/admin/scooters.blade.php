@@ -38,9 +38,6 @@
                     {{ $scooter->id }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $scooter->used_by ?? "No one" }}
-                </td>
-                <td class="px-6 py-4">
                     {{ $scooter->uuid }}
                 </td>
             </tr>

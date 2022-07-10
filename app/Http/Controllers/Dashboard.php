@@ -184,7 +184,7 @@ class Dashboard extends Controller
     }
 
     public function scooter(Request $request) {
-        $cols = ['Status', 'Date', 'Dern. Maintenance', 'Model', 'ID', 'Used by', 'UUID'];
+        $cols = ['Status', 'Date', 'Dern. Maintenance', 'Model', 'ID', 'UUID'];
 
         $scooter = Scooter::all();
         return view('dashboard', [

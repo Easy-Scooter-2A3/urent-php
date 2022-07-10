@@ -108,8 +108,7 @@ const getDetails = async (scooter: (string | null)) => {
         fields[4].textContent += `${new Date(scooter.updated_at)}` ?? 'N/A';
         fields[5].textContent += `${scooter.longitude}`;
         fields[6].textContent += `${scooter.latitude}`;
-        fields[7].textContent += scooter.used_by ?? 'N/A';
-        fields[8].textContent += scooter.uuid;
+        fields[7].textContent += scooter.uuid;
 
         detailsBody.appendChild(clone);
         if (n !== scooterRows.length) {
