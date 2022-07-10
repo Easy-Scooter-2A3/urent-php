@@ -100,12 +100,18 @@ const getDetails = async (user: (string | null)) => {
       const userId = userRow.getAttribute('userid');
       const isAdmin = userRow.getAttribute('isAdmin');
 
+      if (userId === null || isAdmin === null) {
+        console.log('userId or isAdmin is null');
+        return;
+      }
+
       const data = {
-        role: !isAdmin,
+        role: !parseInt(isAdmin, 10),
       };
       const res = await doPatch(`/user/${userId}/role`, data);
       if (res) {
-        notification('success');
+        window.location.reload();
+        //notification('success');
       }
     });
   });
@@ -119,12 +125,18 @@ const getDetails = async (user: (string | null)) => {
       const userId = userRow.getAttribute('userid');
       const isActive = userRow.getAttribute('isActive');
 
+      if (userId === null || isActive === null) {
+        console.log('userId or isActive is null');
+        return;
+      }
+
       const data = {
-        active: !isActive,
+        active: !parseInt(isActive, 10),
       };
       const res = await doPatch(`/user/${userId}/activation`, data);
       if (res) {
-        notification('success');
+        window.location.reload();
+        //notification('success');
       }
     });
   });
