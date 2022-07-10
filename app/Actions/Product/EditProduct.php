@@ -23,7 +23,7 @@ class EditProduct
         ];
     }
 
-    public function handle($id, string $name, string $price, string $description, string $stock, $available, $attributes, $image)
+    public function handle($id, string $name, string $price, string $description, string $stock, bool $available, $attributes, $image)
     {
         if ($image) {
             $type = $image->getMimeType();
@@ -57,7 +57,7 @@ class EditProduct
                 'price' => $price,
                 'description' => $description,
                 'stock' => $stock,
-                'available' => json_decode($available),
+                'available' => boolval($available),
             ]
         );
 

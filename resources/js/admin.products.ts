@@ -36,7 +36,7 @@ const fillFields = async (productId: string) => {
     price: toMDCTextField(document.getElementById('modal-edit-price')) as MDCTextField,
     description: toMDCTextField(document.getElementById('modal-edit-description')) as MDCTextField,
     stock: toMDCTextField(document.getElementById('modal-edit-stock')) as MDCTextField,
-    available: document.getElementById('modal-edit-available') as HTMLInputElement,
+    available: new MDCSwitch(document.getElementById('modal-edit-available') as HTMLButtonElement) as MDCSwitch,
   };
 
   const someValueNull = Object.values(modalFields).some((element) => !element);
@@ -61,7 +61,8 @@ const fillFields = async (productId: string) => {
   modalFields.price.value = product.price.toString();
   modalFields.description.value = product.description;
   modalFields.stock.value = product.stock.toString();
-  modalFields.available.value = product.available ? 'Yes' : 'No';
+
+  modalFields.available.selected = Boolean(product.available);
 
   attributes.forEach((attribute) => {
     const query = `input[productattribute-edit="${attribute}"]`;

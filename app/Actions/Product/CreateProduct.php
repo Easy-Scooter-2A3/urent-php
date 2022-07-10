@@ -45,7 +45,7 @@ class CreateProduct
                 'price' => $price,
                 'description' => $description,
                 'stock' => $stock,
-                'available' => json_decode($available),
+                'available' => boolval($available),
                 'image' => $hash,
             ]
         );
