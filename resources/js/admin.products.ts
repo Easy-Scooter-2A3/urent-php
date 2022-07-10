@@ -12,7 +12,11 @@ import notification from './notif';
 const getDetails = async (product: (string | null)) => {
   const res = await doPost('/dashboard/admin/products/details', { product });
   if (res) {
-    return [res.data.data, res.data.attributes.map((attribute: any) => attribute.attribute_id)];
+    return [
+      res.data.data,
+      res.data.attributes.map((attribute: any) => attribute.attribute_id),
+      res.data.nbAchats,
+    ];
   }
   return null;
 };
@@ -41,7 +45,7 @@ const fillFields = async (productId: string) => {
     return;
   }
 
-  const data = await getDetails(productId) as [Iproduct, number[]];
+  const data = await getDetails(productId) as [Iproduct, number[], number];
   const product = data[0];
   const attributes = data[1];
   if (!product || !attributes) {
@@ -333,7 +337,7 @@ const fillFields = async (productId: string) => {
     let n = 0;
     productsRows.forEach(async (id) => {
       n += 1;
-      const [product, attributes] = await getDetails(id) as [Iproduct, number[]];
+      const [product, attributes, nbAchats] = await getDetails(id) as [Iproduct, number[], number];
       if (product) {
         const clone = document.importNode(detailsBodyTemplate.content, true);
         const fields = clone.querySelectorAll('h2');
@@ -342,7 +346,7 @@ const fillFields = async (productId: string) => {
         fields[2].textContent += `${product.price}`;
         fields[3].textContent += product.description;
         fields[4].textContent += `${product.stock}`;
-        fields[5].textContent += `${product.nbAchat}`;
+        fields[5].textContent += nbAchats.toString();
         fields[6].textContent += `${product.available ? 'Yes' : 'No'}`;
 
         detailsBody.appendChild(clone);

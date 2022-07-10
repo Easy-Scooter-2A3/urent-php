@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Attribute;
 use App\Models\attribute_product;
 use Illuminate\Support\Facades\Log;
+use App\Models\order_product;
 
 class GetProductsDetails
 {
@@ -26,7 +27,10 @@ class GetProductsDetails
         $product = Product::find($productId);
         $attributes = attribute_product::where('product_id', $productId)->get();
 
-        return ['success' => true, 'data' => $product, 'attributes' => $attributes];
+        $nbAchats = 0;
+        $nbAchats = order_product::where('product_id', $productId)->pluck('quantity')->sum();
+
+        return ['success' => true, 'data' => $product, 'attributes' => $attributes, 'nbAchats' => $nbAchats];
     }
 
     public function asController(Request $request)

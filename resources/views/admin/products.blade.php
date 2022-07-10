@@ -29,16 +29,13 @@
                     {{ $product->price }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ -1 }}
-                </td>
-                <td class="px-6 py-4">
                     {{ $product->description }}
                 </td>
                 <td class="px-6 py-4">
                     {{ $product->stock }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ -1 }}
+                    {{ $nbAchats[$product->id] }}
                 </td>
                 <td class="px-6 py-4">
                     {{ $product->available ? 'Yes' : 'No' }}

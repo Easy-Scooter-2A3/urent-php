@@ -14,6 +14,7 @@ use App\Models\Order;
 use App\Models\users_packages;
 use App\Models\Product;
 use App\Models\Maintenance;
+use App\Models\order_product;
 use App\Models\ScooterStatus;
 use Illuminate\Support\Facades\Log;
 
@@ -95,11 +96,16 @@ class Dashboard extends Controller
     }
 
     public function products(Request $request) {
-        $cols = ['Name', 'Price', 'Nb. Achats', 'Desc', 'Stock', 'Achats', 'Available'];
+        $cols = ['Name', 'Price', 'Desc', 'Stock', 'Nb. Achats', 'Available'];
         $products = Product::all();
 
         // TODO: pagination -> action
         $attributes = Attribute::all();
+
+        $nbAchats = [];
+        foreach ($products as $key => $value) {
+            $nbAchats[$value->id] = order_product::where('product_id', $value->id)->pluck('quantity')->sum();
+        }
 
         return view('dashboard', [
             'view' => 'admin.products',
@@ -107,6 +113,7 @@ class Dashboard extends Controller
             'products' => $products,
             'cols' => $cols,
             'attributes' => $attributes,
+            'nbAchats' => $nbAchats,
         ]);
     }
 
