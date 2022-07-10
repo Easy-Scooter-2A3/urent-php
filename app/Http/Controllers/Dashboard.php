@@ -14,6 +14,7 @@ use App\Models\Order;
 use App\Models\users_packages;
 use App\Models\Product;
 use App\Models\Maintenance;
+use App\Models\ScooterStatus;
 use Illuminate\Support\Facades\Log;
 
 class Dashboard extends Controller
@@ -187,9 +188,12 @@ class Dashboard extends Controller
     public function scooter(Request $request) {
         $cols = ['Status', 'Date', 'Dern. Maintenance', 'Model', 'ID', 'UUID'];
 
-        $scooter = Scooter::all();
-        // maintenance
-        foreach ($scooter as $s) {
+        // TODO: pagination
+        $scooters = Scooter::all();
+        // maintenance + status
+        foreach ($scooters as $s) {
+            $s->status = ScooterStatus::getStatus($s->status);
+
             $res = Maintenance::where('scooter_id', $s->id)->orderBy('created_at', 'desc')->first();
             $s->date_last_maintenance = $res ? $res->created_at : 'Never';
         }
@@ -197,7 +201,7 @@ class Dashboard extends Controller
         return view('dashboard', [
             'view' => 'admin.scooters',
             'collection' => $this->collection,
-            'scooters' => $scooter,
+            'scooters' => $scooters,
             'cols' => $cols
         ]);
     }

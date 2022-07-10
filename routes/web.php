@@ -121,6 +121,7 @@ Route::controller(Dashboard::class)->group(function () {
             
             Route::group(['prefix' => 'scooters'], function () {
                 Route::get('/', 'scooter')->name('admin.scooters');
+                Route::get('/list', [ScooterController::class, 'list'])->name('admin.scooters.action');
                 Route::post('/action', [ScooterController::class, 'action'])->name('admin.scooters.action');
                 Route::post('/details', [ScooterController::class, 'details'])->name('admin.scooters.details');
 
