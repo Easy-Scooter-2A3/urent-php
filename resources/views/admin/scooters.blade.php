@@ -40,6 +40,9 @@
                 <td class="px-6 py-4">
                     {{ $scooter->used_by ?? "No one" }}
                 </td>
+                <td class="px-6 py-4">
+                    {{ $scooter->uuid }}
+                </td>
             </tr>
             @endforeach
         </tbody>
@@ -89,6 +92,7 @@
         <h2>Longitude : </h2>
         <h2>Latitude : </h2>
         <h2>Used by : </h2>
+        <h2>UUID : </h2>
     </div>
 </template>
 

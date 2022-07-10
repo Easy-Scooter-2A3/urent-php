@@ -9,6 +9,7 @@ interface IScooter {
         longitude: number;
         latitude: number;
         used_by: string;
+        uuid: string;
 }
 
 export default IScooter;
