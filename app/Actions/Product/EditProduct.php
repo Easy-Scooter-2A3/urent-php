@@ -76,7 +76,7 @@ class EditProduct
         }
     }
 
-    public function asController(Request $request, string $lang, $id)
+    public function asController(Request $request, $id)
     {
         $this->handle(
             $id,

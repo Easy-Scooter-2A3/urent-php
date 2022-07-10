@@ -43,7 +43,7 @@ class GetOrderProducts
         return ['success' => true, 'data' => $productsData];
     }
 
-    public function asController(Request $request, string $lang, $orderId)
+    public function asController(Request $request, $orderId)
     {
         return response()->json($this->handle($orderId));
     }

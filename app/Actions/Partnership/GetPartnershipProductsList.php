@@ -20,7 +20,7 @@ class GetPartnershipProductsList
         return ['success' => true, 'data' => $partnershipProducts];
     }
 
-    public function asController(Request $request, string $lang, $id)
+    public function asController(Request $request, $id)
     {
         return $this->handle(
             $id

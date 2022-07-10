@@ -316,7 +316,7 @@ const fillFields = async (productId: string) => {
     formData.append('available', JSON.stringify(data.available));
     formData.append('attributes', JSON.stringify(data.attributes));
 
-    if (await doPost(`/en/dashboard/admin/products/${id}`, formData)) {
+    if (await doPost(`/dashboard/admin/products/${id}`, formData)) {
       window.location.reload();
     }
   });

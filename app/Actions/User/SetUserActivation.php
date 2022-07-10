@@ -20,7 +20,7 @@ class SetUserActivation
         return response()->json(['success' => true]);
     }
 
-    public function asController(Request $request, string $lang, int $id)
+    public function asController(Request $request, int $id)
     {
         return $this->handle(
             $request->input('active'),

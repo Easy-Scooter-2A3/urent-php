@@ -23,7 +23,7 @@ const toMDCTextField = (element: HTMLElement | null) => {
   return new MDCTextField(element.parentElement);
 };
 
-const getOrderContent = async (orderId: number) => doGet(`/en/dashboard/admin/orders/${orderId}/content`);
+const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/orders/${orderId}/content`);
 
 (async () => {
   const searchInput = document.getElementById('searchField') as HTMLInputElement | null;

@@ -57,7 +57,7 @@ const fillFields = async (partnershipId: string) => {
     return;
   }
 
-  const productsRes = await doGet(`/en/dashboard/admin/partnerships/${partnershipId}/list`);
+  const productsRes = await doGet(`/dashboard/admin/partnerships/${partnershipId}/list`);
   if (!productsRes) {
     console.error('Error getting products');
     return;
@@ -193,7 +193,7 @@ const fillFields = async (partnershipId: string) => {
       products: [...products],
     };
 
-    if (await doPut(`/en/dashboard/admin/partnerships/${id}`, data)) {
+    if (await doPut(`/dashboard/admin/partnerships/${id}`, data)) {
       window.location.reload();
     }
   });
