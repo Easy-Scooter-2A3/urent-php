@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Actions\Product;
 
 use Lorisleiva\Actions\Concerns\AsAction;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\attribute_product;
+use Intervention\Image\ImageManager;
 
 class CreateProduct
 {
@@ -37,7 +39,10 @@ class CreateProduct
         }
 
         $hash = $image->hashName();
-        $image->storeAs('public/images', $hash);
+        $manager = new ImageManager('gd');
+        $image = $manager->make($image->path());
+        $image->
+        $image->resize(150, 150)->save("public/images/$hash");
 
         $product = Product::create(
             [

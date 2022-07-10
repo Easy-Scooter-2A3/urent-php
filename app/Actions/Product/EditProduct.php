@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\attribute_product;
 use Illuminate\Support\Facades\Log;
+use Intervention\Image\ImageManager;
 
 class EditProduct
 {
@@ -38,11 +39,14 @@ class EditProduct
             }
 
             $hash = $image->hashName();
-            $image->storeAs('public/images', $hash);
+            $manager = new ImageManager('gd');
+            $image = $manager->make($image->path());
+            $image->resize(200, 200);
+            $image->toPng()->save("storage/images/$hash");
 
             $current = Product::where('id', $id)->first()->image;
             if ($current) {
-                unlink(storage_path('app/public/' . $current));
+                unlink(storage_path('app/public/images/' . $current));
             }
             Product::where('id', $id)->update(
                 [

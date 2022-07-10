@@ -80,38 +80,38 @@
                                       <h2 class="text-lg ">{{ $product->price }} €</h2>
                                   </div>
                                   
+                                  @component('components.inputfield', [
+                                    'text' => 'Quantity',
+                                    'icon' => 'search',
+                                    'id' => 'productId-'.$product->id.'-quantity',
+                                    'name' => 'quantity',
+                                    'type' => 'number',
+                                    'value' => $quantity[$product->id],
+                                    ])
+                                  @endcomponent
 
                                   <div class="w-4/6">
-                                      @component('components.inputfield', [
-                                          'text' => 'Quantity',
-                                          'icon' => 'search',
-                                          'id' => 'productId-'.$product->id.'-quantity',
-                                          'name' => 'quantity',
-                                          'type' => 'number',
-                                          'value' => $quantity[$product->id],
-                                          ])
-                                      @endcomponent
-                                      @component('components.button', [
-                                        'text' => 'Set quantity',
-                                        'type' => 'button',
-                                        'id' => 'setQuantityBtn-'.$product->id,
-                                        'customId' => $product->id,
-                                      ])
-                                      @endcomponent
-                                      @component('components.button', [
-                                        'text' => 'Remove',
-                                        'type' => 'button',
-                                        'id' => 'removeBtn-'.$product->id,
-                                        'customId' => $product->id,
-                                      ])
-                                      @endcomponent
-                                  </div>
+                                    @component('components.button', [
+                                      'text' => 'Set quantity',
+                                      'type' => 'button',
+                                      'id' => 'setQuantityBtn-'.$product->id,
+                                      'customId' => $product->id,
+                                    ])
+                                    @endcomponent
+                                    @component('components.button', [
+                                      'text' => 'Remove',
+                                      'type' => 'button',
+                                      'id' => 'removeBtn-'.$product->id,
+                                      'customId' => $product->id,
+                                    ])
+                                    @endcomponent
+                                </div>
                               </div>
                             </div>
                         </td>
                         {{-- TODO: rework --}}
                         <td class="mdc-data-table__cell">
-                            <div class="flex flex-col justify-around">
+                            <div class="flex flex-col justify-around p-3">
                               <ul class="list-disc mb-5">
                                   @isset($attributesList[$product->id])
                                       @foreach ($attributesList[$product->id] as $attribute)
