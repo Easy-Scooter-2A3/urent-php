@@ -88,7 +88,6 @@
         <h2>Date de dernière modification : </h2>
         <h2>Longitude : </h2>
         <h2>Latitude : </h2>
-        <h2>Used by : </h2>
         <h2>UUID : </h2>
     </div>
 </template>
