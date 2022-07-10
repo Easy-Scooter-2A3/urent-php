@@ -102,12 +102,14 @@ Route::controller(Dashboard::class)->group(function () {
     Route::get('/dashboard', 'index')->middleware('auth')->name('dashboard');
     
 
-    Route::group(['prefix' => 'dashboard/admin'], function () {
+    Route::group(['prefix' => 'dashboard'], function () {
         Route::middleware(['auth'])->group(function () {
             Route::get('/orders', 'orders')->name('dashboard.orders');
             Route::get('/packages', 'packages')->name('dashboard.packages');
             Route::get('/weather', 'weather')->name('dashboard.weather');
             Route::get('/packages', 'packages')->name('dashboard.packages');
+
+            Route::post('/packages/edit', EditUserPackage::class)->name('user.packages.edit');
         });
     });
 
