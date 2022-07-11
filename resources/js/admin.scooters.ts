@@ -5,6 +5,8 @@ import searchField from './searchField';
 import selectedRows from './selectedRows';
 import { doPost } from './utils';
 import checkAll from './checkAll';
+import { MDCSelect } from '@material/select';
+import notification from './notif';
 
 const getDetails = async (scooter: (string | null)) => {
   const res = await doPost('/dashboard/admin/scooters/details', { scooter });
@@ -16,8 +18,8 @@ const getDetails = async (scooter: (string | null)) => {
 
 (async () => {
   const confirmCreationBtn = document.getElementById('confirmCreationBtn') as HTMLButtonElement | null;
-  const modalCreationModel = document.getElementById('modal-creation-model') as HTMLInputElement | null;
-  const modalCreationStatus = document.getElementById('modal-creation-status') as HTMLInputElement | null;
+  const modalCreationModel = document.getElementById('modal-creation-model') as HTMLElement | null;
+  const modalCreationQuantity = document.getElementById('modal-creation-quantity') as HTMLInputElement | null;
 
   const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement | null;
 
@@ -54,10 +56,12 @@ const getDetails = async (scooter: (string | null)) => {
     return;
   }
 
-  if (!modalCreationModel || !modalCreationStatus) {
+  if (!modalCreationModel || !modalCreationQuantity) {
     console.error('Could not find modal-creation-model or modal-creation-status');
     return;
   }
+
+  const modalCreationModelSelect = new MDCSelect(modalCreationModel);
 
   deleteBtn.addEventListener('click', async (_e: MouseEvent) => {
     // TODO: dialog
@@ -72,12 +76,39 @@ const getDetails = async (scooter: (string | null)) => {
   });
 
   confirmCreationBtn.addEventListener('click', async (_e: MouseEvent) => {
+    const model = modalCreationModelSelect.value;
+    if (!model) {
+      notification('Please select a model');
+      return;
+    }
+
+    // get max
+    const inputElemQuantityI = modalCreationQuantity.querySelector('input') as HTMLInputElement | null;
+    if (!inputElemQuantityI) {
+      notification('Could not find input element');
+      return;
+    }
+
+    const quantityMax = inputElemQuantityI.max;
+    if (!quantityMax) {
+      notification('Could not find quantity');
+      return;
+    }
+
+    const quantity = modalCreationQuantity.value;
+    if (quantity > quantityMax) {
+      notification(`Quantity cannot be greater than ${quantityMax}`);
+      return;
+    }
+
     const data = {
-      model: modalCreationModel.value,
-      status: modalCreationStatus.value,
+      model,
+      quantity,
     };
     if (await doPost('/dashboard/admin/scooters/create', data)) {
       window.location.reload();
+    } else {
+      notification('Could not create scooters');
     }
   });
 

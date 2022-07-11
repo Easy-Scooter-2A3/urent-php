@@ -10,7 +10,7 @@ use App\Http\Controllers\Weather;
 use App\Http\Controllers\Panier;
 use App\Http\Controllers\Catalogue;
 use App\Actions\Authentication\ResetPassword;
-use App\Http\Controllers\ScooterController;
+use App\Http\Controllers\Scooter;
 use Illuminate\Http\Request;
 use App\Actions\Package\EditUserPackage;
 use App\Actions\Product\CreateProduct;
@@ -123,12 +123,12 @@ Route::controller(Dashboard::class)->group(function () {
             
             Route::group(['prefix' => 'scooters'], function () {
                 Route::get('/', 'scooter')->name('admin.scooters');
-                Route::get('/list', [ScooterController::class, 'list'])->name('admin.scooters.action');
-                Route::post('/action', [ScooterController::class, 'action'])->name('admin.scooters.action');
-                Route::post('/details', [ScooterController::class, 'details'])->name('admin.scooters.details');
+                Route::get('/list', [Scooter::class, 'list'])->name('admin.scooters.action');
+                Route::post('/action', [Scooter::class, 'action'])->name('admin.scooters.action');
+                Route::post('/details', [Scooter::class, 'details'])->name('admin.scooters.details');
 
-                Route::post('/create', [ScooterController::class, 'create'])->middleware("admin")->name('admin.scooters.create');
-                Route::post('/delete', [ScooterController::class, 'delete'])->middleware("admin")->name('admin.scooters.delete');
+                Route::post('/create', [Scooter::class, 'create'])->middleware("admin")->name('admin.scooters.create');
+                Route::post('/delete', [Scooter::class, 'delete'])->middleware("admin")->name('admin.scooters.delete');
             });
 
             Route::group(['prefix' => 'products'], function () {

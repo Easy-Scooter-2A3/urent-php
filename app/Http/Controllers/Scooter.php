@@ -5,16 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use App\Models\Scooter;
+use App\Models\Scooter as ScooterModel;
 use App\Models\ScooterStatus;
 use App\Models\Maintenance;
+use Ramsey\Uuid\Rfc4122\UuidV4;
 
-use function PHPUnit\Framework\isNull;
-
-class ScooterController extends Controller
+class Scooter extends Controller
 {
     public function details(Request $request) {
-        $scooter = Scooter::find($request->input('scooter'));
+        $scooter = ScooterModel::find($request->input('scooter'));
 
         $res = Maintenance::where('scooter_id', $scooter->id)->orderBy('created_at', 'desc')->first();
         $scooter->status = ScooterStatus::getStatus($scooter->status);
@@ -26,20 +25,30 @@ class ScooterController extends Controller
     public function create(Request $request) {
         $validator = Validator::make($request->all(), [
             'model' => ['required', 'string', 'max:255'],
-            // 'status' => ['string', 'max:255', 'default:available'],
+            'quantity' => ['required', 'numeric', "between:1,50"],
         ])->validate();
 
-        Scooter::create([
-            'model' => $request->input('model'),
-            'status' => 0, //TODO: use enum
-            // 'status' => $request->input('status') ?? 'available',
-        ]);
+        $quantity = $request->input('quantity');
+
+        if ($quantity < 1) {
+            return response()->json(['success' => false, 'message' => 'Quantity must be greater than 0']);
+        }
+
+        if ($quantity > 0) {
+            for ($i = 0; $i < $quantity; $i++) {
+                ScooterModel::create([
+                    'model' => $request->input('model'),
+                    'status' => ScooterStatus::SCOOTER_STATUS_UNSPECIFIED, //TODO: use enum
+                    'uuid' => UuidV4::uuid4(), //serial number of the scooter
+                ]);
+            }
+        }
         return response()->json(['success' => true]);
     }
 
     public function list(Request $request) { 
         //TODO: pagination
-        $scooters = Scooter::all();
+        $scooters = ScooterModel::all();
         foreach ($scooters as $s) {
             $s->status = ScooterStatus::getStatus($s->status);
 
@@ -50,16 +59,16 @@ class ScooterController extends Controller
     }
 
     public function get(Request $request) { 
-        return response()->json(['data' => Scooter::find($request->id)]);
+        return response()->json(['data' => ScooterModel::find($request->id)]);
     }
 
     public function delete(Request $request) {
-        $status = Scooter::destroy($request->input('scooters'));
+        $status = ScooterModel::destroy($request->input('scooters'));
         return response()->json(['success' => boolval($status)]);
     }
 
     public function setUser(Request $request) {
-        $scooter = Scooter::find($request->id);
+        $scooter = ScooterModel::find($request->id);
         $scooter->used_by = $request->userID;
         return response()->json(['success' => $scooter->save()]);
     }
