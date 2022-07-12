@@ -13,6 +13,18 @@ const start = async () => {
   const options: LoaderOptions = {};
   const loader = new Loader(apiKey, options);
 
+  const searchField = document.getElementById('searchField') as HTMLInputElement;
+  if (!searchField) {
+    console.log('searchField not found');
+    return;
+  }
+
+  const scootersAmount = document.getElementById('scootersAmount') as HTMLSpanElement;
+  if (!scootersAmount) {
+    console.log('scootersAmount not found');
+    return;
+  }
+
   const res = doGet('/dashboard/admin/scooters/list');
 
   const google = await loader.load();
@@ -27,14 +39,15 @@ const start = async () => {
       return;
     }
 
-    console.log(scooters.data);
-    const { data } = scooters.data;
+    const { data }: {data: IScooter[]} = scooters.data;
+    scootersAmount.textContent = data.length.toString();
 
-    data.forEach((scooter: IScooter) => {
+    const markers = Array.from(data).map((scooter) => {
       const marker = new google.maps.Marker({
         position: { lat: scooter.latitude, lng: scooter.longitude },
         map,
       });
+      marker.set('uuid', scooter.uuid);
 
       const infoWindow = new google.maps.InfoWindow({
         content: scooter.uuid, // dialog content with scooter details
@@ -43,7 +56,22 @@ const start = async () => {
       marker.addListener('click', () => {
         infoWindow.open(map, marker);
       });
+      return marker;
     });
+
+    searchField.onkeyup = async (event: Event) => {
+      const search = searchField.value;
+      let n = 0;
+      markers.forEach((marker) => {
+        const uuid = marker.get('uuid');
+        const visible = uuid.includes(search);
+        marker.setVisible(visible);
+        if (visible) {
+          n += 1;
+        }
+      });
+      scootersAmount.textContent = n.toString();
+    };
   });
 
   map.addListener('click', (e) => {
