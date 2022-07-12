@@ -49,8 +49,19 @@ const start = async () => {
       });
       marker.set('uuid', scooter.uuid);
 
+      const content = `<div>
+        <h2>Status: ${scooter.status}</h2>
+        <h2>Model: ${scooter.model}</h2>
+        <h2>Created at: ${scooter.created_at}</h2>
+        <h2>Updated at: ${scooter.updated_at}</h2>
+        <h2>Last maintenance: ${scooter.date_last_maintenance}</h2>
+        <h2>Next maintenance: ${scooter.date_next_maintenance}</h2>
+        <h2>Longitude: ${scooter.longitude}</h2>
+        <h2>Latitude: ${scooter.latitude}</h2>
+        <h2>UUID: ${scooter.uuid}</h2>
+      </div>`;
       const infoWindow = new google.maps.InfoWindow({
-        content: scooter.uuid, // dialog content with scooter details
+        content,
       });
 
       marker.addListener('click', () => {
