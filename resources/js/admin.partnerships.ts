@@ -229,6 +229,6 @@ const fillFields = async (partnershipId: string) => {
   });
 
   searchInput.addEventListener('keyup', (_e) => {
-    searchField(_e, 1, '[partnershipidParent]');
+    searchField(_e, '[partnershipidParent]');
   });
 })();

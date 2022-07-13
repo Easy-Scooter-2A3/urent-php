@@ -359,6 +359,6 @@ const fillFields = async (productId: string) => {
   });
 
   searchInput.addEventListener('keyup', (e) => {
-    searchField(e, 1, '[productidParent]');
+    searchField(e, '[productidParent]');
   });
 })();

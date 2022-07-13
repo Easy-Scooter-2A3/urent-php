@@ -142,6 +142,6 @@ const getDetails = async (user: (string | null)) => {
   });
 
   searchInput.addEventListener('keyup', (e) => {
-    searchField(e, 2, '[useridParent]');
+    searchField(e, '[useridParent]');
   });
 })();

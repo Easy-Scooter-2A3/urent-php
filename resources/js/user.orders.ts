@@ -105,9 +105,6 @@ const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/order
     });
   });
 
-  searchInput.addEventListener('keyup', (e) => {
-    searchField(e, 1, '[orderidParent]');
-  });
   getOrdersBtn.addEventListener('click', async (e: MouseEvent) => {
     const orderRows = selectedRows('[orderid]').map((element) => element.getAttribute('orderid'));
     if (orderRows.length === 0) {
@@ -124,6 +121,6 @@ const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/order
   });
 
   searchInput.addEventListener('keyup', (e) => {
-    searchField(e, 1, '[orderidParent]');
+    searchField(e, '[orderidParent]');
   });
 })();

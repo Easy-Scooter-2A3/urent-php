@@ -150,6 +150,6 @@ const getDetails = async (scooter: (string | null)) => {
   });
 
   searchInput.addEventListener('keyup', (e) => {
-    searchField(e, 5, '[scooteridParent]');
+    searchField(e, '[scooteridParent]');
   });
 })();
