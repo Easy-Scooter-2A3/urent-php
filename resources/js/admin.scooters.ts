@@ -1,11 +1,11 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
+import { MDCSelect } from '@material/select';
+import { MDCDataTable } from '@material/data-table';
 import IScooter from './interfaces/scooter';
 import searchField from './searchField';
 import selectedRows from './selectedRows';
 import { doPost } from './utils';
-import checkAll from './checkAll';
-import { MDCSelect } from '@material/select';
 import notification from './notif';
 
 const getDetails = async (scooter: (string | null)) => {
@@ -29,8 +29,6 @@ const getDetails = async (scooter: (string | null)) => {
   const detailsBody = document.getElementById('modal-details-body') as HTMLElement | null;
   const detailsBodyTemplate = document.getElementById('modal-details-body-template') as HTMLTemplateElement | null;
 
-  const checkboxAll = document.getElementById('checkbox-all') as HTMLInputElement | null;
-
   if (!detailsBody || !detailsBodyTemplate) {
     console.error('Could not find modal-details-body or modal-details-body-template');
     return;
@@ -38,11 +36,6 @@ const getDetails = async (scooter: (string | null)) => {
 
   if (!searchInput || !viewDetailsBtn) {
     console.error('Could not find search input');
-    return;
-  }
-
-  if (!checkboxAll) {
-    console.error('Could not find checkbox-all');
     return;
   }
 
@@ -62,6 +55,7 @@ const getDetails = async (scooter: (string | null)) => {
   }
 
   const modalCreationModelSelect = new MDCSelect(modalCreationModel);
+  const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table') as HTMLElement);
 
   deleteBtn.addEventListener('click', async (_e: MouseEvent) => {
     // TODO: dialog
@@ -112,15 +106,12 @@ const getDetails = async (scooter: (string | null)) => {
     }
   });
 
-  checkboxAll.addEventListener('click', (_e: MouseEvent) => {
-    console.log('checkbox-all clicked');
-    checkAll(checkboxAll.checked, document);
-  });
-
   viewDetailsBtn.addEventListener('click', (_e: MouseEvent) => {
     detailsBody.innerHTML = '';
     console.log('viewDetailsBtn clicked');
-    const scooterRows = selectedRows('[scooterid]').map((element) => element.getAttribute('scooterid'));
+    const scooterRows = dataTable.getSelectedRowIds();
+    console.log(scooterRows);
+    // const scooterRows = selectedRows('[scooterid]').map((element) => element.getAttribute('scooterid'));
     if (scooterRows.length === 0) {
       return;
     }
