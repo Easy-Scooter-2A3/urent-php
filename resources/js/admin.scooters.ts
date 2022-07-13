@@ -4,7 +4,6 @@ import { MDCSelect } from '@material/select';
 import { MDCDataTable } from '@material/data-table';
 import IScooter from './interfaces/scooter';
 import searchField from './searchField';
-import selectedRows from './selectedRows';
 import { doPost } from './utils';
 import notification from './notif';
 
@@ -60,7 +59,7 @@ const getDetails = async (scooter: (string | null)) => {
   deleteBtn.addEventListener('click', async (_e: MouseEvent) => {
     // TODO: dialog
     if (!confirm('Are you sure you want to delete these scooters?')) return;
-    const scooterRows = selectedRows('[scooterid]').map((element) => element.getAttribute('scooterid'));
+    const scooterRows = dataTable.getSelectedRowIds();
     const data = {
       scooters: scooterRows,
     };
@@ -110,8 +109,6 @@ const getDetails = async (scooter: (string | null)) => {
     detailsBody.innerHTML = '';
     console.log('viewDetailsBtn clicked');
     const scooterRows = dataTable.getSelectedRowIds();
-    console.log(scooterRows);
-    // const scooterRows = selectedRows('[scooterid]').map((element) => element.getAttribute('scooterid'));
     if (scooterRows.length === 0) {
       return;
     }
