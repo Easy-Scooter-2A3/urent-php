@@ -7,7 +7,6 @@ import IPartnership from './interfaces/partnership';
 import IUser from './interfaces/user';
 import searchField from './searchField';
 import { doPost, doPut, doGet } from './utils';
-import checkAll from './checkAll';
 import IProduct from './interfaces/product';
 
 const toMDCTextField = (element: HTMLElement | null) => {
@@ -215,16 +214,6 @@ const fillFields = async (partnershipId: string) => {
     console.error('Could not find a checkbox');
     return;
   }
-
-  checkboxes.edit.addEventListener('click', (_e: MouseEvent) => {
-    console.log('checkbox-all edit clicked');
-    checkAll(checkboxes.edit.checked, checkboxes.editParent);
-  });
-
-  checkboxes.creation.addEventListener('click', (_e: MouseEvent) => {
-    console.log('checkbox-all creation clicked');
-    checkAll(checkboxes.creation.checked, checkboxes.creationParent);
-  });
 
   searchInput.addEventListener('keyup', (_e) => {
     searchField(_e, '[partnershipidParent]');
