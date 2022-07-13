@@ -2,6 +2,7 @@
 /* eslint-disable import/extensions */
 import { MDCSwitch } from '@material/switch';
 import { MDCTextField } from '@material/textfield';
+import { MDCDataTable } from '@material/data-table';
 import IPartnership from './interfaces/partnership';
 import IUser from './interfaces/user';
 import searchField from './searchField';
@@ -103,6 +104,8 @@ const fillFields = async (partnershipId: string) => {
 
   const searchInput = document.getElementById('searchField') as HTMLInputElement | null;
 
+  const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table') as HTMLElement);
+
   if (!searchInput) {
     console.error('Could not find search input');
     return;
@@ -136,7 +139,7 @@ const fillFields = async (partnershipId: string) => {
   }
 
   editBtn.addEventListener('click', async (_e: MouseEvent) => {
-    const partnerships = selectedRows('[partnershipid]').map((element) => element.getAttribute('partnershipid'));
+    const partnerships = dataTable.getSelectedRowIds();
     if (partnerships.length === 0) {
       console.log('No partnerships selected');
       _e.preventDefault(); // TODO: make it work
