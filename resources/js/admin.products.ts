@@ -1,12 +1,12 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 import { MDCSwitch } from '@material/switch';
+import { MDCDataTable } from '@material/data-table';
 import { MDCTextField } from '@material/textfield';
 import Iproduct from './interfaces/product';
 import searchField from './searchField';
 import selectedRows from './selectedRows';
 import { doPost, doPut } from './utils';
-import checkAll from './checkAll';
 import notification from './notif';
 
 const getDetails = async (product: (string | null)) => {
@@ -92,7 +92,7 @@ const fillFields = async (productId: string) => {
   const detailsBody = document.getElementById('modal-details-body') as HTMLElement | null;
   const detailsBodyTemplate = document.getElementById('modal-details-body-template') as HTMLTemplateElement | null;
 
-  const checkboxAll = document.getElementById('checkbox-all') as HTMLInputElement | null;
+  const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table') as HTMLElement);
 
   const fileLoadedEdit = document.getElementById('fileLoadedEdit');
   if (!fileLoadedEdit) {
@@ -131,11 +131,6 @@ const fillFields = async (productId: string) => {
 
   if (!searchInput || !viewDetailsBtn) {
     console.error('Could not find search input');
-    return;
-  }
-
-  if (!checkboxAll) {
-    console.error('Could not find checkbox-all');
     return;
   }
 
@@ -218,7 +213,7 @@ const fillFields = async (productId: string) => {
   deleteBtn.addEventListener('click', async (e: MouseEvent) => {
     // TODO: dialog
     if (!confirm('Are you sure you want to delete these products?')) return;
-    const products = selectedRows('[productid]').map((element) => element.getAttribute('productid'));
+    const products = dataTable.getSelectedRowIds();
 
     if (products.length === 0) {
       e.preventDefault();
@@ -235,7 +230,8 @@ const fillFields = async (productId: string) => {
   });
 
   editBtn.addEventListener('click', async (e: MouseEvent) => {
-    const products = selectedRows('[productid]').map((element) => element.getAttribute('productid'));
+    // check
+    const products = dataTable.getSelectedRowIds();
     if (products.length === 0) {
       console.log('No products selected');
       e.preventDefault(); // TODO: make it work
@@ -322,15 +318,10 @@ const fillFields = async (productId: string) => {
     }
   });
 
-  checkboxAll.addEventListener('click', (_e: MouseEvent) => {
-    console.log('checkbox-all clicked');
-    checkAll(checkboxAll.checked, document);
-  });
-
   viewDetailsBtn.addEventListener('click', async (_e: MouseEvent) => {
     detailsBody.innerHTML = '';
     console.log('viewDetailsBtn clicked');
-    const productsRows = selectedRows('[productid]').map((element) => element.getAttribute('productid'));
+    const productsRows = dataTable.getSelectedRowIds();
     if (productsRows.length === 0) {
       return;
     }
