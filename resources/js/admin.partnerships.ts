@@ -202,7 +202,6 @@ const fillFields = async (partnershipId: string) => {
   });
 
   const checkboxes = {
-    main: document.getElementById('checkbox-all-main') as HTMLInputElement,
     edit: document.getElementById('checkbox-all-edit') as HTMLInputElement,
     creation: document.getElementById('checkbox-all-creation') as HTMLInputElement,
 
@@ -212,14 +211,9 @@ const fillFields = async (partnershipId: string) => {
   };
 
   if (Object.values(checkboxes).some((element) => !element)) {
-    console.error('Could not find a checkbox-all');
+    console.error('Could not find a checkbox');
     return;
   }
-
-  checkboxes.main.addEventListener('click', (_e: MouseEvent) => {
-    console.log('checkbox-all clicked');
-    checkAll(checkboxes.main.checked, checkboxes.mainParent);
-  });
 
   checkboxes.edit.addEventListener('click', (_e: MouseEvent) => {
     console.log('checkbox-all edit clicked');
