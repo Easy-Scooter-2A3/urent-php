@@ -42,7 +42,7 @@ const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/order
     return;
   }
 
-  const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table') as HTMLElement);
+  const dataTable = new MDCDataTable(document.getElementById('dataTable') as HTMLElement);
 
   viewDetailsBtn.addEventListener('click', async (_e: MouseEvent) => {
     detailsBody.innerHTML = '';

@@ -54,7 +54,7 @@ const getDetails = async (scooter: (string | null)) => {
   }
 
   const modalCreationModelSelect = new MDCSelect(modalCreationModel);
-  const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table') as HTMLElement);
+  const dataTable = new MDCDataTable(document.getElementById('dataTable') as HTMLElement);
   //TODO
 
   deleteBtn.addEventListener('click', async (_e: MouseEvent) => {

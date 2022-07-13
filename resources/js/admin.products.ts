@@ -91,9 +91,9 @@ const fillFields = async (productId: string) => {
   const detailsBody = document.getElementById('modal-details-body') as HTMLElement | null;
   const detailsBodyTemplate = document.getElementById('modal-details-body-template') as HTMLTemplateElement | null;
 
-  const dataTable = new MDCDataTable(document.querySelector('dataTable') as HTMLElement);
-  const dataTableCreation = new MDCDataTable(document.querySelector('dataTableCreation') as HTMLElement);
-  const dataTableEdit = new MDCDataTable(document.querySelector('dataTableEdit') as HTMLElement);
+  const dataTable = new MDCDataTable(document.getElementById('dataTable') as HTMLElement);
+  const dataTableCreation = new MDCDataTable(document.getElementById('dataTableCreation') as HTMLElement);
+  const dataTableEdit = new MDCDataTable(document.getElementById('dataTableEdit') as HTMLElement);
 
   const fileLoadedEdit = document.getElementById('fileLoadedEdit');
   if (!fileLoadedEdit) {

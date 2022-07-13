@@ -23,7 +23,7 @@ const getDetails = async (user: (string | null)) => {
   const detailsBody = document.getElementById('modal-details-body') as HTMLElement;
   const detailsBodyTemplate = document.getElementById('modal-details-body-template') as HTMLTemplateElement;
 
-  const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table') as HTMLElement);
+  const dataTable = new MDCDataTable(document.getElementById('dataTable') as HTMLElement);
 
   if (!detailsBody || !detailsBodyTemplate) {
     console.error('Could not find modal-details-body or modal-details-body-template');
