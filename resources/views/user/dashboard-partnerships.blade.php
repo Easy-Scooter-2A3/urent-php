@@ -1,5 +1,4 @@
 <div class="relative overflow-x-auto lg:w-full mx-10 my-10">
-
     <div class="flex flex-row justify-around">
         <div data-mdc-auto-init="MDCDataTable" class="mdc-data-table w-full">
             <div class="mdc-data-table__table-container">

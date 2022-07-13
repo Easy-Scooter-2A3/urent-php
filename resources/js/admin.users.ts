@@ -3,7 +3,6 @@
 import { MDCDataTable } from '@material/data-table';
 import IUser from './interfaces/user';
 import searchField from './searchField';
-import selectedRows from './selectedRows';
 import notification from './notif';
 import { doPatch, doPost } from './utils';
 

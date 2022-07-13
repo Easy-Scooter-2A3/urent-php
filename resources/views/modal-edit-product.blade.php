@@ -84,7 +84,7 @@
 
 
                 <div class="flex flex-row justify-around">
-                    <div class="mdc-data-table">
+                    <div data-mdc-auto-init="MDCDataTable" id="dataTableEdit" class="mdc-data-table">
                         <div class="mdc-data-table__table-container">
                           <table class="mdc-data-table__table" aria-label="Dessert calories">
                             <thead>

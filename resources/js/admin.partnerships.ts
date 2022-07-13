@@ -6,7 +6,6 @@ import { MDCDataTable } from '@material/data-table';
 import IPartnership from './interfaces/partnership';
 import IUser from './interfaces/user';
 import searchField from './searchField';
-import selectedRows from './selectedRows';
 import { doPost, doPut, doGet } from './utils';
 import checkAll from './checkAll';
 import IProduct from './interfaces/product';
@@ -104,7 +103,9 @@ const fillFields = async (partnershipId: string) => {
 
   const searchInput = document.getElementById('searchField') as HTMLInputElement | null;
 
-  const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table') as HTMLElement);
+  const dataTable = new MDCDataTable(document.getElementById('dataTable') as HTMLElement);
+  const dataTableCreation = new MDCDataTable(document.getElementById('dataTableCreation') as HTMLElement);
+  const dataTableEdit = new MDCDataTable(document.getElementById('dataTableEdit') as HTMLElement);
 
   if (!searchInput) {
     console.error('Could not find search input');
@@ -157,7 +158,7 @@ const fillFields = async (partnershipId: string) => {
   });
 
   confirmCreationBtn.addEventListener('click', async (_e: MouseEvent) => {
-    const products = selectedRows('[productattribute]').map((element) => element.getAttribute('productattribute'));
+    const products = dataTableCreation.getSelectedRowIds();
 
     const data = {
       name: modalFieldsCreation.name.value,
@@ -183,7 +184,7 @@ const fillFields = async (partnershipId: string) => {
       return;
     }
 
-    const products = selectedRows('[productattribute-edit]').map((element) => element.getAttribute('productattribute-edit'));
+    const products = dataTableEdit.getSelectedRowIds();
 
     const data = {
       id,

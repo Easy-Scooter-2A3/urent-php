@@ -5,7 +5,6 @@ import { MDCDataTable } from '@material/data-table';
 import { MDCTextField } from '@material/textfield';
 import Iproduct from './interfaces/product';
 import searchField from './searchField';
-import selectedRows from './selectedRows';
 import { doPost, doPut } from './utils';
 import notification from './notif';
 
@@ -92,7 +91,9 @@ const fillFields = async (productId: string) => {
   const detailsBody = document.getElementById('modal-details-body') as HTMLElement | null;
   const detailsBodyTemplate = document.getElementById('modal-details-body-template') as HTMLTemplateElement | null;
 
-  const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table') as HTMLElement);
+  const dataTable = new MDCDataTable(document.querySelector('dataTable') as HTMLElement);
+  const dataTableCreation = new MDCDataTable(document.querySelector('dataTableCreation') as HTMLElement);
+  const dataTableEdit = new MDCDataTable(document.querySelector('dataTableEdit') as HTMLElement);
 
   const fileLoadedEdit = document.getElementById('fileLoadedEdit');
   if (!fileLoadedEdit) {
@@ -235,6 +236,7 @@ const fillFields = async (productId: string) => {
     if (products.length === 0) {
       console.log('No products selected');
       e.preventDefault(); // TODO: make it work
+      // close modal
       return;
     }
     const id = products.shift();
@@ -249,7 +251,7 @@ const fillFields = async (productId: string) => {
   });
 
   confirmCreationBtn.addEventListener('click', async (_e: MouseEvent) => {
-    const attributes = selectedRows('[productattribute]').map((element) => element.getAttribute('productattribute'));
+    const attributes = dataTableCreation.getSelectedRowIds();
 
     const data = {
       name: modalFieldsCreation.name.value,
@@ -288,7 +290,7 @@ const fillFields = async (productId: string) => {
       return;
     }
 
-    const attributes = selectedRows('[productattribute-edit]').map((element) => element.getAttribute('productattribute-edit'));
+    const attributes = dataTableEdit.getSelectedRowIds();
 
     const data = {
       name: modalFieldsEdit.name!.value,
