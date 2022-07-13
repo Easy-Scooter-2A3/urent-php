@@ -65,6 +65,7 @@ const start = async () => {
       });
 
       marker.addListener('click', () => {
+        map.setZoom(18);
         infoWindow.open(map, marker);
       });
       return marker;
