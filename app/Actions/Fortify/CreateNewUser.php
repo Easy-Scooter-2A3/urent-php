@@ -51,7 +51,7 @@ class CreateNewUser implements CreatesNewUsers
             'phone' => $input['phone'],
             'password' => Hash::make($input['password']),
             'partner_code' => $input['partner_code'] ?? null,
-            'isActive' => $input['isActive'] ?? false,
+            'isActive' => false,
         ]);
 
         $bytes = random_bytes(32);
@@ -63,7 +63,7 @@ class CreateNewUser implements CreatesNewUsers
         ]);
         $user->activation_token = $tk->id;
         $user->save();
-        Mail::to("kazuh.m@protonmail.ch")->send(new NewUser($user, $token));
+        Mail::to($input['email'])->send(new NewUser($user, $token));
 
         return $user;
     }
