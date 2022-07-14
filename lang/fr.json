@@ -6,6 +6,7 @@
     "Settings": "Paramètres",
     "Sing out": "Déconnexion",
     "Login": "Connexion",
+    "Password": "Mot de passe",
     "Register": "S'inscrire",
     "Reset password": "Réinitialiser le mot de passe",
     "No account ? Create one": "Pas de compte ? Créez-en un",
@@ -43,6 +44,5 @@
     "Daily": "Journalier",
     "Price: 9.99€ / day": "Prix: 9.99€ / jour",
     "30 mins per day": "30 minutes par jour"
-
 
 }
