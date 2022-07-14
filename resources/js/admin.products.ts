@@ -82,7 +82,6 @@ const fillFields = async (productId: string) => {
   const uploadEditBtn = document.getElementById('uploadEditBtn') as HTMLButtonElement | null;
   const uploadCreateBtn = document.getElementById('uploadCreateBtn') as HTMLButtonElement | null;
 
-  const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement | null;
   const editBtn = document.getElementById('editBtn') as HTMLButtonElement | null;
 
   const searchInput = document.getElementById('searchField') as HTMLInputElement | null;
@@ -135,13 +134,8 @@ const fillFields = async (productId: string) => {
     return;
   }
 
-  if (!deleteBtn) {
-    console.error('Could not find deleteBtn');
-    return;
-  }
-
   if (!editBtn) {
-    console.error('Could not find deleteBtn');
+    console.error('Could not find editBtn');
     return;
   }
 
@@ -210,25 +204,6 @@ const fillFields = async (productId: string) => {
 
     fileLoadedCreate.hidden = false;
   };
-
-  deleteBtn.addEventListener('click', async (e: MouseEvent) => {
-    // TODO: dialog
-    if (!confirm('Are you sure you want to delete these products?')) return;
-    const products = dataTable.getSelectedRowIds();
-
-    if (products.length === 0) {
-      e.preventDefault();
-      return;
-    }
-
-    const data = {
-      products,
-    };
-
-    if (await doPost('/dashboard/admin/products/delete', data)) {
-      window.location.reload();
-    }
-  });
 
   editBtn.addEventListener('click', async (e: MouseEvent) => {
     // check
