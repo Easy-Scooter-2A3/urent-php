@@ -28,7 +28,7 @@ const toMDCTextField = (element: HTMLElement | null) => {
   return new MDCTextField(element.parentElement);
 };
 
-const fillFields = async (productId: string) => {
+const fillFields = async (productId: string, table: MDCDataTable) => {
   // define them as MDCTextField
   const modalFields = {
     name: toMDCTextField(document.getElementById('modal-edit-name')) as MDCTextField,
@@ -63,17 +63,8 @@ const fillFields = async (productId: string) => {
 
   modalFields.available.selected = Boolean(product.available);
 
-  attributes.forEach((attribute) => {
-    const query = `input[productattribute-edit="${attribute}"]`;
-    const elems = document.querySelectorAll<HTMLInputElement>(query);
-    if (elems) {
-      elems.forEach((element) => {
-        if (element.getAttribute('edit') != null) {
-          element.checked = true;
-        }
-      });
-    }
-  });
+  console.log(attributes);
+  table.setSelectedRowIds(attributes.map((attribute) => attribute.toString()));
 };
 
 (async () => {
@@ -82,7 +73,6 @@ const fillFields = async (productId: string) => {
   const uploadEditBtn = document.getElementById('uploadEditBtn') as HTMLButtonElement | null;
   const uploadCreateBtn = document.getElementById('uploadCreateBtn') as HTMLButtonElement | null;
 
-  const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement | null;
   const editBtn = document.getElementById('editBtn') as HTMLButtonElement | null;
 
   const searchInput = document.getElementById('searchField') as HTMLInputElement | null;
@@ -135,13 +125,8 @@ const fillFields = async (productId: string) => {
     return;
   }
 
-  if (!deleteBtn) {
-    console.error('Could not find deleteBtn');
-    return;
-  }
-
   if (!editBtn) {
-    console.error('Could not find deleteBtn');
+    console.error('Could not find editBtn');
     return;
   }
 
@@ -211,25 +196,6 @@ const fillFields = async (productId: string) => {
     fileLoadedCreate.hidden = false;
   };
 
-  deleteBtn.addEventListener('click', async (e: MouseEvent) => {
-    // TODO: dialog
-    if (!confirm('Are you sure you want to delete these products?')) return;
-    const products = dataTable.getSelectedRowIds();
-
-    if (products.length === 0) {
-      e.preventDefault();
-      return;
-    }
-
-    const data = {
-      products,
-    };
-
-    if (await doPost('/dashboard/admin/products/delete', data)) {
-      window.location.reload();
-    }
-  });
-
   editBtn.addEventListener('click', async (e: MouseEvent) => {
     // check
     const products = dataTable.getSelectedRowIds();
@@ -247,7 +213,7 @@ const fillFields = async (productId: string) => {
     }
 
     editBtn.setAttribute('productid', id);
-    fillFields(id);
+    fillFields(id, dataTableEdit);
   });
 
   confirmCreationBtn.addEventListener('click', async (_e: MouseEvent) => {

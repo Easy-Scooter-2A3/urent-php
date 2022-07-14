@@ -79,7 +79,7 @@
             @endif
         </form>
         <span class="border"></span>
-        <div class="m-5 md:w-2/5 sm:w-full border">
+        <div class="m-5 p-4 md:w-2/5 sm:w-full border flex justify-evenly">
             @component('components.button', [
                 'text' => 'Github',
                 'type' => 'button',

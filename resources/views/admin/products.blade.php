@@ -158,12 +158,6 @@
         ])
         @endcomponent
         @component('components.button', [
-            'text' => 'Delete',
-            'type' => 'button',
-            'id' => 'deleteBtn',
-        ])
-        @endcomponent
-        @component('components.button', [
             'text' => 'Create',
             'type' => 'button',
             'id' => 'createBtn',

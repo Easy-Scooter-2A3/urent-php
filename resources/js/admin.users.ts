@@ -95,11 +95,10 @@ const getDetails = async (user: (string | null)) => {
         console.log('userRow is null');
         return;
       }
-      const row = document.getElementById(userRow) as HTMLTableRowElement;
-      const userId = row.getAttribute('userid');
+      const row = document.getElementById(`row-${userRow}`) as HTMLTableRowElement;
       const isAdmin = row.getAttribute('isAdmin');
 
-      if (userId === null || isAdmin === null) {
+      if (isAdmin === null) {
         console.log('userId or isAdmin is null');
         return;
       }
@@ -107,7 +106,7 @@ const getDetails = async (user: (string | null)) => {
       const data = {
         role: !parseInt(isAdmin, 10),
       };
-      const res = await doPatch(`/user/${userId}/role`, data);
+      const res = await doPatch(`/user/${userRow}/role`, data);
       if (res) {
         window.location.reload();
         //notification('success');
@@ -125,19 +124,18 @@ const getDetails = async (user: (string | null)) => {
         console.log('userRow is null');
         return;
       }
-      const row = document.getElementById(userRow) as HTMLTableRowElement;
-      const userId = row.getAttribute('userid');
+      const row = document.getElementById(`row-${userRow}`) as HTMLTableRowElement;
       const isActive = row.getAttribute('isActive');
 
-      if (userId === null || isActive === null) {
-        console.log('userId or isActive is null');
+      if (isActive === null) {
+        console.log('isActive is null');
         return;
       }
 
       const data = {
         active: !parseInt(isActive, 10),
       };
-      const res = await doPatch(`/user/${userId}/activation`, data);
+      const res = await doPatch(`/user/${userRow}/activation`, data);
       if (res) {
         window.location.reload();
         //notification('success');

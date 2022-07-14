@@ -50,22 +50,9 @@
                 @lang('Free Unlock')
             </li>
         </ul>
-    
-    
-        {{-- <ul class="list-decimal m-4">
-            <li>
-                8 trajets à 19.99€
-            </li>
-            <li>
-                25 trajets à 44.99€
-            </li>
-            <li>
-                50 trajets à 79.99€
-            </li>
-        </ul> --}}
 
         <div class="flex">
-            <form action="#">
+            <form class="flex flex-col" action="#">
                 @php
                     $pkg = $packages->where('id', 2)->first();
                     $prices = [$pkg->option1_price, $pkg->option2_price, $pkg->option3_price];

@@ -136,7 +136,6 @@ Route::controller(Dashboard::class)->group(function () {
                 Route::post('/details', GetProductsDetails::class)->name('admin.products.details');
                 Route::post('/', CreateProduct::class)->middleware("admin")->name('admin.products.create');
                 Route::post('/{id}', EditProduct::class)->middleware("admin")->name('admin.products.edit');
-                Route::post('/delete', DeleteProduct::class)->middleware("admin")->name('admin.products.delete');
             });
 
             Route::group(['prefix' => 'partnerships'], function () {

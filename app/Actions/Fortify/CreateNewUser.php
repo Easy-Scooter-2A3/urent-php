@@ -54,18 +54,16 @@ class CreateNewUser implements CreatesNewUsers
             'isActive' => $input['isActive'] ?? false,
         ]);
 
-        if ($user && !$input['isActive']) {
-            $bytes = random_bytes(32);
-            $token = bin2hex($bytes);
-            $tk = Token::create([
-                'user_id' => $user->id,
-                'token' => $token,
-                'action' => 'confirm-account'
-            ]);
-            $user->activation_token = $tk->id;
-            $user->save();
-            Mail::to("kazuh.m@protonmail.ch")->send(new NewUser($user, $token));
-        }
+        $bytes = random_bytes(32);
+        $token = bin2hex($bytes);
+        $tk = Token::create([
+            'user_id' => $user->id,
+            'token' => $token,
+            'action' => 'confirm-account'
+        ]);
+        $user->activation_token = $tk->id;
+        $user->save();
+        Mail::to("kazuh.m@protonmail.ch")->send(new NewUser($user, $token));
 
         return $user;
     }

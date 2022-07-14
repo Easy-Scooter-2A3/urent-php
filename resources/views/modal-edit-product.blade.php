@@ -109,7 +109,7 @@
                             </thead>
                             <tbody class="mdc-data-table__content">
                               @foreach ($attributes as $attribute)
-                              <tr productattributeParent class="mdc-data-table__row">
+                              <tr data-row-id="{{ $attribute->id }}" productattributeParent class="mdc-data-table__row">
                                       
                                 <td class="mdc-data-table__cell mdc-data-table__cell--checkbox">
                                     <div class="mdc-checkbox mdc-data-table__row-checkbox">

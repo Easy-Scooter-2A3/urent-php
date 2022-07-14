@@ -27,7 +27,7 @@
                 </thead>
                 <tbody class="mdc-data-table__content">
                 @foreach ($users as $user)
-                  <tr data-row-id="{{ $user->id }}" useridParent class="mdc-data-table__row">
+                  <tr id="row-{{ $user->id }}" data-row-id="{{ $user->id }}" isActive="{{ $user->isActive }}" isAdmin="{{ $user->isAdmin }}" useridParent class="mdc-data-table__row">
 
                     <td class="mdc-data-table__cell mdc-data-table__cell--checkbox">
                         <div class="mdc-checkbox mdc-data-table__row-checkbox">

@@ -14,7 +14,7 @@
     </div>
 
     <div class="m-2 flex flex-col md:flex-row w-11/12 mx-auto justify-between">
-        <div class="bg-white drop-shadow-md w-2/12 p-4">
+        <div class="bg-white drop-shadow-md md:w-2/12 p-4">
             @component('components.inputfield', [
                 'text' => 'Search',
                 'icon' => 'search',
@@ -46,7 +46,7 @@
 
         </div>
 
-        <div class="w-9/12">
+        <div class="md:w-9/12">
 
             <div class="mdc-data-table w-full">
                 <div class="mdc-data-table__table-container">
@@ -59,19 +59,18 @@
                     </thead>
                     <tbody id="catalogue" class="mdc-data-table__content">
                       @foreach ($products as $product)
-                      <tr productattributeParent rowid="{{ $product->id }}" class="mdc-data-table__row">
+                      <tr productattributeParent rowid="{{ $product->id }}" class="flex flex-col md:flex-row">
                         <td class="mdc-data-table__cell">
-                            <div class="p-3 flex">
+                            <div class="p-3 flex flex-col md:flex-row md:p-0">
                               <img class="h-80" src="{{ asset('storage/images/'.$product->image) }}" alt="">
                               <div class="ml-3 flex flex-col justify-around">
-                                  <div>
+                                  <div class="g-2 flex flex-col">
                                       <h2 class="text-lg ">{{ $product->name }}</h2>
                                       <h2 class="text-slate-400">{{ $product->description }}</h2>
                                       <h2 class="text-lg ">{{ $product->price }} €</h2>
                                   </div>
-                                  
 
-                                  <div class="w-4/6">
+                                  <div class="w-4/6 flex-col md:flex-row flex gap-3">
                                       @component('components.inputfield', [
                                           'text' => 'Quantity',
                                           'icon' => 'search',
@@ -93,7 +92,7 @@
                             </div>
                         </td>
                         <td class="mdc-data-table__cell">
-                            <div class="flex flex-col justify-around">
+                            <div class="flex flex-col justify-around md:m-0 m-5">
                                 <ul class="list-disc mb-5">
                                     @isset($attributesList[$product->id])
                                         @foreach ($attributesList[$product->id] as $attribute)

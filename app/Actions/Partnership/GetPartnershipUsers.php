@@ -16,7 +16,11 @@ class GetPartnershipUsers
     public function handle($partnershipsId)
     {
         $partnershipUsers = partnership_user::where('partnership_id', $partnershipsId)->first();
-        $users = User::whereIn('id', $partnershipUsers->pluck('user_id'))->get(['id','name']);
+        if ($partnershipUsers) {
+            $users = User::whereIn('id', $partnershipUsers->pluck('user_id'))->get(['id','name']);
+        } else {
+            $users = [];
+        }
 
         return ['success' => true, 'users' => $users];
     }
