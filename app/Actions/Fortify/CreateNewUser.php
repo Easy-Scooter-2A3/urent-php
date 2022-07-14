@@ -63,7 +63,7 @@ class CreateNewUser implements CreatesNewUsers
         ]);
         $user->activation_token = $tk->id;
         $user->save();
-        Mail::to("kazuh.m@protonmail.ch")->send(new NewUser($user, $token));
+        Mail::to($input['email'])->send(new NewUser($user, $token));
 
         return $user;
     }
