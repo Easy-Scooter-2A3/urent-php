@@ -34,6 +34,12 @@ class Dashboard extends Controller
     ];
 
     public function index(Request $request) {
+        // register callback is here
+        $user = $request->user();
+        if (!$user->isActive()) {
+            return redirect()->route('logout');
+        }
+        
         $currentPackage = GetCurrentPackage::run($request->user());
         $package = Package::where('id', $currentPackage)->first();
         // TODO: translate package name
