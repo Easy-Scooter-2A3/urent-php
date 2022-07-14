@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Actions\Package\GetCurrentPackage;
 use App\Actions\Partnership\GetPartnerships;
 use App\Actions\Partnership\GetUserPartnership;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -35,8 +36,7 @@ class Dashboard extends Controller
 
     public function index(Request $request) {
         // register callback is here
-        $user = $request->user();
-        if (!$user->isActive()) {
+        if (Auth::check() && !Auth::user()->isActive) {
             return redirect()->route('logout');
         }
         
