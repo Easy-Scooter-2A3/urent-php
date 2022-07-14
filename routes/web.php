@@ -71,7 +71,7 @@ Route::get('/setlang/{lang}', function (Request $request) {
 
 Route::get('/', [Index::class, 'index'])->name('index');
 Route::get('/logout', [Index::class, 'logout'])->name('logout')->withoutMiddleware([CheckUserStatus::class]);
-Route::get('/catalogue', [Catalogue::class, 'index'])->middleware('auth')->name('catalogue');
+Route::get('/catalogue', [Catalogue::class, 'index'])->name('catalogue');
 
 Route::post('/user/convertfidelity', ConvertUserFidelity::class)->middleware('auth')->name('user.convert.fidelity');
 Route::patch('/user/{id}/activation', SetUserActivation::class)->middleware('admin')->name('user.edit.activation');
