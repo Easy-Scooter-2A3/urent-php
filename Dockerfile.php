@@ -8,7 +8,7 @@ RUN apk add --no-cache git curl curl-dev icu-dev
 # install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN docker-php-ext-install pdo_mysql curl intl
+RUN docker-php-ext-install pdo_mysql curl intl gd
 RUN apk del curl-dev icu-dev
 
 COPY . .
