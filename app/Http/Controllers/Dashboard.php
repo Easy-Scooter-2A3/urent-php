@@ -13,6 +13,9 @@ use App\Models\Attribute;
 use App\Models\Order;
 use App\Models\users_packages;
 use App\Models\Product;
+use App\Models\Maintenance;
+use App\Models\order_product;
+use App\Models\ScooterStatus;
 use Illuminate\Support\Facades\Log;
 
 class Dashboard extends Controller
@@ -93,11 +96,16 @@ class Dashboard extends Controller
     }
 
     public function products(Request $request) {
-        $cols = ['Name', 'Price', 'Nb. Achats', 'Desc', 'Stock', 'Achats', 'Available'];
+        $cols = ['Name', 'Price', 'Desc', 'Stock', 'Nb. Achats', 'Available'];
         $products = Product::all();
 
         // TODO: pagination -> action
         $attributes = Attribute::all();
+
+        $nbAchats = [];
+        foreach ($products as $key => $value) {
+            $nbAchats[$value->id] = order_product::where('product_id', $value->id)->pluck('quantity')->sum();
+        }
 
         return view('dashboard', [
             'view' => 'admin.products',
@@ -105,6 +113,7 @@ class Dashboard extends Controller
             'products' => $products,
             'cols' => $cols,
             'attributes' => $attributes,
+            'nbAchats' => $nbAchats,
         ]);
     }
 
@@ -184,13 +193,22 @@ class Dashboard extends Controller
     }
 
     public function scooter(Request $request) {
-        $cols = ['Status', 'Date', 'Dern. Maintenance', 'Model', 'ID', 'Used by'];
+        $cols = ['Status', 'Date', 'Dern. Maintenance', 'Model', 'ID', 'UUID'];
 
-        $scooter = Scooter::all();
+        // TODO: pagination
+        $scooters = Scooter::all();
+        // maintenance + status
+        foreach ($scooters as $s) {
+            $s->status = ScooterStatus::getStatus($s->status);
+
+            $res = Maintenance::where('scooter_id', $s->id)->orderBy('created_at', 'desc')->first();
+            $s->date_last_maintenance = $res ? $res->created_at : 'Never';
+        }
+
         return view('dashboard', [
             'view' => 'admin.scooters',
             'collection' => $this->collection,
-            'scooters' => $scooter,
+            'scooters' => $scooters,
             'cols' => $cols
         ]);
     }

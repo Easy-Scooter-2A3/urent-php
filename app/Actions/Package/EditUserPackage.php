@@ -30,7 +30,7 @@ class EditUserPackage
                 
                 users_packages::create([
                     'user' => $user->id,
-                    'package' => $package,
+                    'package' => $packageId,
                     'option_id' => $option,
                 ]);
                 return ['success' => true];

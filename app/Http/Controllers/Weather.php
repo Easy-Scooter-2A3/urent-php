@@ -27,6 +27,9 @@ class Weather extends Controller
                 $line = stream_get_line($fp, 1024, "\n");
                 Log::debug($line);
                 $json = json_decode($line);
+                if (is_null($json)) {
+                    continue;
+                }
                 $rowDay = date("N", strtotime($json->main->created_at));
                 if ($rowDay == $day) {
                     array_push($arr, $json);

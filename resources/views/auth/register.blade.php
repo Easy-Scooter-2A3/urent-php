@@ -1,4 +1,3 @@
-@include('head')
 @include('header')
 
 <body class="bg-gray-100">
@@ -98,6 +97,11 @@
                 ])
                 @endcomponent
             </div>
+            <div>
+                <input required type="checkbox" name="cgu" id="cgu">
+                En cochant cette case, vous reconnaissez avoir lu et acceptez nos <a class="text-blue-600 hover:text-blue-300" href="#">règles et conditions d'utilisation</a>.
+            </div>
+            
         </form>
     </div>
     

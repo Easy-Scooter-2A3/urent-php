@@ -24,7 +24,7 @@ async function getWeatherData(day: Day) {
 }
 
 function getDataset(finalData: (IWeather | null)[]) {
-  const hours = [...range(0, 24)].map((hour) => `${String(hour).padStart(2, '0')}:00`);
+  const hours = [...range(0, 23)].map((hour) => `${String(hour).padStart(2, '0')}:00`);
 
   const DATA_COUNT = hours.length;
   const NUMBER_CFG = { count: DATA_COUNT, min: -20, max: 50 };

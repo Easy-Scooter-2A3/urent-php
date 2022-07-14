@@ -8,7 +8,7 @@ import notification from './notif';
 import getSelectedCard from './getSelectedCard';
 
 const setQuantity = async (productId: number, quantity: number) => {
-  if (await doPost('/en/cart/set', { productId, quantity })) {
+  if (await doPost('/cart/set', { productId, quantity })) {
     notification('Added to cart');
   } else {
     notification('Failed to add to cart');
@@ -16,7 +16,7 @@ const setQuantity = async (productId: number, quantity: number) => {
 };
 
 const getCartTotal = async () => {
-  const data = await doGet('/en/cart/total');
+  const data = await doGet('/cart/total');
   if (!data) {
     return 0;
   }
@@ -117,9 +117,13 @@ const payment = async () => {
 
   confirmPayBtn.addEventListener('click', async () => {
     const paymentMethod = getSelectedCard();
+    if (!paymentMethod) {
+      notification('Please select a payment method');
+      return;
+    }
     console.log('paymentMethod');
     console.log(paymentMethod);
-    if (await doPost('/en/cart/payment', { paymentMethod, total: await getCartTotal(), mode: 'cart' })) {
+    if (await doPost('/cart/payment', { paymentMethod, total: await getCartTotal(), mode: 'cart' })) {
       window.location.href = '/';
     } else {
       notification('Payment failed');

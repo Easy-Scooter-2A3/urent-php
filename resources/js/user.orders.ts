@@ -1,15 +1,14 @@
 import { MDCSwitch } from '@material/switch';
+import { MDCDataTable } from '@material/data-table';
 import { MDCTextField } from '@material/textfield';
 import IOrder from './interfaces/order';
 import searchField from './searchField';
-import selectedRows from './selectedRows';
 import {
   doPost, doDelete, doPut, doGet,
 } from './utils';
-import checkAll from './checkAll';
 
 const getDetails = async (orders: (string | null)) => {
-  const res = await doPost('/en/dashboard/admin/orders/details', { orders });
+  const res = await doPost('/dashboard/admin/orders/details', { orders });
   if (res) {
     return res.data.data;
   }
@@ -23,7 +22,7 @@ const toMDCTextField = (element: HTMLElement | null) => {
   return new MDCTextField(element.parentElement);
 };
 
-const getOrderContent = async (orderId: number) => doGet(`/en/dashboard/admin/orders/${orderId}/content`);
+const getOrderContent = async (orderId: number) => doGet(`/dashboard/admin/orders/${orderId}/content`);
 
 (async () => {
   const searchInput = document.getElementById('searchField') as HTMLInputElement | null;
@@ -32,8 +31,6 @@ const getOrderContent = async (orderId: number) => doGet(`/en/dashboard/admin/or
 
   const detailsBody = document.getElementById('modal-details-body') as HTMLElement | null;
   const detailsBodyTemplate = document.getElementById('modal-details-body-template') as HTMLTemplateElement | null;
-
-  const checkboxAll = document.getElementById('checkbox-all') as HTMLInputElement | null;
 
   if (!detailsBody || !detailsBodyTemplate) {
     console.error('Could not find modal-details-body or modal-details-body-template');
@@ -45,20 +42,12 @@ const getOrderContent = async (orderId: number) => doGet(`/en/dashboard/admin/or
     return;
   }
 
-  if (!checkboxAll) {
-    console.error('Could not find checkbox-all');
-    return;
-  }
-
-  checkboxAll.addEventListener('click', (_e: MouseEvent) => {
-    console.log('checkbox-all clicked');
-    checkAll(checkboxAll.checked, document);
-  });
+  const dataTable = new MDCDataTable(document.getElementById('dataTable') as HTMLElement);
 
   viewDetailsBtn.addEventListener('click', async (_e: MouseEvent) => {
     detailsBody.innerHTML = '';
     console.log('viewDetailsBtn clicked');
-    const ordersRows = selectedRows('[orderid]').map((element) => element.getAttribute('orderid'));
+    const ordersRows = dataTable.getSelectedRowIds();
     if (ordersRows.length === 0) {
       return;
     }
@@ -105,11 +94,8 @@ const getOrderContent = async (orderId: number) => doGet(`/en/dashboard/admin/or
     });
   });
 
-  searchInput.addEventListener('keyup', (e) => {
-    searchField(e, 1, '[orderidParent]');
-  });
   getOrdersBtn.addEventListener('click', async (e: MouseEvent) => {
-    const orderRows = selectedRows('[orderid]').map((element) => element.getAttribute('orderid'));
+    const orderRows = dataTable.getSelectedRowIds();
     if (orderRows.length === 0) {
       return;
     }
@@ -124,6 +110,6 @@ const getOrderContent = async (orderId: number) => doGet(`/en/dashboard/admin/or
   });
 
   searchInput.addEventListener('keyup', (e) => {
-    searchField(e, 1, '[orderidParent]');
+    searchField(e, '[orderidParent]');
   });
 })();

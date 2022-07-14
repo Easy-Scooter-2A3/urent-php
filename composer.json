@@ -10,6 +10,7 @@
         "biscolab/laravel-recaptcha": "^5.4",
         "fedeisas/laravel-mail-css-inliner": "dev-master",
         "guzzlehttp/guzzle": "^7.4",
+        "intervention/image": "^3.0@alpha",
         "laravel/cashier": "^13.8",
         "laravel/fortify": "^1.12",
         "laravel/framework": "^9.14",

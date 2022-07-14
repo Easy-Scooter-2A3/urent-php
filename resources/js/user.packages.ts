@@ -11,7 +11,7 @@ const selectPackage = async (packageId: number, paymentMethod: string, option: n
     package: packageId,
     option,
   };
-  const res = await doPost('/en/dashboard/packages/edit', data);
+  const res = await doPost('/dashboard/packages/edit', data);
   if (res) {
     return res;
   }
@@ -62,18 +62,18 @@ const payment = async () => {
   confirmPayBtn.addEventListener('click', async () => {
     const paymentMethod = getSelectedCard();
     if (!paymentMethod) {
-      console.error('Could not find paymentMethod');
+      notification('Please select a payment method');
       return;
     }
     const pkg = confirmPayBtn.getAttribute('pkg');
     if (!pkg) {
-      console.error('Could not find pkg');
+      notification('Please select a package');
       return;
     }
 
     const option = checkOption();
     if (!option && parseInt(pkg, 10) === 2) {
-      console.error('Could not find option');
+      notification('Please select an option');
       return;
     }
 

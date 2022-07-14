@@ -2,12 +2,11 @@
 /* eslint-disable import/extensions */
 import { MDCSwitch } from '@material/switch';
 import { MDCTextField } from '@material/textfield';
+import { MDCDataTable } from '@material/data-table';
 import IPartnership from './interfaces/partnership';
 import IUser from './interfaces/user';
 import searchField from './searchField';
-import selectedRows from './selectedRows';
 import { doPost, doPut, doGet } from './utils';
-import checkAll from './checkAll';
 import IProduct from './interfaces/product';
 
 const toMDCTextField = (element: HTMLElement | null) => {
@@ -37,7 +36,7 @@ const modalFieldsCreation = {
 };
 
 const getDetails = async (partnershipsId: (string | null)) => {
-  const res = await doPost('/en/dashboard/admin/partnerships/details', { partnershipsId });
+  const res = await doPost('/dashboard/admin/partnerships/details', { partnershipsId });
   if (res) {
     return [res.data.partnership, res.data.users, res.data.products];
   }
@@ -57,7 +56,7 @@ const fillFields = async (partnershipId: string) => {
     return;
   }
 
-  const productsRes = await doGet(`/en/dashboard/admin/partnerships/${partnershipId}/list`);
+  const productsRes = await doGet(`/dashboard/admin/partnerships/${partnershipId}/list`);
   if (!productsRes) {
     console.error('Error getting products');
     return;
@@ -103,6 +102,10 @@ const fillFields = async (partnershipId: string) => {
 
   const searchInput = document.getElementById('searchField') as HTMLInputElement | null;
 
+  const dataTable = new MDCDataTable(document.getElementById('dataTable') as HTMLElement);
+  const dataTableCreation = new MDCDataTable(document.getElementById('dataTableCreation') as HTMLElement);
+  const dataTableEdit = new MDCDataTable(document.getElementById('dataTableEdit') as HTMLElement);
+
   if (!searchInput) {
     console.error('Could not find search input');
     return;
@@ -136,7 +139,7 @@ const fillFields = async (partnershipId: string) => {
   }
 
   editBtn.addEventListener('click', async (_e: MouseEvent) => {
-    const partnerships = selectedRows('[partnershipid]').map((element) => element.getAttribute('partnershipid'));
+    const partnerships = dataTable.getSelectedRowIds();
     if (partnerships.length === 0) {
       console.log('No partnerships selected');
       _e.preventDefault(); // TODO: make it work
@@ -154,7 +157,7 @@ const fillFields = async (partnershipId: string) => {
   });
 
   confirmCreationBtn.addEventListener('click', async (_e: MouseEvent) => {
-    const products = selectedRows('[productattribute]').map((element) => element.getAttribute('productattribute'));
+    const products = dataTableCreation.getSelectedRowIds();
 
     const data = {
       name: modalFieldsCreation.name.value,
@@ -168,7 +171,7 @@ const fillFields = async (partnershipId: string) => {
 
     console.log(data);
 
-    if (await doPost('/en/dashboard/admin/partnerships', data)) {
+    if (await doPost('/dashboard/admin/partnerships', data)) {
       window.location.reload();
     }
   });
@@ -180,7 +183,7 @@ const fillFields = async (partnershipId: string) => {
       return;
     }
 
-    const products = selectedRows('[productattribute-edit]').map((element) => element.getAttribute('productattribute-edit'));
+    const products = dataTableEdit.getSelectedRowIds();
 
     const data = {
       id,
@@ -193,13 +196,12 @@ const fillFields = async (partnershipId: string) => {
       products: [...products],
     };
 
-    if (await doPut(`/en/dashboard/admin/partnerships/${id}`, data)) {
+    if (await doPut(`/dashboard/admin/partnerships/${id}`, data)) {
       window.location.reload();
     }
   });
 
   const checkboxes = {
-    main: document.getElementById('checkbox-all-main') as HTMLInputElement,
     edit: document.getElementById('checkbox-all-edit') as HTMLInputElement,
     creation: document.getElementById('checkbox-all-creation') as HTMLInputElement,
 
@@ -209,26 +211,11 @@ const fillFields = async (partnershipId: string) => {
   };
 
   if (Object.values(checkboxes).some((element) => !element)) {
-    console.error('Could not find a checkbox-all');
+    console.error('Could not find a checkbox');
     return;
   }
 
-  checkboxes.main.addEventListener('click', (_e: MouseEvent) => {
-    console.log('checkbox-all clicked');
-    checkAll(checkboxes.main.checked, checkboxes.mainParent);
-  });
-
-  checkboxes.edit.addEventListener('click', (_e: MouseEvent) => {
-    console.log('checkbox-all edit clicked');
-    checkAll(checkboxes.edit.checked, checkboxes.editParent);
-  });
-
-  checkboxes.creation.addEventListener('click', (_e: MouseEvent) => {
-    console.log('checkbox-all creation clicked');
-    checkAll(checkboxes.creation.checked, checkboxes.creationParent);
-  });
-
   searchInput.addEventListener('keyup', (_e) => {
-    searchField(_e, 1, '[partnershipidParent]');
+    searchField(_e, '[partnershipidParent]');
   });
 })();

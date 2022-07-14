@@ -16,6 +16,10 @@
             <div id="modal-payment-body" class="p-6 space-y-6 h-96 overflow-y-auto">
 
                 <div id="payment-cardlist" class="flex flex-col">
+                    @php
+                        $cards = Auth::user()->paymentMethods();
+                    @endphp
+                    @if (count($cards) > 0)
                     @foreach (Auth::user()->paymentMethods() as $pm)
                     <div class="mdc-form-field">
                         <div class="mdc-checkbox">
@@ -29,11 +33,17 @@
                             <div class="mdc-checkbox__ripple"></div>
                         </div>
                         <label for="checkbox-{{ $pm->id }}">
-                            <img class="h-5" src="{{ asset('/img/'.$pm->card->brand.'.svgz') }}" alt="{{ $pm->card->brand }}">
+                            {{-- <img class="h-5" src="{{ asset('/img/'.$pm->card->brand.'.svgz') }}" alt="{{ $pm->card->brand }}"> --}}
+                            <img class="h-5" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="{{ $pm->card->brand }}">
                             XXXX XXXX XXXX {{ $pm->card->last4 }}   -   {{ $pm->card->exp_month." / ".$pm->card->exp_year }}
                         </label>
                     </div>
                     @endforeach
+                    @else
+                    <div class="text-center">
+                        <p class="text-gray-500">You have no saved cards</p>
+                        {{-- <a href="{{ route('payment.add') }}" class="btn btn-primary">Add a card</a> --}}
+                    @endif
                 </div>
 
                 {{-- @foreach (Auth::user()->paymentMethods() as $pm)

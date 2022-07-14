@@ -1,6 +1,18 @@
 <div class="relative overflow-x-auto lg:w-full mx-10 my-10">
     <div class="w-full h-96" id="map">
     </div>
+
+    <div class="w-full p-4 flex border shadow-lg">
+        @component('components.inputfield', [
+            'text' => 'Search',
+            'icon' => 'search',
+            'name' => 'search',
+            'type' => 'search',
+            'id' => 'searchField',
+        ])
+        @endcomponent
+        <h2 class="p-4 font-bold"><span id="scootersAmount">X</span> scooters</h2>
+    </div>
     {{-- <div class="gap-3 lg-5/6 md:w-full p-4 m-5 mx-auto flex items-center bg-white drop-shadow-md"> --}}
         {{-- @component('components.inputfield', [
             'text' => 'Search',

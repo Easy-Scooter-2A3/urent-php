@@ -20,7 +20,7 @@ import { doPost } from './utils';
   dialog.listen('MDCDialog:closing', async (e: CustomEvent) => {
     const { action } = e.detail;
     if (action === 'accept') {
-      if (await doPost('/en/user/convertfidelity', {})) {
+      if (await doPost('/user/convertfidelity', {})) {
         location.reload();
       }
     }
