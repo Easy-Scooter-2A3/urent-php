@@ -202,10 +202,6 @@ const fillFields = async (partnershipId: string) => {
   });
 
   const checkboxes = {
-    edit: document.getElementById('checkbox-all-edit') as HTMLInputElement,
-    creation: document.getElementById('checkbox-all-creation') as HTMLInputElement,
-
-    mainParent: document.getElementById('modal-main') as HTMLInputElement,
     creationParent: document.getElementById('modal-creation') as HTMLInputElement,
     editParent: document.getElementById('modal-edit') as HTMLInputElement,
   };
