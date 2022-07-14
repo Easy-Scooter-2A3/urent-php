@@ -1,4 +1,4 @@
-<div class="p-4 bg-white w-full md:w-60">
+<div class="p-4 bg-white w-full md:w-60 my-5">
     <div class="flex flex-col gap-4 text-center justify-items-center w-full">
         @foreach ($collection as $item)
             @if ((strstr($item[0], 'admin') != false) && (Auth::user()->isAdmin == 0))

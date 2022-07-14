@@ -4,7 +4,7 @@
 <body>
     <div class="flex darkBackground text-white h-4/5 p-10">
         <div class="flex">
-            <div class="w-3/6 ml-36">
+            <div class="w-3/6 md:ml-36 ml-0">
                 <p class="text-xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas amet quo libero architecto doloribus</p>
                 <h2>Desc</h2>
                 <br>
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="flex justify-around w-2/4 items-center text-white">
-            <img src="/img/trot.png" alt="logo" class="w-1/2">
+            <img src="/img/trot.png" alt="logo" class="hidden md:block w-1/2">
         </div>
     </div>
 
@@ -26,7 +26,7 @@
             <p class="text-lg">Lorem ipsum dolor sit amet, consectetur adipliscing elit</p>
         </div>
     </div>
-    <div class="flex">
+    <div class="flex flex-col md:flex-row">
         @include('user.dashboard-packages')
     </div>
     <div class="darkBackground text-white h-4/5 p-10">
