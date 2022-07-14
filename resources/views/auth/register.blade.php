@@ -1,3 +1,4 @@
+@include('head')
 @include('header')
 
 <body class="bg-gray-100">
