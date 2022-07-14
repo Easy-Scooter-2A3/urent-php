@@ -6,10 +6,14 @@ import notification from './notif';
 import { doPost } from './utils';
 
 const addToCart = async (productId: number, quantity: number) => {
-  if (await doPost('/cart/add', { productId, quantity })) {
-    notification('Added to cart');
-  } else {
-    notification('Failed to add to cart');
+  try {
+    if (await doPost('/cart/add', { productId, quantity })) {
+      notification('Added to cart');
+    } else {
+      notification('Failed to add to cart');
+    }
+  } catch (error) {
+    notification('You must be authenticated');
   }
 };
 
