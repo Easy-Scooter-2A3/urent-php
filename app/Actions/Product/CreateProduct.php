@@ -41,8 +41,8 @@ class CreateProduct
         $hash = $image->hashName();
         $manager = new ImageManager('gd');
         $image = $manager->make($image->path());
-        $image->
-        $image->resize(150, 150)->save("public/images/$hash");
+        $image->resize(150, 150);
+        $image->toPng()->save("storage/images/$hash", 100);
 
         $product = Product::create(
             [
