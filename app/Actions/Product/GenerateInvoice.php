@@ -24,8 +24,7 @@ class GenerateInvoice
         
         $file ='user.pdf';
         $pdf = pdf::loadView($file, ['order' => Order::find($id), 'product' => $product]);
-        return $pdf->download('invoice.pdf'); 
-        return ['success' => true];
+        return $pdf->download('invoice.pdf');
     }
 
     public function asController(Request $request, $id)

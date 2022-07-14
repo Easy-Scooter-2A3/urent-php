@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\order_product;
+use App\Models\partnership_products;
 
 class GetOrderProducts
 {

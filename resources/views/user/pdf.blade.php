@@ -5,10 +5,9 @@
     <div class="w-3/5 bg-white shadow-lg">
         <div class="flex justify-between p-4">
             <div>
-                <h1 class="text-3xl italic font-extrabold tracking-widest">Urent</h1>
-                <img width="250" height="250" src="/img/logo4.png" alt="logo">
+                <h1 class="text-3xl italic font-extrabold tracking-widest">URent</h1>
+                <img width="250" height="250" src="/im" alt="logo">
             </div>
-           
         </div>
         <div class="w-full h-0.5 bg-indigo-500"></div>
         <div class="flex justify-between p-4">
@@ -39,6 +38,15 @@
                                 Prix : 
                             </th>
                             <th class="px-4 py-2 text-xs text-gray-500 ">
+                                Remise : 
+                            </th>
+                            <th class="px-4 py-2 text-xs text-gray-500 ">
+                                Taxe : 
+                            </th>
+                            <th class="px-4 py-2 text-xs text-gray-500 ">
+                                Méthode de paiement : 
+                            </th>
+                            <th class="px-4 py-2 text-xs text-gray-500 ">
                                 Total : 
                             </th>
                         </tr>
@@ -57,7 +65,16 @@
                                 {{$product->price}}
                             </td>
                             <td class="px-6 py-4">
-                                {{$order->total_price}}
+                                {{$order->total_discount}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{$order->total_tax}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{$order->payment_method}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{($order->total_price + $order->total_tax) - $order->total_discount}}
                             </td>
                         </tr>
                     </tbody>
@@ -70,6 +87,5 @@
             </div>
         </div>
         <div class="w-full h-0.5 bg-indigo-500"></div>
-
     </div>
 </div>
