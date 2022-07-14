@@ -24,6 +24,6 @@
     type="{{ $type }}">
     <span class="mdc-button__ripple"></span>
     <span @isset($customId) customId="{{ $customId }}" @endisset class="mdc-button__touch"></span>
-    <span @isset($customId) customId="{{ $customId }}" @endisset class="mdc-button__label m-3">@lang("$text")</span>
+    <span @isset($customId) customId="{{ $customId }}" @endisset class="mdc-button__label p-5">@lang("$text")</span>
 </button>
 @isset($href) </a> @endisset
