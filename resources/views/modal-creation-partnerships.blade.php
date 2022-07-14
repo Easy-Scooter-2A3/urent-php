@@ -106,11 +106,10 @@
                             </thead>
                             <tbody class="mdc-data-table__content">
                             @foreach ($products as $product)
-                              <tr productattributeParent class="mdc-data-table__row">
-                                      
+                              <tr data-row-id="{{ $product->id }}" productattributeParent class="mdc-data-table__row">
                                 <td class="mdc-data-table__cell mdc-data-table__cell--checkbox">
                                     <div class="mdc-checkbox mdc-data-table__row-checkbox">
-                                      <input productattribute={{ $product->id }} type="checkbox" class="mdc-checkbox__native-control"/>
+                                      <input type="checkbox" class="mdc-checkbox__native-control"/>
                                       <div class="mdc-checkbox__background">
                                         <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
                                           <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />

@@ -4,6 +4,7 @@ import { MDCSwitch } from '@material/switch';
 import { MDCTextField } from '@material/textfield';
 import { MDCDataTable } from '@material/data-table';
 import IPartnership from './interfaces/partnership';
+import IPartnershipProduct from './interfaces/partnership_product';
 import IUser from './interfaces/user';
 import searchField from './searchField';
 import { doPost, doPut, doGet } from './utils';
@@ -37,20 +38,17 @@ const modalFieldsCreation = {
 
 const getDetails = async (partnershipsId: (string | null)) => {
   const res = await doPost('/dashboard/admin/partnerships/details', { partnershipsId });
-  if (res) {
-    return [res.data.partnership, res.data.users, res.data.products];
-  }
-  return null;
+  return res ? [res.data.partnership, res.data.users, res.data.products] : null;
 };
 
-const fillFields = async (partnershipId: string) => {
+const fillFields = async (partnershipId: string, table: MDCDataTable) => {
   const usersList = document.getElementById('usersList');
   if (!usersList) {
     console.log('usersList not found');
     return;
   }
 
-  const data = await getDetails(partnershipId) as [IPartnership, IUser[], IProduct[]];
+  const data = await getDetails(partnershipId) as [IPartnership, IUser[], IPartnershipProduct[]];
   if (!data) {
     console.error('Error getting data');
     return;
@@ -64,16 +62,8 @@ const fillFields = async (partnershipId: string) => {
 
   const [partnership, users, products] = data;
 
-  // no interface
-  // console.log(products);
-  const productsSet = new Set<string>(products.map((x: any) => String(x.product_id)));
-  const productsFields = document.querySelectorAll<HTMLInputElement>('[productattribute-edit]');
-  productsFields.forEach((element) => {
-    const attr = element.getAttribute('productattribute-edit');
-    // element is in the DOM, so it can be reassigned
-    // eslint-disable-next-line no-param-reassign
-    element.checked = productsSet.has(attr ?? '');
-  });
+  const list = products.map((product) => product.product_id.toString());
+  table.setSelectedRowIds(list);
 
   const {
     name, from_date, to_date, voucher, max_people, active,
@@ -153,7 +143,7 @@ const fillFields = async (partnershipId: string) => {
     }
 
     editBtn.setAttribute('productid', id);
-    fillFields(id);
+    fillFields(id, dataTableEdit);
   });
 
   confirmCreationBtn.addEventListener('click', async (_e: MouseEvent) => {

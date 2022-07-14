@@ -35,7 +35,7 @@ class EditPartnership
                 'to_date' => date('Y-m-d H:i:s', strtotime($data['to_date']))
             ]);
 
-        partnership_product::destroy($productsIds);
+        partnership_product::where('partnership_id', $id)->delete();
 
         foreach ($productsIds as $key => $productid) {
             partnership_product::create([
