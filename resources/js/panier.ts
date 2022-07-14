@@ -8,8 +8,14 @@ import notification from './notif';
 import getSelectedCard from './getSelectedCard';
 
 const setQuantity = async (productId: number, quantity: number) => {
-  if (await doPost('/cart/set', { productId, quantity })) {
-    notification('Added to cart');
+  const res = await doPost('/cart/set', { productId, quantity });
+  if (res) {
+    if (res.data.success) {
+      notification('Added to cart');
+      return;
+    }
+
+    notification(res.data.message);
   } else {
     notification('Failed to add to cart');
   }
@@ -121,12 +127,15 @@ const payment = async () => {
       notification('Please select a payment method');
       return;
     }
-    console.log('paymentMethod');
-    console.log(paymentMethod);
-    if (await doPost('/cart/payment', { paymentMethod, total: await getCartTotal(), mode: 'cart' })) {
-      window.location.href = '/';
-    } else {
-      notification('Payment failed');
+
+    const res = await doPost('/cart/payment', { paymentMethod, total: await getCartTotal(), mode: 'cart' }); 
+    if (res) {
+      if (res.data.success) {
+        notification('Payment successful');
+        window.location.href = '/cart';
+        return;
+      }
+      notification(res.data.message);
     }
   });
 };

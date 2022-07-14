@@ -39,6 +39,18 @@ class SingleCharge
                 }
                 $total = $cartPrice['total'];
 
+                //check stock
+                $cart = Cart::where('user_id', auth()->user()->id)->get();
+                foreach ($cart as $item) {
+                    $productsInCart[$item->product_id] = $item->quantity;
+                }
+                $products = Product::whereIn('id', array_keys($productsInCart))->get();
+                foreach ($products as $product) {
+                    if ($product->stock < $productsInCart[$product->id]) {
+                        Log::debug('stock is not enough');
+                        return response()->json(['success' => false, 'message' => 'Not enough stock']);
+                    }
+                }
 
                 break;
 
