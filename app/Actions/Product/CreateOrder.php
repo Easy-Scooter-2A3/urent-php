@@ -32,9 +32,9 @@ class CreateOrder
             'delivery_place' => 'ratio',
             'delivery_date' => date('Y-m-d H:i:s', strtotime('+1 day')),
             'transporter_tracking_number' => '123',
-            'total_price' => $total,
-            'total_tax' => 20.0,
-            'total_discount' => 0.0,
+            'total_price' => floatval(round($total)),
+            'total_tax' => floatval(20.0),
+            'total_discount' =>floatval(0.0),
             'payment_method' => $paymentMethod,
             'recu' => $recu,
         ]);

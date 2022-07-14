@@ -57,7 +57,16 @@
                                 {{$product->price}}
                             </td>
                             <td class="px-6 py-4">
-                                {{$order->total_price}}
+                                {{$order->total_discount}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{$order->total_tax}}
+                            </td>
+                            <td class="px-6 py-4">
+                                <div>Carte de crédit</div>
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ floatval(($order->total_price + $order->total_tax) - $order->total_discount / 10 - 20 )}} €
                             </td>
                         </tr>
                     </tbody>
