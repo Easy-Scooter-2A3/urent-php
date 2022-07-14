@@ -28,7 +28,7 @@ const toMDCTextField = (element: HTMLElement | null) => {
   return new MDCTextField(element.parentElement);
 };
 
-const fillFields = async (productId: string) => {
+const fillFields = async (productId: string, table: MDCDataTable) => {
   // define them as MDCTextField
   const modalFields = {
     name: toMDCTextField(document.getElementById('modal-edit-name')) as MDCTextField,
@@ -63,17 +63,8 @@ const fillFields = async (productId: string) => {
 
   modalFields.available.selected = Boolean(product.available);
 
-  attributes.forEach((attribute) => {
-    const query = `input[productattribute-edit="${attribute}"]`;
-    const elems = document.querySelectorAll<HTMLInputElement>(query);
-    if (elems) {
-      elems.forEach((element) => {
-        if (element.getAttribute('edit') != null) {
-          element.checked = true;
-        }
-      });
-    }
-  });
+  console.log(attributes);
+  table.setSelectedRowIds(attributes.map((attribute) => attribute.toString()));
 };
 
 (async () => {
@@ -222,7 +213,7 @@ const fillFields = async (productId: string) => {
     }
 
     editBtn.setAttribute('productid', id);
-    fillFields(id);
+    fillFields(id, dataTableEdit);
   });
 
   confirmCreationBtn.addEventListener('click', async (_e: MouseEvent) => {
