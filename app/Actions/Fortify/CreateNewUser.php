@@ -51,7 +51,7 @@ class CreateNewUser implements CreatesNewUsers
             'phone' => $input['phone'],
             'password' => Hash::make($input['password']),
             'partner_code' => $input['partner_code'] ?? null,
-            'isActive' => $input['isActive'] ?? false,
+            'isActive' => false,
         ]);
 
         $bytes = random_bytes(32);
